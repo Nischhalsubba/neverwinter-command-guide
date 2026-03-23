@@ -109,7 +109,7 @@ function CommandCard({ command, compact = false }) {
   const aliasText = command.aliases?.length ? command.aliases.join(", ") : "No alias";
 
   return (
-    <article className={`${styles.commandCard}${compact ? ` ${styles.commandCardCompact}` : ""}`}>
+    <article className={`${styles.commandCard}${compact ? ` ${styles.commandCardCompact}` : ""}`} data-reveal data-tilt>
       <div className={styles.cardGlowTop} aria-hidden="true" />
       <div className={styles.commandTopline}>
         <span className={styles.categoryBadge}>{command.category}</span>

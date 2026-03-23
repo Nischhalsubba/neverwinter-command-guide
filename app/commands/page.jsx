@@ -13,7 +13,22 @@ export const metadata = {
     title: "Neverwinter Commands List | Search Chat, Emote & Utility Commands",
     description:
       "Search Neverwinter slash commands by syntax, alias, or category and open detail pages for examples, descriptions, and command use cases.",
-    url: "/commands"
+    url: "/commands",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Neverwinter commands directory preview"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Neverwinter Commands List | Search Chat, Emote & Utility Commands",
+    description:
+      "Search Neverwinter slash commands by syntax, alias, or category and open detail pages for examples, descriptions, and command use cases.",
+    images: ["/twitter-image"]
   }
 };
 

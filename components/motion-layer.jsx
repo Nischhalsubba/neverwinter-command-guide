@@ -43,20 +43,18 @@ export function MotionLayer() {
     document.querySelectorAll("[data-tilt]").forEach((element) => {
       const xTo = gsap.quickTo(element, "x", { duration: 0.35, ease: "power3.out" });
       const yTo = gsap.quickTo(element, "y", { duration: 0.35, ease: "power3.out" });
-      const rotateXTo = gsap.quickTo(element, "rotateX", { duration: 0.35, ease: "power3.out" });
-      const rotateYTo = gsap.quickTo(element, "rotateY", { duration: 0.35, ease: "power3.out" });
+      const scaleTo = gsap.quickTo(element, "scale", { duration: 0.35, ease: "power3.out" });
+      const shadowTo = gsap.quickTo(element, "boxShadow", { duration: 0.35, ease: "power3.out" });
 
       function handleMove(event) {
         const rect = element.getBoundingClientRect();
         const px = (event.clientX - rect.left) / rect.width;
         const py = (event.clientY - rect.top) / rect.height;
-        const rotateY = (px - 0.5) * 10;
-        const rotateX = (0.5 - py) * 10;
 
-        xTo((px - 0.5) * 6);
-        yTo((py - 0.5) * 4);
-        rotateXTo(rotateX);
-        rotateYTo(rotateY);
+        xTo((px - 0.5) * 4);
+        yTo((py - 0.5) * 3);
+        scaleTo(1.01);
+        shadowTo("0 28px 90px rgba(2, 8, 23, 0.58)");
         element.style.setProperty("--pointer-x", `${px * 100}%`);
         element.style.setProperty("--pointer-y", `${py * 100}%`);
       }
@@ -64,8 +62,8 @@ export function MotionLayer() {
       function handleLeave() {
         xTo(0);
         yTo(0);
-        rotateXTo(0);
-        rotateYTo(0);
+        scaleTo(1);
+        shadowTo("0 24px 80px rgba(2, 8, 23, 0.45)");
         element.style.setProperty("--pointer-x", "50%");
         element.style.setProperty("--pointer-y", "50%");
       }

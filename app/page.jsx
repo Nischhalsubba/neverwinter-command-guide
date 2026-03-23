@@ -15,7 +15,22 @@ export const metadata = {
     title: "Neverwinter Command Guide | Chat, Emotes, Utility, and Slash Commands",
     description:
       "A fan-made searchable reference for Neverwinter slash commands, chat tools, emotes, screenshots, combat logging, and player utility shortcuts.",
-    url: "/"
+    url: "/",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Neverwinter Command Guide preview"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Neverwinter Command Guide | Chat, Emotes, Utility, and Slash Commands",
+    description:
+      "A fan-made searchable reference for Neverwinter slash commands, chat tools, emotes, screenshots, combat logging, and player utility shortcuts.",
+    images: ["/twitter-image"]
   }
 };
 
