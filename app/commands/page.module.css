@@ -1,0 +1,253 @@
+.page {
+  display: grid;
+  grid-template-columns: 256px minmax(0, 1fr);
+  min-height: calc(100vh - 65px);
+}
+
+.sidebar {
+  background: var(--panel-soft);
+}
+
+.sidebarInner {
+  position: sticky;
+  top: 65px;
+  display: grid;
+  min-height: calc(100vh - 65px);
+  padding: 24px;
+}
+
+.sidebarHeader h2 {
+  margin: 0;
+  color: var(--violet);
+  font-family: var(--font-display), serif;
+  font-size: 18px;
+}
+
+.sidebarHeader span {
+  color: var(--muted-3);
+  font-family: var(--font-command), sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sideButton {
+  padding: 12px;
+  border: 0;
+  color: var(--muted-3);
+  background: transparent;
+  text-align: left;
+  font-family: var(--font-command), sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sideButtonActive {
+  border-right: 2px solid var(--teal);
+  background: rgba(123, 214, 209, 0.1);
+  color: var(--teal);
+}
+
+.systemWrap {
+  align-self: end;
+  padding-top: 32px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.content {
+  padding: 48px;
+}
+
+.header {
+  display: grid;
+  gap: 16px;
+}
+
+.header p {
+  max-width: 672px;
+  margin: 0;
+  color: var(--muted-2);
+  font-size: 18px;
+  line-height: 1.625;
+}
+
+.searchBar {
+  display: flex;
+  gap: 0;
+  padding: 4px;
+  margin-top: 48px;
+  border-radius: 8px;
+  background: rgba(31, 31, 36, 0.8);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.searchInput {
+  flex: 1;
+  min-height: 56px;
+  padding: 18px 16px 18px 48px;
+  border-radius: 4px;
+  background: var(--panel-soft);
+  color: #475569;
+  font-size: 16px;
+}
+
+.searchAction {
+  min-width: 136px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--teal);
+  color: #003735;
+  font-family: var(--font-command), sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.groupStack {
+  display: grid;
+  gap: 96px;
+  margin-top: 96px;
+}
+
+.groupSection {
+  display: grid;
+  gap: 32px;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.groupHeader h2 {
+  margin: 0;
+  color: var(--violet);
+  font-family: var(--font-display), serif;
+  font-size: 30px;
+}
+
+.groupRule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(211, 187, 255, 0.3), rgba(211, 187, 255, 0));
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+
+.card {
+  position: relative;
+  min-height: 332px;
+  padding: 24px;
+  border-left: 4px solid transparent;
+  border-radius: 4px;
+  background: var(--panel);
+  box-shadow: var(--shadow-sm);
+}
+
+.accentViolet {
+  border-left-color: var(--violet);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.cardBadge {
+  padding: 5px 13px;
+  border: 1px solid rgba(62, 73, 72, 0.3);
+  border-radius: 4px;
+  background: #343439;
+  color: var(--violet);
+  font-family: var(--font-command), sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.copyButton {
+  border: 0;
+  color: var(--muted-3);
+  background: transparent;
+}
+
+.syntax {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 4px;
+  background: var(--bg-deep);
+  color: var(--teal);
+  font-family: var(--font-command), sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.card h3 {
+  margin: 20px 0 12px;
+  font-family: var(--font-display), serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.card p {
+  margin: 0;
+  color: var(--muted-2);
+  font-size: 14px;
+  line-height: 1.625;
+}
+
+.aliasRow {
+  display: flex;
+  gap: 16px;
+  padding-top: 17px;
+  margin-top: 24px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.aliasRow span {
+  color: var(--muted-3);
+  font-family: var(--font-command), sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.aliasRow code {
+  color: var(--gold);
+  font-family: monospace;
+  font-size: 11px;
+}
+
+@media (max-width: 980px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebarInner {
+    position: static;
+    min-height: auto;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .systemWrap {
+    grid-column: 1 / -1;
+  }
+
+  .content {
+    padding: 24px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

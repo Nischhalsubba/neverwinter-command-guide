@@ -1,0 +1,147 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(12px);
+  background: rgba(18, 19, 23, 0.8);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 8px 32px 0 rgba(123, 214, 209, 0.06);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 64px;
+}
+
+.brand {
+  font-family: var(--font-display), serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.05em;
+  color: var(--teal);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navLink {
+  padding: 0 0 6px;
+  color: var(--muted-2);
+  font-family: var(--font-display), serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.navLinkActive {
+  color: var(--teal);
+  border-bottom: 2px solid var(--teal);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.searchWrap {
+  position: relative;
+}
+
+.searchInput {
+  width: 256px;
+  min-height: 40px;
+  padding: 6px 16px 7px 40px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--panel-input);
+  color: var(--text);
+}
+
+.searchInput::placeholder {
+  color: #6b7280;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translateY(-50%);
+  color: #6b7280;
+}
+
+.searchIcon svg,
+.utilityIcon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.login {
+  min-height: 28px;
+  padding: 6px 16px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--teal-deep);
+  color: #003735;
+  font-family: var(--font-command), sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.utilityIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--muted-2);
+}
+
+@media (max-width: 960px) {
+  .inner {
+    flex-wrap: wrap;
+    padding: 16px 0;
+  }
+
+  .nav {
+    order: 3;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .controls {
+    margin-left: auto;
+  }
+
+  .searchInput {
+    width: 180px;
+  }
+}
+
+@media (max-width: 640px) {
+  .brand {
+    font-size: 18px;
+  }
+
+  .controls {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .searchWrap {
+    flex: 1;
+  }
+
+  .searchInput {
+    width: 100%;
+  }
+}
