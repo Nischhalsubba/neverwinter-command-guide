@@ -1,0 +1,46 @@
+import { Space_Grotesk, Source_Sans_3 } from "next/font/google";
+import "./globals.css";
+import { siteUrl } from "@/lib/site";
+
+const headingFont = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  display: "swap"
+});
+
+const bodyFont = Source_Sans_3({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap"
+});
+
+export const metadata = {
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Neverwinter Command Guide",
+    template: "%s | Neverwinter Command Guide"
+  },
+  description:
+    "A fan-made searchable reference for Neverwinter chat commands, emotes, utility commands, and copy-ready syntax.",
+  applicationName: "Neverwinter Command Guide",
+  openGraph: {
+    title: "Neverwinter Command Guide",
+    description:
+      "Search Neverwinter commands, chat shortcuts, whispers, emotes, utility commands, and copy-ready syntax.",
+    type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Neverwinter Command Guide",
+    description:
+      "A fan-made searchable reference for Neverwinter chat commands, emotes, utility commands, and copy-ready syntax."
+  }
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={`${headingFont.variable} ${bodyFont.variable}`}>
+      <body>{children}</body>
+    </html>
+  );
+}

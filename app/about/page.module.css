@@ -1,0 +1,9 @@
+.about {
+  padding: 40px 0 72px;
+}
+
+.panel {
+  display: grid;
+  gap: 18px;
+  padding: clamp(24px, 5vw, 56px);
+}

@@ -1,0 +1,232 @@
+:root {
+  --bg: #08111f;
+  --bg-accent: #101e34;
+  --panel: rgba(11, 21, 37, 0.82);
+  --panel-strong: rgba(14, 27, 46, 0.96);
+  --line: rgba(154, 182, 214, 0.2);
+  --text: #eef4ff;
+  --muted: #b0c2de;
+  --accent: #7dd3fc;
+  --accent-strong: #38bdf8;
+  --gold: #f4d58d;
+  --success: #8ce7b0;
+  --danger: #ffb4a2;
+  --shadow: 0 24px 80px rgba(2, 8, 23, 0.45);
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --max-width: 1440px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 28%),
+    radial-gradient(circle at top right, rgba(244, 213, 141, 0.12), transparent 18%),
+    linear-gradient(180deg, #0b1525 0%, #08111f 60%, #050b14 100%);
+  color: var(--text);
+  font-family: var(--font-body), sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(125, 211, 252, 0.9);
+  outline-offset: 3px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.shell {
+  width: min(calc(100% - 32px), var(--max-width));
+  margin: 0 auto;
+}
+
+.skipLink {
+  position: absolute;
+  left: 16px;
+  top: -48px;
+  z-index: 100;
+  padding: 10px 14px;
+  background: var(--text);
+  color: #06101d;
+  border-radius: 10px;
+}
+
+.skipLink:focus {
+  top: 16px;
+}
+
+.siteHeader {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(18px);
+  background: rgba(4, 10, 18, 0.72);
+  border-bottom: 1px solid var(--line);
+}
+
+.siteHeaderInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.brandMark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: #05101b;
+  background: linear-gradient(135deg, var(--gold), #fff2c4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.navLink {
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+}
+
+.navLink:hover,
+.navLink:focus-visible,
+.navLink.active {
+  color: var(--text);
+  background: rgba(125, 211, 252, 0.12);
+}
+
+.quickSearchLink {
+  padding: 11px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.pageSection {
+  padding: 32px 0 72px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(244, 213, 141, 0.28);
+  background: rgba(244, 213, 141, 0.08);
+  color: var(--gold);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sectionTitle,
+.displayTitle {
+  margin: 0;
+  font-family: var(--font-heading), sans-serif;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.sectionTitle {
+  font-size: clamp(2rem, 3vw, 3.4rem);
+}
+
+.displayTitle {
+  font-size: clamp(3rem, 8vw, 6rem);
+}
+
+.sectionIntro {
+  max-width: 70ch;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.cardSurface {
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(16, 30, 52, 0.96), rgba(9, 19, 33, 0.96));
+  box-shadow: var(--shadow);
+  border-radius: var(--radius-xl);
+}
+
+.pageFooter {
+  border-top: 1px solid var(--line);
+  padding: 32px 0 48px;
+}
+
+.footerGrid {
+  display: grid;
+  gap: 18px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 900px) {
+  .siteHeaderInner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .nav {
+    width: 100%;
+  }
+}

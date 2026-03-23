@@ -1,0 +1,37 @@
+.home {
+  padding: 40px 0 72px;
+}
+
+.hero {
+  display: grid;
+  gap: 22px;
+  padding: clamp(24px, 5vw, 56px);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.primaryAction,
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.primaryAction {
+  color: #06101b;
+  background: linear-gradient(135deg, var(--gold), #ffe8b1);
+}
+
+.secondaryAction {
+  color: var(--text);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
