@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useId, useMemo, useState } from "react";
 import {
   categoryShortcuts,
@@ -7,6 +8,7 @@ import {
   developerTricks,
   faqItems,
   featuredCommands,
+  getCommandUrl,
   quickHelpLinks,
   sidebarLinks
 } from "@/lib/commands-data";
@@ -168,7 +170,9 @@ function CommandCard({ command, compact = false }) {
       </div>
 
       <code className={styles.syntaxBlock}>{command.syntax}</code>
-      <h3 className={styles.commandTitle}>{command.title}</h3>
+      <h3 className={styles.commandTitle}>
+        <Link href={getCommandUrl(command)}>{command.title}</Link>
+      </h3>
       <p className={styles.commandDescription}>{command.description}</p>
       <p className={styles.commandMeta}>
         <strong>Example:</strong> <code>{command.example}</code>
@@ -323,14 +327,7 @@ export function CommandLibrary() {
                       <Icon />
                     </span>
                     <span className={styles.categoryLabel}>
-                      {{
-                        Chat: "Combat",
-                        Private: "Movement",
-                        "Party / Guild": "Social",
-                        Utility: "Utility",
-                        Emotes: "Emotes",
-                        Display: "Graphics"
-                      }[shortcut.label]}
+                      {shortcut.label}
                     </span>
                   </button>
                 );
@@ -370,7 +367,7 @@ export function CommandLibrary() {
                       type="button"
                       aria-pressed={category === option}
                       className={`${styles.filterChip}${category === option ? ` ${styles.filterChipActive}` : ""}`}
-                      onClick={() => setCategory(option)}
+                      onClick={() => applyCategory(option)}
                     >
                       {option}
                     </button>

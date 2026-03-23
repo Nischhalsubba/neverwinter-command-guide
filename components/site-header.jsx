@@ -1,19 +1,19 @@
 import Link from "next/link";
 
 const navItems = [
+  { href: "/", label: "Home" },
   { href: "/commands", label: "All Commands" },
-  { href: "/commands#browse-by-category", label: "Categories" },
-  { href: "/commands#most-used", label: "Most Used" },
-  { href: "/commands#developer-tricks", label: "Dev Tricks" },
-  { href: "/commands#directory-title", label: "Emotes" },
-  { href: "/commands#directory-title", label: "Utility" }
+  { href: "/categories", label: "Categories" },
+  { href: "/emotes", label: "Emotes" },
+  { href: "/utility", label: "Utility" },
+  { href: "/about", label: "About" }
 ];
 
 export function SiteHeader({ activePath = "" }) {
   return (
     <header className="siteHeader">
       <div className="shell siteHeaderInner">
-        <Link href="/commands" className="brand" aria-label="Neverwinter Command Guide home">
+        <Link href="/" className="brand" aria-label="Neverwinter Command Guide home">
           <span className="brandMark" aria-hidden="true">
             NW
           </span>
@@ -23,8 +23,7 @@ export function SiteHeader({ activePath = "" }) {
         <nav className="nav" aria-label="Primary">
           {navItems.map((item) => {
             const isActive =
-              item.href === activePath ||
-              (activePath.startsWith("/commands") && item.href === "/commands");
+              item.href === activePath;
 
             return (
               <Link
