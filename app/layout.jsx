@@ -1,16 +1,28 @@
-import { Space_Grotesk, Source_Sans_3 } from "next/font/google";
+import { Inter, Noto_Serif, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { siteUrl } from "@/lib/site";
 
-const headingFont = Space_Grotesk({
+const displayFont = Noto_Serif({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap"
+});
+
+const headingFont = Inter({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap"
 });
 
-const bodyFont = Source_Sans_3({
+const bodyFont = Inter({
   subsets: ["latin"],
   variable: "--font-body",
+  display: "swap"
+});
+
+const commandFont = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-command",
   display: "swap"
 });
 
@@ -39,7 +51,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${headingFont.variable} ${bodyFont.variable}`}>
+    <html
+      lang="en"
+      className={`${displayFont.variable} ${headingFont.variable} ${bodyFont.variable} ${commandFont.variable}`}
+    >
       <body>{children}</body>
     </html>
   );

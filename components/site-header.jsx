@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 const navItems = [
-  { href: "/", label: "Home" },
+  { href: "/commands", label: "Home" },
   { href: "/commands", label: "All Commands" },
-  { href: "/commands#chat-commands", label: "Chat" },
-  { href: "/commands#emotes", label: "Emotes" },
-  { href: "/commands#utility-commands", label: "Utility" },
+  { href: "/commands#directory-title", label: "Chat" },
+  { href: "/commands#directory-title", label: "Emotes" },
+  { href: "/commands#directory-title", label: "Utility" },
   { href: "/about", label: "About" }
 ];
 
@@ -13,7 +13,7 @@ export function SiteHeader({ activePath = "" }) {
   return (
     <header className="siteHeader">
       <div className="shell siteHeaderInner">
-        <Link href="/" className="brand" aria-label="Neverwinter Command Guide home">
+        <Link href="/commands" className="brand" aria-label="Neverwinter Command Guide home">
           <span className="brandMark" aria-hidden="true">
             NW
           </span>

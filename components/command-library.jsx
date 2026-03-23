@@ -85,16 +85,12 @@ function CommandCard({ command }) {
         <CopyButton syntax={command.syntax} />
       </div>
 
-      <code className={styles.syntax}>{command.syntax}</code>
+      <code className={styles.syntaxBlock}>{command.syntax}</code>
       <h3 className={styles.commandTitle}>{command.title}</h3>
       <p className={styles.commandDescription}>{command.description}</p>
-
-      {command.example ? (
-        <p className={styles.commandMeta}>
-          <strong>Example:</strong> <code>{command.example}</code>
-        </p>
-      ) : null}
-
+      <p className={styles.commandMeta}>
+        <strong>Example</strong> <code>{command.example}</code>
+      </p>
       <p className={styles.commandMeta}>
         <strong>Alias</strong> {aliasText}
       </p>
@@ -123,7 +119,6 @@ export function CommandLibrary() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
   const searchId = useId();
-
   const normalizedQuery = normalize(query);
 
   const filteredCommands = useMemo(() => {
@@ -136,22 +131,39 @@ export function CommandLibrary() {
 
   const groupedCommands = useMemo(() => groupByLetter(filteredCommands), [filteredCommands]);
   const letterKeys = useMemo(() => Object.keys(groupedCommands).sort(), [groupedCommands]);
+  const activeCategoryLabel =
+    category === "All" ? "All Commands" : `${category} Commands`;
 
-  function handleSidebarAction(link) {
-    if (link.query) {
-      setQuery(link.query);
-      setCategory("All");
-    }
-
-    if (link.category) {
-      setCategory(link.category);
-    }
-
-    const targetId = link.href.replace("#", "");
-    const element = document.getElementById(targetId);
+  function scrollTo(id) {
+    const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+  }
+
+  function applyCategory(nextCategory) {
+    setCategory(nextCategory);
+    scrollTo("directory-title");
+  }
+
+  function applySearch(nextQuery) {
+    setQuery(nextQuery);
+    setCategory("All");
+    scrollTo("directory-title");
+  }
+
+  function handleSidebarAction(link) {
+    if (link.query) {
+      applySearch(link.query);
+      return;
+    }
+
+    if (link.category) {
+      applyCategory(link.category);
+      return;
+    }
+
+    scrollTo(link.href.replace("#", ""));
   }
 
   return (
@@ -162,13 +174,14 @@ export function CommandLibrary() {
 
       <main id="main-content" className={`shell ${styles.pageShell}`}>
         <aside className={styles.sidebar} aria-label="Section links">
-          <div className={`cardSurface ${styles.sidebarCard}`}>
-            <p className={styles.sidebarHeading}>On this page</p>
+          <div className={styles.sidebarCard}>
+            <p className={styles.sidebarLabel}>Reference map</p>
             <nav className={styles.sidebarNav}>
               {sidebarLinks.map((link) => (
                 <button
                   key={link.id}
                   type="button"
+                  className={styles.sidebarButton}
                   onClick={() => handleSidebarAction(link)}
                 >
                   {link.label}
@@ -183,7 +196,7 @@ export function CommandLibrary() {
         </aside>
 
         <div className={styles.mainColumn}>
-          <section id="start-here" className={`${styles.hero} cardSurface`}>
+          <section id="start-here" className={styles.heroPanel}>
             <div className={styles.heroCopy}>
               <span className="eyebrow">Player Command Guide</span>
               <h1 className="displayTitle">Search All Neverwinter Commands</h1>
@@ -191,33 +204,39 @@ export function CommandLibrary() {
                 Find chat, whisper, guild, alliance, emote, and utility commands in one
                 clean searchable guide.
               </p>
+            </div>
 
-              <form id="command-search" className={styles.searchForm} role="search">
-                <label htmlFor={searchId} className="srOnly">
-                  Search commands, aliases, or categories
-                </label>
-                <input
-                  id={searchId}
-                  type="search"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Search /all, /tell, /r, /combatlog, /screenshot"
-                  autoComplete="off"
-                />
-                <button type="button" onClick={() => document.getElementById(searchId)?.focus()}>
-                  Search
-                </button>
-              </form>
+            <form
+              id="command-search"
+              className={styles.searchForm}
+              role="search"
+              onSubmit={(event) => {
+                event.preventDefault();
+                scrollTo("directory-title");
+              }}
+            >
+              <label htmlFor={searchId} className="srOnly">
+                Search commands, aliases, or categories
+              </label>
+              <input
+                id={searchId}
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search /all, /tell, /r, /combatlog, /screenshot"
+                autoComplete="off"
+              />
+              <button type="submit">Search</button>
+            </form>
 
-              <div className={styles.searchStats} aria-live="polite">
-                <span>{filteredCommands.length} matching commands</span>
-                <span>Search commands, aliases, examples, and categories</span>
-              </div>
+            <div className={styles.heroMeta} aria-live="polite">
+              <span>{filteredCommands.length} matching commands</span>
+              <span>{activeCategoryLabel}</span>
             </div>
           </section>
 
-          <section className={styles.categorySection} aria-labelledby="browse-by-category">
-            <div className={styles.sectionHeader}>
+          <section className={styles.sectionBlock} aria-labelledby="browse-by-category">
+            <div className={styles.sectionHeading}>
               <h2 id="browse-by-category" className="sectionTitle">
                 Browse by Category
               </h2>
@@ -234,27 +253,20 @@ export function CommandLibrary() {
                   <button
                     key={shortcut.id}
                     type="button"
-                    className={`${styles.categoryPill}${isActive ? ` ${styles.categoryPillActive}` : ""}`}
-                    onClick={() => setCategory(shortcut.label)}
+                    aria-pressed={isActive}
+                    className={`${styles.categoryButton}${isActive ? ` ${styles.categoryButtonActive}` : ""}`}
+                    onClick={() => applyCategory(shortcut.label)}
                   >
                     <span>{shortcut.label}</span>
                     <small>{shortcut.blurb}</small>
                   </button>
                 );
               })}
-              <button
-                type="button"
-                className={`${styles.categoryPill}${category === "All" ? ` ${styles.categoryPillActive}` : ""}`}
-                onClick={() => setCategory("All")}
-              >
-                <span>All</span>
-                <small>Reset the filter and browse the full reference.</small>
-              </button>
             </div>
           </section>
 
-          <section id="most-used" className={styles.contentSection} aria-labelledby="most-used-title">
-            <div className={styles.sectionHeader}>
+          <section id="most-used" className={styles.sectionBlock} aria-labelledby="most-used-title">
+            <div className={styles.sectionHeading}>
               <h2 id="most-used-title" className="sectionTitle">
                 Most Used Commands
               </h2>
@@ -270,8 +282,8 @@ export function CommandLibrary() {
             </div>
           </section>
 
-          <section className={styles.directorySection} aria-labelledby="directory-title">
-            <div className={styles.sectionHeader}>
+          <section className={styles.sectionBlock} aria-labelledby="directory-title">
+            <div className={styles.sectionHeading}>
               <h2 id="directory-title" className="sectionTitle">
                 Browse Commands A-Z
               </h2>
@@ -286,6 +298,7 @@ export function CommandLibrary() {
                 <button
                   key={option}
                   type="button"
+                  aria-pressed={category === option}
                   className={`${styles.filterChip}${category === option ? ` ${styles.filterChipActive}` : ""}`}
                   onClick={() => setCategory(option)}
                 >
@@ -319,7 +332,7 @@ export function CommandLibrary() {
                 ))}
               </div>
             ) : (
-              <div className={`cardSurface ${styles.emptyState}`}>
+              <div className={styles.emptyState}>
                 <h3>No commands found</h3>
                 <p>
                   Try a shorter keyword, search an alias, or browse a category instead.
@@ -328,29 +341,33 @@ export function CommandLibrary() {
                   You can search by command name, alias, or category.
                 </p>
                 <div className={styles.emptyActions}>
-                  {["Chat", "Utility", "Emotes", "Most Used Commands"].map((item) =>
-                    item === "Most Used Commands" ? (
-                      <a key={item} href="#most-used">
-                        {item}
-                      </a>
-                    ) : (
-                      <button
-                        key={item}
-                        type="button"
-                        onClick={() => setCategory(item)}
-                      >
-                        {item}
-                      </button>
-                    )
-                  )}
+                  <button type="button" onClick={() => applyCategory("Chat")}>
+                    Chat Commands
+                  </button>
+                  <button type="button" onClick={() => applyCategory("Utility")}>
+                    Utility Commands
+                  </button>
+                  <button type="button" onClick={() => applyCategory("Emotes")}>
+                    Emotes
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setQuery("");
+                      setCategory("All");
+                      scrollTo("most-used");
+                    }}
+                  >
+                    Most Used Commands
+                  </button>
                 </div>
               </div>
             )}
           </section>
 
           <section className={styles.helpStrip} aria-labelledby="quick-help-title">
-            <div>
-              <h2 id="quick-help-title" className={styles.helpStripTitle}>
+            <div className={styles.sectionHeadingCompact}>
+              <h2 id="quick-help-title" className="sectionTitle">
                 Need a starting point?
               </h2>
             </div>
@@ -360,11 +377,16 @@ export function CommandLibrary() {
                   key={link.label}
                   type="button"
                   className={styles.helpLink}
-                  onClick={() => handleSidebarAction({
-                    href: "#directory-title",
-                    category: link.category,
-                    query: link.query
-                  })}
+                  onClick={() => {
+                    if (link.query) {
+                      applySearch(link.query);
+                      return;
+                    }
+
+                    if (link.category) {
+                      applyCategory(link.category);
+                    }
+                  }}
                 >
                   {link.label}
                 </button>
@@ -372,15 +394,11 @@ export function CommandLibrary() {
             </div>
           </section>
 
-          <section className={styles.faqSection} aria-labelledby="faq-title">
-            <div className={styles.sectionHeader}>
+          <section className={styles.sectionBlock} aria-labelledby="faq-title">
+            <div className={styles.sectionHeading}>
               <h2 id="faq-title" className="sectionTitle">
                 Frequently Asked Questions
               </h2>
-              <p className="sectionIntro">
-                Short answers for the most common questions about this fan-made command
-                reference.
-              </p>
             </div>
 
             <div className={styles.faqList}>
@@ -391,7 +409,7 @@ export function CommandLibrary() {
           </section>
 
           <footer className="pageFooter">
-            <div className="footerGrid">
+            <div className={styles.footerPanel}>
               <div>
                 <h2 className={styles.footerTitle}>Neverwinter Command Guide</h2>
                 <p className="muted">
@@ -402,9 +420,15 @@ export function CommandLibrary() {
 
               <nav className={styles.footerLinks} aria-label="Footer">
                 <Link href="/commands">All Commands</Link>
-                <a href="#chat-commands">Chat</a>
-                <a href="#emotes">Emotes</a>
-                <a href="#utility-commands">Utility</a>
+                <button type="button" onClick={() => applyCategory("Chat")}>
+                  Chat
+                </button>
+                <button type="button" onClick={() => applyCategory("Emotes")}>
+                  Emotes
+                </button>
+                <button type="button" onClick={() => applyCategory("Utility")}>
+                  Utility
+                </button>
                 <Link href="/about">About</Link>
                 <a href="https://github.com" target="_blank" rel="noreferrer">
                   GitHub
@@ -414,7 +438,8 @@ export function CommandLibrary() {
               <p className="muted">Built for fast command lookup by Neverwinter players.</p>
               <p className="muted">
                 Neverwinter Command Guide is a fan-made project and is not affiliated
-                with the official Neverwinter game or its publishers.
+                with Cryptic Studios, Gearbox Publishing, Wizards of the Coast, or the
+                official Neverwinter website.
               </p>
             </div>
           </footer>
