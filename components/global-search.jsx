@@ -200,7 +200,13 @@ export function GlobalSearch() {
   return (
     <>
       <button type="button" className="quickSearchLink" onClick={() => setOpen(true)}>
-        Quick search...
+        <span className="quickSearchIcon" aria-hidden="true">
+          <IconSearch />
+        </span>
+        <span className="quickSearchText">Search</span>
+        <span className="quickSearchShortcut" aria-hidden="true">
+          Ctrl K
+        </span>
       </button>
 
       {open ? (

@@ -43,11 +43,46 @@
   overflow: hidden;
 }
 
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(180deg, transparent 0 23px, rgba(125, 211, 252, 0.08) 23px 24px);
+  opacity: 0.32;
+  pointer-events: none;
+}
+
 .card::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(125, 211, 252, 0.14), transparent 32%);
+  background:
+    radial-gradient(circle, rgba(125, 211, 252, 0.32) 0 2px, transparent 3px),
+    linear-gradient(90deg, rgba(125, 211, 252, 0), rgba(125, 211, 252, 0.16), rgba(125, 211, 252, 0)),
+    radial-gradient(circle, rgba(244, 213, 141, 0.22) 0 2px, transparent 3px),
+    linear-gradient(90deg, rgba(244, 213, 141, 0), rgba(244, 213, 141, 0.12), rgba(244, 213, 141, 0)),
+    radial-gradient(circle, rgba(125, 211, 252, 0.28) 0 2px, transparent 3px),
+    linear-gradient(90deg, rgba(125, 211, 252, 0), rgba(125, 211, 252, 0.14), rgba(125, 211, 252, 0));
+  background-repeat: no-repeat;
+  background-size:
+    6px 6px,
+    58px 2px,
+    6px 6px,
+    52px 2px,
+    6px 6px,
+    48px 2px;
+  background-position:
+    0 18%,
+    -90px 18%,
+    100% 52%,
+    calc(100% + 90px) 52%,
+    0 80%,
+    -84px 80%;
+  opacity: 0.34;
+  animation:
+    driftParticleA 12s linear infinite,
+    driftParticleB 14s linear infinite;
   pointer-events: none;
 }
 
