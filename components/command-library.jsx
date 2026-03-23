@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useId, useMemo, useState } from "react";
+import { CopyCommandButton } from "@/components/copy-command-button";
 import {
   categoryShortcuts,
   commands,
@@ -137,27 +138,6 @@ function groupByLetter(items) {
   }, {});
 }
 
-function CopyButton({ syntax }) {
-  const [copied, setCopied] = useState(false);
-
-  async function handleCopy() {
-    try {
-      await navigator.clipboard.writeText(syntax);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1600);
-    } catch {
-      setCopied(false);
-    }
-  }
-
-  return (
-    <button type="button" className={styles.copyButton} onClick={handleCopy}>
-      {copied ? "Copied" : "Copy"}
-      <span className="srOnly"> command syntax {syntax}</span>
-    </button>
-  );
-}
-
 function CommandCard({ command, compact = false }) {
   const aliasText = command.aliases?.length ? command.aliases.join(", ") : "No alias";
 
@@ -166,7 +146,7 @@ function CommandCard({ command, compact = false }) {
       <div className={styles.cardGlowTop} aria-hidden="true" />
       <div className={styles.commandTopline}>
         <span className={styles.categoryBadge}>{command.category}</span>
-        <CopyButton syntax={command.syntax} />
+        <CopyCommandButton value={command.syntax} className={styles.copyButton} />
       </div>
 
       <code className={styles.syntaxBlock}>{command.syntax}</code>
@@ -280,8 +260,9 @@ export function CommandLibrary() {
             <span className="eyebrow">Player Command Guide</span>
             <h1 className="displayTitle">Search All Neverwinter Commands</h1>
             <p className={styles.heroText}>
-              Find chat, whisper, guild, alliance, emote, display, and utility commands in one
-              searchable Neverwinter reference built for quick lookup and cleaner syntax.
+              Find the right Neverwinter command even if you only remember part of it. Search by
+              what you want to do, such as whispering a player, talking in alliance chat, taking a
+              screenshot, or fixing a stuck character.
             </p>
 
             <form
@@ -335,6 +316,36 @@ export function CommandLibrary() {
             </section>
           </section>
 
+          <section className={styles.starterSection} aria-labelledby="starter-title">
+            <div className={styles.directoryHeader}>
+              <h2 id="starter-title" className={styles.letterTitle}>
+                Start Here
+              </h2>
+              <span className={styles.directoryLine} aria-hidden="true" />
+            </div>
+            <p className={styles.sectionLead}>
+              If you do not know command names yet, start with the action you want to perform.
+              These shortcuts are written for players, not developers.
+            </p>
+            <div className={styles.starterGrid}>
+              <button type="button" className={styles.starterCard} onClick={() => applySearch("/tell")}>
+                <span className={styles.starterLabel}>Talk to one player</span>
+                <strong>Whispers and replies</strong>
+                <p>Use this when you want to privately message another player or reply to the last whisper.</p>
+              </button>
+              <button type="button" className={styles.starterCard} onClick={() => applyCategory("Chat")}>
+                <span className={styles.starterLabel}>Talk to a group</span>
+                <strong>Alliance, zone, and local chat</strong>
+                <p>Browse the commands used for public channels, coordination, and normal conversation.</p>
+              </button>
+              <button type="button" className={styles.starterCard} onClick={() => applyCategory("Utility")}>
+                <span className={styles.starterLabel}>Fix or test your client</span>
+                <strong>Utility and display tools</strong>
+                <p>Find commands for screenshots, combat logs, framerate checks, and stuck recovery.</p>
+              </button>
+            </div>
+          </section>
+
           <section id="most-used" className={styles.commonSection} aria-labelledby="most-used-title">
             <div className={styles.directoryHeader}>
               <h2 id="most-used-title" className={styles.letterTitle}>
@@ -361,9 +372,9 @@ export function CommandLibrary() {
               <span className={styles.directoryLine} aria-hidden="true" />
             </div>
             <p className={styles.sectionLead}>
-              Browse the full command library by category, search term, alias, or letter. This
-              section is designed for complete command discovery when you need more than the common
-              shortcuts.
+              Browse the full command library by category, search term, alias, or letter. Every
+              card explains the command in plain language so you do not need technical knowledge to
+              understand what it does.
             </p>
 
             <div className={styles.lowerPanels}>

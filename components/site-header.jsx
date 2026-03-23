@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { GlobalSearch } from "@/components/global-search";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -37,9 +38,7 @@ export function SiteHeader({ activePath = "" }) {
           })}
         </nav>
 
-        <Link href="/commands#command-search" className="quickSearchLink">
-          Quick search...
-        </Link>
+        <GlobalSearch />
       </div>
     </header>
   );

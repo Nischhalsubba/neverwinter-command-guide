@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { CopyCommandButton } from "@/components/copy-command-button";
 import { SiteHeader } from "@/components/site-header";
 import { getAllCommands, getCommandBySlug, getCommandUrl } from "@/lib/commands-data";
 import { siteUrl } from "@/lib/site";
@@ -56,7 +57,10 @@ export default function CommandDetailPage({ params }) {
           <span className="eyebrow">{command.category}</span>
           <h1 className="sectionTitle">{command.title}</h1>
           <p className={styles.description}>{command.description}</p>
-          <code className={styles.syntax}>{command.syntax}</code>
+          <div className={styles.syntaxRow}>
+            <code className={styles.syntax}>{command.syntax}</code>
+            <CopyCommandButton value={command.syntax} className={styles.copyButton} />
+          </div>
         </section>
 
         <section className={styles.detailGrid}>

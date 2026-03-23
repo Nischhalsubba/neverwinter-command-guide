@@ -214,6 +214,48 @@
   margin-top: 22px;
 }
 
+.starterSection {
+  margin-top: 26px;
+}
+
+.starterGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.starterCard {
+  display: grid;
+  gap: 10px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  color: var(--text);
+  background: linear-gradient(180deg, rgba(16, 30, 52, 0.88), rgba(9, 19, 33, 0.88));
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+
+.starterCard strong {
+  font-family: var(--font-display), serif;
+  font-size: 1.3rem;
+}
+
+.starterCard p {
+  margin: 0;
+  color: var(--muted-strong);
+  line-height: 1.6;
+}
+
+.starterLabel {
+  color: var(--accent);
+  font-family: var(--font-command), sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .commandCard {
   padding: 22px;
   border: 1px solid var(--line);
@@ -580,6 +622,7 @@
 
   .searchForm,
   .featuredGrid,
+  .starterGrid,
   .azGrid,
   .lowerPanels,
   .categoryRow {

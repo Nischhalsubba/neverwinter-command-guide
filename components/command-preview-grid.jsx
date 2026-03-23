@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CopyCommandButton } from "@/components/copy-command-button";
 import { getCommandUrl } from "@/lib/commands-data";
 import styles from "./command-preview-grid.module.css";
 
@@ -17,9 +18,12 @@ export function CommandPreviewGrid({ commands, title, intro }) {
           <article key={command.id} className={styles.card}>
             <div className={styles.topline}>
               <span className={styles.badge}>{command.category}</span>
-              <Link href={getCommandUrl(command)} className={styles.detailLink}>
-                Details
-              </Link>
+              <div className={styles.actions}>
+                <CopyCommandButton value={command.syntax} className={styles.copyButton} />
+                <Link href={getCommandUrl(command)} className={styles.detailLink}>
+                  Details
+                </Link>
+              </div>
             </div>
             <code className={styles.syntax}>{command.syntax}</code>
             <h3 className={styles.cardTitle}>

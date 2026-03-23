@@ -46,6 +46,12 @@
   align-items: center;
 }
 
+.actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -66,6 +72,16 @@
   font-family: var(--font-command), sans-serif;
   font-size: 0.78rem;
   text-transform: uppercase;
+}
+
+.copyButton {
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid rgba(125, 211, 252, 0.18);
+  border-radius: 999px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 0.78rem;
 }
 
 .syntax {
