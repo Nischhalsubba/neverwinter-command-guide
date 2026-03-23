@@ -1,10 +1,11 @@
-import { Inter, Noto_Serif, Space_Grotesk } from "next/font/google";
+import { Cormorant_Garamond, Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { siteUrl } from "@/lib/site";
 
-const displayFont = Noto_Serif({
+const displayFont = Cormorant_Garamond({
   subsets: ["latin"],
   variable: "--font-display",
+  weight: ["400", "500", "600", "700"],
   display: "swap"
 });
 

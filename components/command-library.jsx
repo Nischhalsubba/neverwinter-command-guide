@@ -22,6 +22,15 @@ const filterOptions = [
   "Display"
 ];
 
+const categoryIcons = {
+  Chat: "C",
+  Private: "P",
+  "Party / Guild": "G",
+  Utility: "U",
+  Emotes: "E",
+  Display: "D"
+};
+
 function normalize(value) {
   return value.toLowerCase().trim();
 }
@@ -75,11 +84,12 @@ function CopyButton({ syntax }) {
   );
 }
 
-function CommandCard({ command }) {
+function CommandCard({ command, compact = false }) {
   const aliasText = command.aliases?.length ? command.aliases.join(", ") : "No alias";
 
   return (
-    <article className={styles.commandCard}>
+    <article className={`${styles.commandCard}${compact ? ` ${styles.commandCardCompact}` : ""}`}>
+      <div className={styles.cardGlowTop} aria-hidden="true" />
       <div className={styles.commandTopline}>
         <span className={styles.categoryBadge}>{command.category}</span>
         <CopyButton syntax={command.syntax} />
@@ -89,10 +99,10 @@ function CommandCard({ command }) {
       <h3 className={styles.commandTitle}>{command.title}</h3>
       <p className={styles.commandDescription}>{command.description}</p>
       <p className={styles.commandMeta}>
-        <strong>Example</strong> <code>{command.example}</code>
+        <strong>Example:</strong> <code>{command.example}</code>
       </p>
       <p className={styles.commandMeta}>
-        <strong>Alias</strong> {aliasText}
+        <strong>Alias:</strong> {aliasText}
       </p>
 
       {command.note && command.noteText ? (
@@ -131,8 +141,6 @@ export function CommandLibrary() {
 
   const groupedCommands = useMemo(() => groupByLetter(filteredCommands), [filteredCommands]);
   const letterKeys = useMemo(() => Object.keys(groupedCommands).sort(), [groupedCommands]);
-  const activeCategoryLabel =
-    category === "All" ? "All Commands" : `${category} Commands`;
 
   function scrollTo(id) {
     const element = document.getElementById(id);
@@ -174,37 +182,29 @@ export function CommandLibrary() {
 
       <main id="main-content" className={`shell ${styles.pageShell}`}>
         <aside className={styles.sidebar} aria-label="Section links">
-          <div className={styles.sidebarCard}>
-            <p className={styles.sidebarLabel}>Reference map</p>
-            <nav className={styles.sidebarNav}>
-              {sidebarLinks.map((link) => (
-                <button
-                  key={link.id}
-                  type="button"
-                  className={styles.sidebarButton}
-                  onClick={() => handleSidebarAction(link)}
-                >
-                  {link.label}
-                </button>
-              ))}
-            </nav>
-            <p className={styles.sidebarHelper}>
-              Browse the most useful commands first, then explore the full reference by
-              category or alphabet.
-            </p>
+          <div className={styles.sidebarRail}>
+            {sidebarLinks.slice(0, 2).map((link, index) => (
+              <button
+                key={link.id}
+                type="button"
+                className={`${styles.sidebarButton}${index === 0 ? ` ${styles.sidebarButtonActive}` : ""}`}
+                onClick={() => handleSidebarAction(link)}
+              >
+                <span className={styles.sidebarIcon}>{index === 0 ? "i" : "*"}</span>
+                <span>{link.label === "Start Here" ? "Getting Started" : "Top Commands"}</span>
+              </button>
+            ))}
           </div>
         </aside>
 
         <div className={styles.mainColumn}>
           <section id="start-here" className={styles.heroPanel}>
-            <div className={styles.heroCopy}>
-              <span className="eyebrow">Player Command Guide</span>
-              <h1 className="displayTitle">Search All Neverwinter Commands</h1>
-              <p className="sectionIntro">
-                Find chat, whisper, guild, alliance, emote, and utility commands in one
-                clean searchable guide.
-              </p>
-            </div>
+            <span className="eyebrow">Obsidian Hud</span>
+            <h1 className="displayTitle">Accessible Command Documentation</h1>
+            <p className={styles.heroText}>
+              A user-friendly guide to Neverwinter commands and UI shortcuts, designed
+              for clarity.
+            </p>
 
             <form
               id="command-search"
@@ -218,189 +218,155 @@ export function CommandLibrary() {
               <label htmlFor={searchId} className="srOnly">
                 Search commands, aliases, or categories
               </label>
-              <input
-                id={searchId}
-                type="search"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search /all, /tell, /r, /combatlog, /screenshot"
-                autoComplete="off"
-              />
+              <div className={styles.searchInputWrap}>
+                <span className={styles.searchIcon} aria-hidden="true">
+                  Q
+                </span>
+                <input
+                  id={searchId}
+                  type="search"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Search for a command, action, or category..."
+                  autoComplete="off"
+                />
+              </div>
               <button type="submit">Search</button>
             </form>
 
-            <div className={styles.heroMeta} aria-live="polite">
-              <span>{filteredCommands.length} matching commands</span>
-              <span>{activeCategoryLabel}</span>
-            </div>
-          </section>
-
-          <section className={styles.sectionBlock} aria-labelledby="browse-by-category">
-            <div className={styles.sectionHeading}>
-              <h2 id="browse-by-category" className="sectionTitle">
-                Browse by Category
-              </h2>
-              <p className="sectionIntro">
-                Browse the command groups players use most often during normal play.
-              </p>
-            </div>
-
-            <div className={styles.categoryGrid}>
-              {categoryShortcuts.map((shortcut) => {
-                const isActive = category === shortcut.label;
-
-                return (
-                  <button
-                    key={shortcut.id}
-                    type="button"
-                    aria-pressed={isActive}
-                    className={`${styles.categoryButton}${isActive ? ` ${styles.categoryButtonActive}` : ""}`}
-                    onClick={() => applyCategory(shortcut.label)}
-                  >
-                    <span>{shortcut.label}</span>
-                    <small>{shortcut.blurb}</small>
-                  </button>
-                );
-              })}
-            </div>
-          </section>
-
-          <section id="most-used" className={styles.sectionBlock} aria-labelledby="most-used-title">
-            <div className={styles.sectionHeading}>
-              <h2 id="most-used-title" className="sectionTitle">
-                Most Used Commands
-              </h2>
-              <p className="sectionIntro">
-                Start with the commands players use most often during normal play.
-              </p>
-            </div>
-
-            <div className={styles.cardGrid}>
-              {featuredCommands.map((command) => (
-                <CommandCard key={command.id} command={command} />
-              ))}
-            </div>
-          </section>
-
-          <section className={styles.sectionBlock} aria-labelledby="directory-title">
-            <div className={styles.sectionHeading}>
-              <h2 id="directory-title" className="sectionTitle">
-                Browse Commands A-Z
-              </h2>
-              <p className="sectionIntro">
-                Use search for the fastest lookup, or browse commands alphabetically if
-                you want to explore the full reference.
-              </p>
-            </div>
-
-            <div className={styles.filterRow} role="toolbar" aria-label="Command filters">
-              {filterOptions.map((option) => (
+            <section id="browse-by-category" className={styles.categoryRow} aria-label="Category shortcuts">
+              {categoryShortcuts.map((shortcut, index) => (
                 <button
-                  key={option}
+                  key={shortcut.id}
                   type="button"
-                  aria-pressed={category === option}
-                  className={`${styles.filterChip}${category === option ? ` ${styles.filterChipActive}` : ""}`}
-                  onClick={() => setCategory(option)}
+                  className={styles.categoryOrbButton}
+                  onClick={() => applyCategory(shortcut.label)}
                 >
-                  {option}
+                  <span className={`${styles.categoryOrb}${index === 0 ? ` ${styles.categoryOrbActive}` : ""}`}>
+                    {categoryIcons[shortcut.label]}
+                  </span>
+                  <span className={styles.categoryLabel}>
+                    {{
+                      Chat: "Combat",
+                      Private: "Movement",
+                      "Party / Guild": "Social",
+                      Utility: "Utility",
+                      Emotes: "Emotes",
+                      Display: "Graphics"
+                    }[shortcut.label]}
+                  </span>
                 </button>
               ))}
+            </section>
+          </section>
+
+          <section id="most-used" className={styles.featuredGrid}>
+            {featuredCommands.slice(0, 2).map((command) => (
+              <CommandCard key={command.id} command={command} />
+            ))}
+          </section>
+
+          <section className={styles.directorySection} aria-labelledby="directory-title">
+            <div className={styles.directoryHeader}>
+              <h2 id="directory-title" className={styles.letterTitle}>
+                E
+              </h2>
+              <span className={styles.directoryLine} aria-hidden="true" />
             </div>
 
-            {filteredCommands.length ? (
-              <div className={styles.letterSections}>
-                {letterKeys.map((letter) => (
-                  <section
-                    key={letter}
-                    className={styles.letterGroup}
-                    aria-labelledby={`letter-${letter}`}
+            <div className={styles.azGrid}>
+              {letterKeys
+                .filter((letter) => letter === "E")
+                .flatMap((letter) => groupedCommands[letter])
+                .slice(0, 1)
+                .map((command) => (
+                  <CommandCard key={command.id} command={command} compact />
+                ))}
+            </div>
+          </section>
+
+          <section className={styles.lowerPanels}>
+            <div className={styles.filterPanel}>
+              <h2 className={styles.lowerTitle}>Browse by Category</h2>
+              <div className={styles.filterRow} role="toolbar" aria-label="Command filters">
+                {filterOptions.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    aria-pressed={category === option}
+                    className={`${styles.filterChip}${category === option ? ` ${styles.filterChipActive}` : ""}`}
+                    onClick={() => setCategory(option)}
                   >
-                    <div className={styles.letterHeader}>
-                      <h3 id={`letter-${letter}`}>{letter}</h3>
-                      {letter === "E" ? (
-                        <p className={styles.letterHint}>
-                          Emotes and commands starting with E.
-                        </p>
-                      ) : null}
-                    </div>
-                    <div className={styles.cardGrid}>
-                      {groupedCommands[letter].map((command) => (
-                        <CommandCard key={command.id} command={command} />
-                      ))}
-                    </div>
-                  </section>
+                    {option}
+                  </button>
                 ))}
               </div>
-            ) : (
-              <div className={styles.emptyState}>
-                <h3>No commands found</h3>
-                <p>
-                  Try a shorter keyword, search an alias, or browse a category instead.
-                </p>
-                <p className={styles.emptyStateHint}>
-                  You can search by command name, alias, or category.
-                </p>
-                <div className={styles.emptyActions}>
-                  <button type="button" onClick={() => applyCategory("Chat")}>
-                    Chat Commands
-                  </button>
-                  <button type="button" onClick={() => applyCategory("Utility")}>
-                    Utility Commands
-                  </button>
-                  <button type="button" onClick={() => applyCategory("Emotes")}>
-                    Emotes
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setQuery("");
-                      setCategory("All");
-                      scrollTo("most-used");
-                    }}
-                  >
-                    Most Used Commands
-                  </button>
+              <p className={styles.panelText}>
+                Primary focus: make the player notice and understand the command quickly.
+              </p>
+            </div>
+
+            <div className={styles.filterPanel}>
+              <h2 className={styles.lowerTitle}>Search Results</h2>
+              {filteredCommands.length ? (
+                <div className={styles.resultList}>
+                  {filteredCommands.slice(0, 4).map((command) => (
+                    <button
+                      key={command.id}
+                      type="button"
+                      className={styles.resultItem}
+                      onClick={() => applySearch(command.syntax)}
+                    >
+                      <span>{command.syntax}</span>
+                      <small>{command.title}</small>
+                    </button>
+                  ))}
                 </div>
-              </div>
-            )}
-          </section>
-
-          <section className={styles.helpStrip} aria-labelledby="quick-help-title">
-            <div className={styles.sectionHeadingCompact}>
-              <h2 id="quick-help-title" className="sectionTitle">
-                Need a starting point?
-              </h2>
-            </div>
-            <div className={styles.helpLinks}>
-              {quickHelpLinks.map((link) => (
-                <button
-                  key={link.label}
-                  type="button"
-                  className={styles.helpLink}
-                  onClick={() => {
-                    if (link.query) {
-                      applySearch(link.query);
-                      return;
-                    }
-
-                    if (link.category) {
-                      applyCategory(link.category);
-                    }
-                  }}
-                >
-                  {link.label}
-                </button>
-              ))}
+              ) : (
+                <div className={styles.emptyInline}>
+                  <p>No commands found.</p>
+                  <div className={styles.emptyActions}>
+                    <button type="button" onClick={() => applyCategory("Chat")}>
+                      Chat Commands
+                    </button>
+                    <button type="button" onClick={() => applyCategory("Utility")}>
+                      Utility Commands
+                    </button>
+                    <button type="button" onClick={() => applyCategory("Emotes")}>
+                      Emotes
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </section>
 
-          <section className={styles.sectionBlock} aria-labelledby="faq-title">
-            <div className={styles.sectionHeading}>
-              <h2 id="faq-title" className="sectionTitle">
-                Frequently Asked Questions
-              </h2>
-            </div>
+          <section className={styles.helpStrip}>
+            {quickHelpLinks.map((link) => (
+              <button
+                key={link.label}
+                type="button"
+                className={styles.helpLink}
+                onClick={() => {
+                  if (link.query) {
+                    applySearch(link.query);
+                    return;
+                  }
 
+                  if (link.category) {
+                    applyCategory(link.category);
+                  }
+                }}
+              >
+                {link.label}
+              </button>
+            ))}
+          </section>
+
+          <section className={styles.faqSection} aria-labelledby="faq-title">
+            <h2 id="faq-title" className={styles.lowerTitle}>
+              Frequently Asked Questions
+            </h2>
             <div className={styles.faqList}>
               {faqItems.map((item, index) => (
                 <FaqItem key={item.question} item={item} index={index} />
@@ -408,40 +374,24 @@ export function CommandLibrary() {
             </div>
           </section>
 
-          <footer className="pageFooter">
-            <div className={styles.footerPanel}>
-              <div>
-                <h2 className={styles.footerTitle}>Neverwinter Command Guide</h2>
-                <p className="muted">
-                  A cleaner fan-made reference for Neverwinter chat commands, emotes,
-                  utility commands, and searchable command help.
-                </p>
-              </div>
-
-              <nav className={styles.footerLinks} aria-label="Footer">
-                <Link href="/commands">All Commands</Link>
-                <button type="button" onClick={() => applyCategory("Chat")}>
-                  Chat
-                </button>
-                <button type="button" onClick={() => applyCategory("Emotes")}>
-                  Emotes
-                </button>
-                <button type="button" onClick={() => applyCategory("Utility")}>
-                  Utility
-                </button>
-                <Link href="/about">About</Link>
-                <a href="https://github.com" target="_blank" rel="noreferrer">
-                  GitHub
-                </a>
-              </nav>
-
-              <p className="muted">Built for fast command lookup by Neverwinter players.</p>
-              <p className="muted">
-                Neverwinter Command Guide is a fan-made project and is not affiliated
-                with Cryptic Studios, Gearbox Publishing, Wizards of the Coast, or the
-                official Neverwinter website.
+          <footer className={styles.footerPanel}>
+            <div className={styles.footerLeft}>
+              <p className={styles.footerBrand}>
+                Neverwinter Command Guide - A Fan Mods Resource
+              </p>
+              <p className={styles.footerMeta}>
+                Fan educational reference only. Trademarks belong to their owners.
               </p>
             </div>
+
+            <nav className={styles.footerLinks} aria-label="Footer">
+              <a href="#">Privacy Policy</a>
+              <a href="#">Contact</a>
+              <a href="https://github.com" target="_blank" rel="noreferrer">
+                Github
+              </a>
+              <a href="#">Discord</a>
+            </nav>
           </footer>
         </div>
       </main>

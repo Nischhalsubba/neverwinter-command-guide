@@ -3,10 +3,9 @@ import Link from "next/link";
 const navItems = [
   { href: "/commands", label: "Home" },
   { href: "/commands", label: "All Commands" },
-  { href: "/commands#directory-title", label: "Chat" },
+  { href: "/commands#browse-by-category", label: "Categories" },
   { href: "/commands#directory-title", label: "Emotes" },
-  { href: "/commands#directory-title", label: "Utility" },
-  { href: "/about", label: "About" }
+  { href: "/commands#directory-title", label: "Utility" }
 ];
 
 export function SiteHeader({ activePath = "" }) {
@@ -39,7 +38,7 @@ export function SiteHeader({ activePath = "" }) {
         </nav>
 
         <Link href="/commands#command-search" className="quickSearchLink">
-          Quick search...
+          Search grimoire...
         </Link>
       </div>
     </header>
