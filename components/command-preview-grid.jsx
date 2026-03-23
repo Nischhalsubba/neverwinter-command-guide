@@ -5,7 +5,7 @@ import styles from "./command-preview-grid.module.css";
 
 export function CommandPreviewGrid({ commands, title, intro }) {
   return (
-    <section className={styles.section}>
+    <section className={styles.section} data-reveal>
       <div className={styles.header}>
         <div>
           <h2 className={styles.title}>{title}</h2>
@@ -15,7 +15,7 @@ export function CommandPreviewGrid({ commands, title, intro }) {
 
       <div className={styles.grid}>
         {commands.map((command) => (
-          <article key={command.id} className={styles.card}>
+          <article key={command.id} className={styles.card} data-reveal data-tilt>
             <div className={styles.topline}>
               <span className={styles.badge}>{command.category}</span>
               <div className={styles.actions}>

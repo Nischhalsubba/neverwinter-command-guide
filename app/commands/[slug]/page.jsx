@@ -53,7 +53,7 @@ export default function CommandDetailPage({ params }) {
     <>
       <SiteHeader activePath="/commands" />
       <main className={`shell ${styles.page}`}>
-        <section className={styles.hero}>
+        <section className={styles.hero} data-reveal data-tilt>
           <span className="eyebrow">{command.category}</span>
           <h1 className="sectionTitle">{command.title}</h1>
           <p className={styles.description}>{command.description}</p>
@@ -64,14 +64,14 @@ export default function CommandDetailPage({ params }) {
         </section>
 
         <section className={styles.detailGrid}>
-          <article className={styles.panel}>
+          <article className={styles.panel} data-reveal data-tilt>
             <h2>What this command does</h2>
             <p>
               {command.title} is a Neverwinter slash command used to {command.description.charAt(0).toLowerCase() + command.description.slice(1)}
             </p>
             {command.noteText ? <p>{command.noteText}</p> : null}
           </article>
-          <article className={styles.panel}>
+          <article className={styles.panel} data-reveal data-tilt>
             <h2>Example usage</h2>
             <code>{command.example}</code>
             <p>
@@ -79,7 +79,7 @@ export default function CommandDetailPage({ params }) {
               target, message, value, or preferred setting before running the command in game.
             </p>
           </article>
-          <article className={styles.panel}>
+          <article className={styles.panel} data-reveal data-tilt>
             <h2>Aliases</h2>
             <p>
               {command.aliases?.length
@@ -87,7 +87,7 @@ export default function CommandDetailPage({ params }) {
                 : "No alias is currently documented for this command."}
             </p>
           </article>
-          <article className={styles.panel}>
+          <article className={styles.panel} data-reveal data-tilt>
             <h2>Command Category</h2>
             <p>
               This command is grouped under <strong>{command.category}</strong>, which helps players

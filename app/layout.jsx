@@ -1,4 +1,5 @@
 import { Space_Grotesk, Source_Sans_3 } from "next/font/google";
+import { MotionLayer } from "@/components/motion-layer";
 import "./globals.css";
 import { siteUrl } from "@/lib/site";
 
@@ -50,13 +51,22 @@ export const metadata = {
       "Search Neverwinter commands, chat shortcuts, whispers, emotes, utility commands, and copy-ready syntax.",
     type: "website",
     siteName: "Neverwinter Command Guide",
-    url: siteUrl
+    url: siteUrl,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Neverwinter Command Guide"
+      }
+    ]
   },
   twitter: {
     card: "summary_large_image",
     title: "Neverwinter Command Guide",
     description:
-      "A fan-made searchable reference for Neverwinter chat commands, emotes, utility commands, and copy-ready syntax."
+      "A fan-made searchable reference for Neverwinter chat commands, emotes, utility commands, and copy-ready syntax.",
+    images: ["/twitter-image"]
   },
   alternates: {
     canonical: siteUrl
@@ -66,7 +76,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${headingFont.variable} ${bodyFont.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <MotionLayer />
+      </body>
     </html>
   );
 }

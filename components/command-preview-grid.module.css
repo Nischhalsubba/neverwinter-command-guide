@@ -30,6 +30,7 @@
 }
 
 .card {
+  position: relative;
   display: grid;
   gap: 12px;
   padding: 22px;
@@ -37,6 +38,17 @@
   border-radius: var(--radius-lg);
   background: linear-gradient(180deg, rgba(16, 30, 52, 0.96), rgba(9, 19, 33, 0.96));
   box-shadow: var(--shadow);
+  transform-style: preserve-3d;
+  will-change: transform;
+  overflow: hidden;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(125, 211, 252, 0.14), transparent 32%);
+  pointer-events: none;
 }
 
 .topline {

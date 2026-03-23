@@ -6,13 +6,25 @@
 
 .categoryOrb svg,
 .searchIcon svg {
-  width: 18px;
-  height: 18px;
+  width: 26px;
+  height: 26px;
   fill: currentColor;
 }
 
 .heroPanel {
+  position: relative;
   padding: 34px 34px 26px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.heroPanel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(125, 211, 252, 0.12), transparent 34%);
+  pointer-events: none;
 }
 
 .heroText {
@@ -90,8 +102,8 @@
 }
 
 .categoryOrb {
-  width: 72px;
-  height: 72px;
+  width: 104px;
+  height: 104px;
   display: grid;
   place-items: center;
   border-radius: 999px;
@@ -120,11 +132,23 @@
 }
 
 .commandCard {
+  position: relative;
   padding: 22px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: linear-gradient(180deg, rgba(14, 27, 46, 0.98), rgba(9, 19, 33, 0.98));
   box-shadow: var(--shadow);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.commandCard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(125, 211, 252, 0.12), transparent 34%);
+  pointer-events: none;
 }
 
 .commandCardCompact {
@@ -323,6 +347,11 @@
   .categoryRow {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  .categoryOrb {
+    width: 92px;
+    height: 92px;
+  }
 }
 
 @media (max-width: 860px) {
@@ -337,6 +366,27 @@
   }
 
   .categoryRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
+  }
+
+  .categoryOrb {
+    width: 84px;
+    height: 84px;
+  }
+
+  .categoryOrb svg,
+  .searchIcon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .filterHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .searchForm {
+    grid-template-columns: 1fr;
   }
 }

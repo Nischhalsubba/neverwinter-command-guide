@@ -24,7 +24,7 @@ export default function HomePage() {
     <>
       <SiteHeader activePath="/" />
       <main className={`shell ${styles.page}`}>
-        <section className={styles.hero}>
+        <section className={styles.hero} data-reveal data-tilt>
           <span className="eyebrow">Player Command Guide</span>
           <h1 className="displayTitle">Search Neverwinter commands faster, with clearer explanations and cleaner syntax.</h1>
           <p className={styles.heroCopy}>{categoryPageContent.home.intro}</p>
@@ -39,7 +39,7 @@ export default function HomePage() {
         </section>
 
         <section className={styles.richIntro}>
-          <article>
+          <article data-reveal data-tilt>
             <h2>What this guide actually covers</h2>
             <p>
               This fan-made reference is built for both quick command lookup and deeper reading.
@@ -47,7 +47,7 @@ export default function HomePage() {
               pages for syntax, examples, and practical in-game use.
             </p>
           </article>
-          <article>
+          <article data-reveal data-tilt>
             <h2>Why Neverwinter players bookmark it</h2>
             <p>
               Neverwinter mixes social chat, whispers, guild coordination, emotes, display
@@ -56,7 +56,7 @@ export default function HomePage() {
               alias or part of the syntax.
             </p>
           </article>
-          <article>
+          <article data-reveal data-tilt>
             <h2>How to use the guide</h2>
             <p>
               Start with the most-used commands, then move into category pages for chat, emotes,

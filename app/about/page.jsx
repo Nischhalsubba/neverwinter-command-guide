@@ -12,7 +12,7 @@ export default function AboutPage() {
     <>
       <SiteHeader activePath="/about" />
       <main className={`shell ${styles.about}`}>
-        <section className={`cardSurface ${styles.panel}`}>
+        <section className={`cardSurface ${styles.panel}`} data-reveal data-tilt>
           <span className="eyebrow">About</span>
           <h1 className="sectionTitle">A player-first Neverwinter command reference.</h1>
           <p className="sectionIntro">
@@ -31,6 +31,9 @@ export default function AboutPage() {
             that are useful enough to bookmark. That includes clearer examples, alias coverage,
             command-category navigation, and search-friendly content that surfaces the most useful
             commands quickly.
+          </p>
+          <p className="sectionIntro">
+            The project was designed and developed by <strong>Archew | Aяcнië</strong>.
           </p>
           <p className="sectionIntro">
             Neverwinter Command Guide is a fan-made project and is not affiliated with

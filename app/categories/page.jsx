@@ -23,7 +23,7 @@ export default function CategoriesPage() {
     <>
       <SiteHeader activePath="/categories" />
       <main className={`shell ${styles.about}`}>
-        <section className={`cardSurface ${styles.panel}`}>
+        <section className={`cardSurface ${styles.panel}`} data-reveal data-tilt>
           <span className="eyebrow">Categories</span>
           <h1 className="sectionTitle">{categoryPageContent.categories.title}</h1>
           <p className="sectionIntro">{categoryPageContent.categories.intro}</p>

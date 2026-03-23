@@ -23,7 +23,7 @@ export default function UtilityPage() {
     <>
       <SiteHeader activePath="/utility" />
       <main className={`shell ${styles.about}`}>
-        <section className={`cardSurface ${styles.panel}`}>
+        <section className={`cardSurface ${styles.panel}`} data-reveal data-tilt>
           <span className="eyebrow">Utility</span>
           <h1 className="sectionTitle">{categoryPageContent.utility.title}</h1>
           <p className="sectionIntro">{categoryPageContent.utility.intro}</p>

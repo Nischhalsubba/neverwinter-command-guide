@@ -23,7 +23,7 @@ export default function EmotesPage() {
     <>
       <SiteHeader activePath="/emotes" />
       <main className={`shell ${styles.about}`}>
-        <section className={`cardSurface ${styles.panel}`}>
+        <section className={`cardSurface ${styles.panel}`} data-reveal data-tilt>
           <span className="eyebrow">Emotes</span>
           <h1 className="sectionTitle">{categoryPageContent.emotes.title}</h1>
           <p className="sectionIntro">{categoryPageContent.emotes.intro}</p>

@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
+import gsap from "gsap";
 import { commands, getCommandUrl } from "@/lib/commands-data";
 import styles from "./global-search.module.css";
 
@@ -97,6 +98,8 @@ export function GlobalSearch() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const searchId = useId();
+  const overlayRef = useRef(null);
+  const dialogRef = useRef(null);
 
   const searchableCommands = useMemo(
     () =>
@@ -172,6 +175,28 @@ export function GlobalSearch() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!open || !overlayRef.current || !dialogRef.current) {
+      return;
+    }
+
+    const context = gsap.context(() => {
+      gsap.fromTo(overlayRef.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.22, ease: "power2.out" });
+      gsap.fromTo(
+        dialogRef.current,
+        { autoAlpha: 0, y: 22, scale: 0.98 },
+        { autoAlpha: 1, y: 0, scale: 1, duration: 0.34, ease: "power2.out" }
+      );
+      gsap.fromTo(
+        dialogRef.current.querySelectorAll(`.${styles.resultCard}`),
+        { autoAlpha: 0, y: 14 },
+        { autoAlpha: 1, y: 0, duration: 0.26, stagger: 0.03, delay: 0.08, ease: "power2.out" }
+      );
+    }, dialogRef);
+
+    return () => context.revert();
+  }, [open, query]);
+
   return (
     <>
       <button type="button" className="quickSearchLink" onClick={() => setOpen(true)}>
@@ -179,8 +204,9 @@ export function GlobalSearch() {
       </button>
 
       {open ? (
-        <div className={styles.overlay} role="presentation" onClick={() => setOpen(false)}>
+        <div ref={overlayRef} className={styles.overlay} role="presentation" onClick={() => setOpen(false)}>
           <div
+            ref={dialogRef}
             className={styles.dialog}
             role="dialog"
             aria-modal="true"

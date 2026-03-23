@@ -167,7 +167,7 @@ export function CommandLibrary() {
       </a>
 
       <main id="main-content" className={`shell ${styles.pageShell}`}>
-        <section id="start-here" className={`${styles.heroPanel} cardSurface`}>
+        <section id="start-here" className={`${styles.heroPanel} cardSurface`} data-reveal data-tilt>
           <span className="eyebrow">Player Command Guide</span>
           <h1 className="displayTitle">All Neverwinter Commands</h1>
           <p className={styles.heroText}>
@@ -204,7 +204,7 @@ export function CommandLibrary() {
             </button>
           </form>
 
-          <div className={styles.filterPanel}>
+          <div className={styles.filterPanel} data-reveal>
             <div className={styles.filterHeader}>
               <h2 className={styles.lowerTitle}>Filter Commands</h2>
               <p className={styles.resultCount}>
@@ -246,7 +246,7 @@ export function CommandLibrary() {
           </div>
         </section>
 
-        <section className={styles.directorySection} aria-labelledby="directory-title">
+        <section className={styles.directorySection} aria-labelledby="directory-title" data-reveal>
           <div className={styles.directoryHeader}>
             <h2 id="directory-title" className={styles.letterTitle}>
               Command Directory
