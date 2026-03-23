@@ -277,11 +277,11 @@ export function CommandLibrary() {
 
         <div className={styles.mainColumn}>
           <section id="start-here" className={styles.heroPanel}>
-            <span className="eyebrow">Obsidian Hud</span>
-            <h1 className="displayTitle">Accessible Command Documentation</h1>
+            <span className="eyebrow">Player Command Guide</span>
+            <h1 className="displayTitle">Search All Neverwinter Commands</h1>
             <p className={styles.heroText}>
-              A user-friendly guide to Neverwinter commands and UI shortcuts, designed
-              for clarity.
+              Find chat, whisper, guild, alliance, emote, display, and utility commands in one
+              searchable Neverwinter reference built for quick lookup and cleaner syntax.
             </p>
 
             <form
@@ -305,7 +305,7 @@ export function CommandLibrary() {
                   type="search"
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Search for a command, action, or category..."
+                  placeholder="Search /all, /tell, /r, /CombatLog, /screenshot_jpg"
                   autoComplete="off"
                 />
               </div>
@@ -342,6 +342,10 @@ export function CommandLibrary() {
               </h2>
               <span className={styles.directoryLine} aria-hidden="true" />
             </div>
+            <p className={styles.sectionLead}>
+              Start with the commands players reach for most often during everyday play, from
+              alliance chat and whispers to screenshots, combat logs, and stuck recovery.
+            </p>
             <div className={styles.featuredGrid}>
               {featuredCommands.slice(0, 6).map((command) => (
                 <CommandCard key={command.id} command={command} />
@@ -356,6 +360,11 @@ export function CommandLibrary() {
               </h2>
               <span className={styles.directoryLine} aria-hidden="true" />
             </div>
+            <p className={styles.sectionLead}>
+              Browse the full command library by category, search term, alias, or letter. This
+              section is designed for complete command discovery when you need more than the common
+              shortcuts.
+            </p>
 
             <div className={styles.lowerPanels}>
               <div className={styles.filterPanel}>
@@ -374,7 +383,8 @@ export function CommandLibrary() {
                   ))}
                 </div>
                 <p className={styles.panelText}>
-                  Filter the full library by category, then browse every available command in one place.
+                  Filter the full library by category to narrow the list to chat, private,
+                  party and guild, emotes, utility, or display commands.
                 </p>
               </div>
 
@@ -397,6 +407,10 @@ export function CommandLibrary() {
                 ) : (
                   <div className={styles.emptyInline}>
                     <p>No commands found.</p>
+                    <p className={styles.emptyHint}>
+                      Try a shorter keyword, search an alias, or browse a category instead. You
+                      can search by command name, alias, or category.
+                    </p>
                     <div className={styles.emptyActions}>
                       <button type="button" onClick={() => applyCategory("Chat")}>
                         Chat Commands
@@ -439,6 +453,10 @@ export function CommandLibrary() {
               </h2>
               <span className={styles.directoryLine} aria-hidden="true" />
             </div>
+            <p className={styles.sectionLead}>
+              These are practical testing and documentation commands used for parser setup,
+              screenshots, performance checks, and environment troubleshooting.
+            </p>
             <div className={styles.azGrid}>
               {developerTricks.map((command) => (
                 <CommandCard key={command.id} command={command} compact />

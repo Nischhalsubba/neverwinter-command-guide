@@ -5,9 +5,15 @@ import { siteUrl } from "@/lib/site";
 export const metadata = {
   title: "Neverwinter Commands List | Search Chat, Emote & Utility Commands",
   description:
-    "Search Neverwinter commands, chat shortcuts, whispers, emotes, utility commands, and copy-ready syntax in a clean player-friendly reference.",
+    "Search Neverwinter commands, chat shortcuts, whispers, emotes, utility commands, and copy-ready syntax in a detailed player-friendly command reference.",
   alternates: {
     canonical: "/commands"
+  },
+  openGraph: {
+    title: "Neverwinter Commands List | Search Chat, Emote & Utility Commands",
+    description:
+      "Search Neverwinter slash commands by syntax, alias, or category and open detail pages for examples, descriptions, and command use cases.",
+    url: "/commands"
   }
 };
 
@@ -17,8 +23,12 @@ export default function CommandsPage() {
     "@type": "WebPage",
     name: "Search All Neverwinter Commands",
     description:
-      "Find Neverwinter chat, whisper, guild, alliance, emote, and utility commands in one searchable guide built for fast lookup and clean copy-ready syntax.",
-    url: `${siteUrl}/commands`
+      "Find Neverwinter chat, whisper, guild, alliance, emote, display, and utility commands in one searchable guide built for fast lookup and clean copy-ready syntax.",
+    url: `${siteUrl}/commands`,
+    about: {
+      "@type": "Thing",
+      name: "Neverwinter slash commands"
+    }
   };
 
   return (

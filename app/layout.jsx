@@ -32,22 +32,34 @@ export const metadata = {
   description:
     "A fan-made searchable reference for Neverwinter chat commands, emotes, utility commands, and copy-ready syntax.",
   applicationName: "Neverwinter Command Guide",
+  category: "gaming",
   robots: {
     index: true,
-    follow: true
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1
+    }
   },
   openGraph: {
     title: "Neverwinter Command Guide",
     description:
       "Search Neverwinter commands, chat shortcuts, whispers, emotes, utility commands, and copy-ready syntax.",
     type: "website",
-    siteName: "Neverwinter Command Guide"
+    siteName: "Neverwinter Command Guide",
+    url: siteUrl
   },
   twitter: {
     card: "summary_large_image",
     title: "Neverwinter Command Guide",
     description:
       "A fan-made searchable reference for Neverwinter chat commands, emotes, utility commands, and copy-ready syntax."
+  },
+  alternates: {
+    canonical: siteUrl
   }
 };
 
