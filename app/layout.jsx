@@ -1,29 +1,16 @@
-import { Cormorant_Garamond, Inter, Space_Grotesk } from "next/font/google";
+import { Space_Grotesk, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import { siteUrl } from "@/lib/site";
 
-const displayFont = Cormorant_Garamond({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["400", "500", "600", "700"],
-  display: "swap"
-});
-
-const headingFont = Inter({
+const headingFont = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap"
 });
 
-const bodyFont = Inter({
+const bodyFont = Source_Sans_3({
   subsets: ["latin"],
   variable: "--font-body",
-  display: "swap"
-});
-
-const commandFont = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-command",
   display: "swap"
 });
 
@@ -66,10 +53,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${displayFont.variable} ${headingFont.variable} ${bodyFont.variable} ${commandFont.variable}`}
-    >
+    <html lang="en" className={`${headingFont.variable} ${bodyFont.variable}`}>
       <body>{children}</body>
     </html>
   );

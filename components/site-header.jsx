@@ -38,7 +38,7 @@ export function SiteHeader({ activePath = "" }) {
         </nav>
 
         <Link href="/commands#command-search" className="quickSearchLink">
-          Search grimoire...
+          Quick search...
         </Link>
       </div>
     </header>
