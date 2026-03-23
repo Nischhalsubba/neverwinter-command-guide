@@ -20,37 +20,6 @@
   will-change: transform;
 }
 
-.hero::after,
-.panel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    repeating-linear-gradient(180deg, transparent 0 23px, rgba(125, 211, 252, 0.08) 23px 24px),
-    radial-gradient(circle, rgba(125, 211, 252, 0.32) 0 2px, transparent 3px),
-    linear-gradient(90deg, rgba(125, 211, 252, 0), rgba(125, 211, 252, 0.16), rgba(125, 211, 252, 0)),
-    radial-gradient(circle, rgba(244, 213, 141, 0.2) 0 2px, transparent 3px),
-    linear-gradient(90deg, rgba(244, 213, 141, 0), rgba(244, 213, 141, 0.12), rgba(244, 213, 141, 0));
-  background-repeat: no-repeat;
-  background-size:
-    100% 100%,
-    6px 6px,
-    62px 2px,
-    6px 6px,
-    56px 2px;
-  background-position:
-    0 0,
-    0 24%,
-    -94px 24%,
-    100% 72%,
-    calc(100% + 82px) 72%;
-  opacity: 0.34;
-  animation:
-    driftParticleA 12s linear infinite,
-    driftParticleB 15s linear infinite;
-  pointer-events: none;
-}
-
 .description {
   max-width: 72ch;
   margin: 0;

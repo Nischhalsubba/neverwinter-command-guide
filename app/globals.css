@@ -31,6 +31,7 @@ html {
 }
 
 body {
+  position: relative;
   margin: 0;
   min-width: 320px;
   background:
@@ -41,6 +42,62 @@ body {
   font-family: var(--font-body), sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+body::before {
+  z-index: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(125, 211, 252, 0) 0 79px,
+      rgba(125, 211, 252, 0.08) 79px 80px
+    );
+  opacity: 0.24;
+  animation: verticalGridDrift 18s linear infinite;
+}
+
+body::after {
+  z-index: 0;
+  background:
+    radial-gradient(circle, rgba(125, 211, 252, 0.34) 0 2px, transparent 3px),
+    linear-gradient(180deg, rgba(125, 211, 252, 0), rgba(125, 211, 252, 0.16), rgba(125, 211, 252, 0)),
+    radial-gradient(circle, rgba(244, 213, 141, 0.22) 0 2px, transparent 3px),
+    linear-gradient(180deg, rgba(244, 213, 141, 0), rgba(244, 213, 141, 0.12), rgba(244, 213, 141, 0)),
+    radial-gradient(circle, rgba(125, 211, 252, 0.28) 0 2px, transparent 3px),
+    linear-gradient(180deg, rgba(125, 211, 252, 0), rgba(125, 211, 252, 0.12), rgba(125, 211, 252, 0));
+  background-repeat: no-repeat;
+  background-size:
+    6px 6px,
+    2px 92px,
+    6px 6px,
+    2px 76px,
+    6px 6px,
+    2px 68px;
+  background-position:
+    18% -5%,
+    18% -120px,
+    54% -12%,
+    54% -140px,
+    78% -8%,
+    78% -100px;
+  opacity: 0.3;
+  animation:
+    verticalParticleDriftA 11s linear infinite,
+    verticalParticleDriftB 16s linear infinite;
+}
+
+.siteHeader,
+.shell {
+  position: relative;
+  z-index: 1;
 }
 
 a {
@@ -263,6 +320,45 @@ select {
       calc(-10% + 56px) 32%,
       -10% 66%,
       calc(-10% + 72px) 66%;
+  }
+}
+
+@keyframes verticalGridDrift {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(18px);
+  }
+}
+
+@keyframes verticalParticleDriftA {
+  0% {
+    background-position:
+      18% -5%,
+      18% -120px,
+      54% -12%,
+      54% -140px,
+      78% -8%,
+      78% -100px;
+  }
+  100% {
+    background-position:
+      18% 105%,
+      18% calc(105% - 54px),
+      54% 108%,
+      54% calc(108% - 48px),
+      78% 104%,
+      78% calc(104% - 42px);
+  }
+}
+
+@keyframes verticalParticleDriftB {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(12px);
   }
 }
 
