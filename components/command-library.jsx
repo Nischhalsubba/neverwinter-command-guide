@@ -7,6 +7,7 @@ import {
   commands,
   faqItems,
   featuredCommands,
+  quickHelpLinks,
   sidebarLinks
 } from "@/lib/commands-data";
 import styles from "./command-library.module.css";
@@ -75,6 +76,8 @@ function CopyButton({ syntax }) {
 }
 
 function CommandCard({ command }) {
+  const aliasText = command.aliases?.length ? command.aliases.join(", ") : "No alias";
+
   return (
     <article className={styles.commandCard}>
       <div className={styles.commandTopline}>
@@ -92,15 +95,13 @@ function CommandCard({ command }) {
         </p>
       ) : null}
 
-      {command.aliases?.length ? (
-        <p className={styles.commandMeta}>
-          <strong>Aliases:</strong> {command.aliases.join(", ")}
-        </p>
-      ) : null}
+      <p className={styles.commandMeta}>
+        <strong>Alias</strong> {aliasText}
+      </p>
 
       {command.note && command.noteText ? (
         <p className={styles.commandNote}>
-          <strong>{command.note}:</strong> {command.noteText}
+          <strong>{command.note}</strong> {command.noteText}
         </p>
       ) : null}
     </article>
@@ -137,12 +138,13 @@ export function CommandLibrary() {
   const letterKeys = useMemo(() => Object.keys(groupedCommands).sort(), [groupedCommands]);
 
   function handleSidebarAction(link) {
-    if (link.category) {
-      setCategory(link.category);
-    }
-
     if (link.query) {
       setQuery(link.query);
+      setCategory("All");
+    }
+
+    if (link.category) {
+      setCategory(link.category);
     }
 
     const targetId = link.href.replace("#", "");
@@ -173,6 +175,10 @@ export function CommandLibrary() {
                 </button>
               ))}
             </nav>
+            <p className={styles.sidebarHelper}>
+              Browse the most useful commands first, then explore the full reference by
+              category or alphabet.
+            </p>
           </div>
         </aside>
 
@@ -183,7 +189,7 @@ export function CommandLibrary() {
               <h1 className="displayTitle">Search All Neverwinter Commands</h1>
               <p className="sectionIntro">
                 Find chat, whisper, guild, alliance, emote, and utility commands in one
-                clean searchable guide built for fast lookup and copy-ready syntax.
+                clean searchable guide.
               </p>
 
               <form id="command-search" className={styles.searchForm} role="search">
@@ -216,8 +222,7 @@ export function CommandLibrary() {
                 Browse by Category
               </h2>
               <p className="sectionIntro">
-                Use the categories players actually think in when searching for commands
-                during play.
+                Browse the command groups players use most often during normal play.
               </p>
             </div>
 
@@ -299,6 +304,11 @@ export function CommandLibrary() {
                   >
                     <div className={styles.letterHeader}>
                       <h3 id={`letter-${letter}`}>{letter}</h3>
+                      {letter === "E" ? (
+                        <p className={styles.letterHint}>
+                          Emotes and commands starting with E.
+                        </p>
+                      ) : null}
                     </div>
                     <div className={styles.cardGrid}>
                       {groupedCommands[letter].map((command) => (
@@ -313,6 +323,9 @@ export function CommandLibrary() {
                 <h3>No commands found</h3>
                 <p>
                   Try a shorter keyword, search an alias, or browse a category instead.
+                </p>
+                <p className={styles.emptyStateHint}>
+                  You can search by command name, alias, or category.
                 </p>
                 <div className={styles.emptyActions}>
                   {["Chat", "Utility", "Emotes", "Most Used Commands"].map((item) =>
@@ -333,6 +346,30 @@ export function CommandLibrary() {
                 </div>
               </div>
             )}
+          </section>
+
+          <section className={styles.helpStrip} aria-labelledby="quick-help-title">
+            <div>
+              <h2 id="quick-help-title" className={styles.helpStripTitle}>
+                Need a starting point?
+              </h2>
+            </div>
+            <div className={styles.helpLinks}>
+              {quickHelpLinks.map((link) => (
+                <button
+                  key={link.label}
+                  type="button"
+                  className={styles.helpLink}
+                  onClick={() => handleSidebarAction({
+                    href: "#directory-title",
+                    category: link.category,
+                    query: link.query
+                  })}
+                >
+                  {link.label}
+                </button>
+              ))}
+            </div>
           </section>
 
           <section className={styles.faqSection} aria-labelledby="faq-title">
