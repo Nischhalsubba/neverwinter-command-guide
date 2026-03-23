@@ -176,6 +176,27 @@ export function GlobalSearch() {
   }, [open]);
 
   useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    function handlePointerDown(event) {
+      if (!dialogRef.current) {
+        return;
+      }
+
+      if (!dialogRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [open]);
+
+  useEffect(() => {
     if (!open || !overlayRef.current || !dialogRef.current) {
       return;
     }
