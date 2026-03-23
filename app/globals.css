@@ -3,11 +3,13 @@
   --font-command: var(--font-heading);
   --bg: #08111f;
   --bg-accent: #101e34;
+  --bg-soft: rgba(16, 30, 52, 0.82);
   --panel: rgba(11, 21, 37, 0.82);
   --panel-strong: rgba(14, 27, 46, 0.96);
   --line: rgba(154, 182, 214, 0.2);
   --text: #eef4ff;
-  --muted: #b0c2de;
+  --muted: #c2d0e6;
+  --muted-strong: #d7e2f2;
   --accent: #7dd3fc;
   --accent-strong: #38bdf8;
   --gold: #f4d58d;

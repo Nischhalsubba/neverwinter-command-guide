@@ -8,16 +8,18 @@
   display: grid;
   gap: 18px;
   padding: 32px;
-  border-radius: 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
   background:
-    radial-gradient(circle at 50% 22%, rgba(120, 238, 244, 0.1), transparent 22%),
-    linear-gradient(180deg, rgba(80, 92, 112, 0.72), rgba(67, 78, 96, 0.66));
+    radial-gradient(circle at 18% 12%, rgba(125, 211, 252, 0.14), transparent 28%),
+    linear-gradient(180deg, rgba(16, 30, 52, 0.96), rgba(9, 19, 33, 0.96));
+  box-shadow: var(--shadow);
 }
 
 .heroCopy {
   max-width: 70ch;
   margin: 0;
-  color: #ecf4fd;
+  color: var(--muted-strong);
   line-height: 1.7;
 }
 
@@ -38,14 +40,15 @@
 }
 
 .primaryAction {
-  color: #214349;
-  background: linear-gradient(180deg, #7ef2f8, #68dce9);
+  color: #07141f;
+  background: linear-gradient(180deg, #98e0ff, #69c9f5);
   font-weight: 700;
 }
 
 .secondaryAction {
-  color: #e8f4ff;
-  background: rgba(73, 84, 102, 0.92);
+  color: var(--text);
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(16, 30, 52, 0.84), rgba(9, 19, 33, 0.84));
 }
 
 .richIntro {
@@ -55,9 +58,11 @@
 }
 
 .richIntro article {
+  border: 1px solid var(--line);
   padding: 22px;
-  border-radius: 0.55rem;
-  background: rgba(53, 62, 77, 0.58);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(16, 30, 52, 0.88), rgba(9, 19, 33, 0.88));
+  box-shadow: var(--shadow);
 }
 
 .richIntro h2 {
@@ -68,7 +73,7 @@
 
 .richIntro p {
   margin: 0;
-  color: var(--muted);
+  color: var(--muted-strong);
   line-height: 1.7;
 }
 

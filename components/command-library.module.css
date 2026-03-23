@@ -80,7 +80,7 @@
 
 .heroText {
   margin: 14px 0 0;
-  color: #ecf4fd;
+  color: var(--muted-strong);
   font-size: 1rem;
 }
 
@@ -142,7 +142,7 @@
 }
 
 .searchForm input::placeholder {
-  color: #cad8e8;
+  color: #d8e3f1;
 }
 
 .searchForm button {
@@ -199,6 +199,7 @@
 }
 
 .categoryLabel {
+  color: var(--muted-strong);
   font-size: 0.92rem;
 }
 
@@ -279,13 +280,13 @@
 .commandMeta,
 .commandNote {
   margin: 8px 0 0;
-  color: #eff5ff;
+  color: var(--muted-strong);
   line-height: 1.55;
   font-size: 0.88rem;
 }
 
 .commandMeta {
-  color: #cfd8e7;
+  color: #d7e2f2;
   font-size: 0.74rem;
   text-transform: uppercase;
 }
@@ -306,7 +307,7 @@
 .sectionLead {
   max-width: 72ch;
   margin: -6px 0 24px;
-  color: #dce7f7;
+  color: var(--muted-strong);
   line-height: 1.7;
 }
 
@@ -376,12 +377,14 @@
 .helpStrip,
 .faqSection,
 .footerPanel {
-  background: rgba(53, 62, 77, 0.58);
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(16, 30, 52, 0.88), rgba(9, 19, 33, 0.88));
+  box-shadow: var(--shadow);
 }
 
 .filterPanel {
   padding: 20px;
-  border-radius: 0.45rem;
+  border-radius: var(--radius-lg);
 }
 
 .lowerTitle {
@@ -407,18 +410,19 @@
 .filterChip {
   min-height: 34px;
   padding: 0 12px;
-  color: #dce7f7;
-  background: rgba(73, 84, 102, 0.92);
+  color: var(--muted-strong);
+  background: rgba(9, 19, 33, 0.92);
+  border: 1px solid rgba(154, 182, 214, 0.18);
 }
 
 .filterChipActive {
-  color: #214349;
-  background: linear-gradient(180deg, #7ef2f8, #6fe2ec);
+  color: #07141f;
+  background: linear-gradient(180deg, #98e0ff, #69c9f5);
 }
 
 .panelText {
   margin: 14px 0 0;
-  color: #d6e2f1;
+  color: var(--muted-strong);
   line-height: 1.6;
 }
 
@@ -432,8 +436,9 @@
   justify-items: start;
   gap: 4px;
   padding: 12px 14px;
-  color: #ffffff;
-  background: rgba(73, 84, 102, 0.92);
+  color: var(--text);
+  background: rgba(9, 19, 33, 0.92);
+  border: 1px solid rgba(154, 182, 214, 0.18);
   text-align: left;
 }
 
@@ -443,7 +448,7 @@
 }
 
 .resultItem small {
-  color: #dce6f5;
+  color: var(--muted-strong);
 }
 
 .emptyInline p {
@@ -452,7 +457,7 @@
 
 .emptyHint {
   margin-top: 10px !important;
-  color: #d6e2f1;
+  color: var(--muted-strong);
   line-height: 1.6;
 }
 
@@ -467,8 +472,9 @@
 .helpLink {
   min-height: 34px;
   padding: 0 12px;
-  color: #e8f4ff;
-  background: rgba(73, 84, 102, 0.92);
+  color: var(--text);
+  background: rgba(9, 19, 33, 0.92);
+  border: 1px solid rgba(154, 182, 214, 0.18);
 }
 
 .helpStrip {
@@ -477,13 +483,13 @@
   gap: 10px;
   margin-top: 26px;
   padding: 12px;
-  border-radius: 0.45rem;
+  border-radius: var(--radius-lg);
 }
 
 .faqSection {
   margin-top: 26px;
   padding: 20px;
-  border-radius: 0.45rem;
+  border-radius: var(--radius-lg);
 }
 
 .faqList {
@@ -494,7 +500,8 @@
 .faqItem {
   padding: 12px 14px;
   border-radius: 0.35rem;
-  background: rgba(73, 84, 102, 0.92);
+  background: rgba(9, 19, 33, 0.92);
+  border: 1px solid rgba(154, 182, 214, 0.18);
 }
 
 .faqItem summary {
@@ -509,7 +516,7 @@
 
 .faqItem p {
   margin: 8px 0 0;
-  color: #d8e4f2;
+  color: var(--muted-strong);
   line-height: 1.6;
 }
 
@@ -529,13 +536,13 @@
 .footerBrand,
 .footerMeta {
   margin: 0;
-  color: #d6e1ef;
+  color: var(--muted-strong);
   font-size: 0.78rem;
 }
 
 .footerMeta {
   margin-top: 6px;
-  color: #b5c4d6;
+  color: var(--muted);
 }
 
 .footerLinks {
@@ -546,7 +553,7 @@
 }
 
 .footerLinks a {
-  color: #dce8f8;
+  color: var(--muted-strong);
   font-size: 0.84rem;
 }
 
