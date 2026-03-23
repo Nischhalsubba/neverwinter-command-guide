@@ -6,12 +6,7 @@ import { CopyCommandButton } from "@/components/copy-command-button";
 import {
   categoryShortcuts,
   commands,
-  developerTricks,
-  faqItems,
-  featuredCommands,
   getCommandUrl,
-  quickHelpLinks,
-  sidebarLinks
 } from "@/lib/commands-data";
 import styles from "./command-library.module.css";
 
@@ -73,22 +68,6 @@ function IconDisplay() {
   );
 }
 
-function IconInfo() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18Zm0 4a1.2 1.2 0 1 0 0 2.4A1.2 1.2 0 0 0 12 7Zm-1 4v6h2v-6h-2Z" />
-    </svg>
-  );
-}
-
-function IconTrophy() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M7 4h10v2h2a1 1 0 0 1 1 1v1a4 4 0 0 1-4 4h-.4A5.5 5.5 0 0 1 13 15.8V18h3v2H8v-2h3v-2.2A5.5 5.5 0 0 1 8.4 12H8a4 4 0 0 1-4-4V7a1 1 0 0 1 1-1h2V4Zm10 4V7h2v1a2.5 2.5 0 0 1-2 2.4V8ZM5 8V7h2v3.4A2.5 2.5 0 0 1 5 8Z" />
-    </svg>
-  );
-}
-
 function IconSearch() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -126,18 +105,6 @@ function matchesSearch(command, query) {
   return haystack.includes(query);
 }
 
-function groupByLetter(items) {
-  return items.reduce((accumulator, command) => {
-    const letter = command.letter || "#";
-    if (!accumulator[letter]) {
-      accumulator[letter] = [];
-    }
-
-    accumulator[letter].push(command);
-    return accumulator;
-  }, {});
-}
-
 function CommandCard({ command, compact = false }) {
   const aliasText = command.aliases?.length ? command.aliases.join(", ") : "No alias";
 
@@ -170,17 +137,6 @@ function CommandCard({ command, compact = false }) {
   );
 }
 
-function FaqItem({ item, index }) {
-  const id = `faq-${index}`;
-
-  return (
-    <details className={styles.faqItem}>
-      <summary aria-controls={id}>{item.question}</summary>
-      <p id={id}>{item.answer}</p>
-    </details>
-  );
-}
-
 export function CommandLibrary() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
@@ -195,39 +151,13 @@ export function CommandLibrary() {
     });
   }, [category, normalizedQuery]);
 
-  const groupedCommands = useMemo(() => groupByLetter(filteredCommands), [filteredCommands]);
-  const letterKeys = useMemo(() => Object.keys(groupedCommands).sort(), [groupedCommands]);
-
-  function scrollTo(id) {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }
-
   function applyCategory(nextCategory) {
     setCategory(nextCategory);
-    scrollTo("directory-title");
   }
 
   function applySearch(nextQuery) {
     setQuery(nextQuery);
     setCategory("All");
-    scrollTo("directory-title");
-  }
-
-  function handleSidebarAction(link) {
-    if (link.query) {
-      applySearch(link.query);
-      return;
-    }
-
-    if (link.category) {
-      applyCategory(link.category);
-      return;
-    }
-
-    scrollTo(link.href.replace("#", ""));
   }
 
   return (
@@ -237,63 +167,64 @@ export function CommandLibrary() {
       </a>
 
       <main id="main-content" className={`shell ${styles.pageShell}`}>
-        <aside className={styles.sidebar} aria-label="Section links">
-          <div className={styles.sidebarRail}>
-            {sidebarLinks.slice(0, 2).map((link, index) => (
-              <button
-                key={link.id}
-                type="button"
-                className={`${styles.sidebarButton}${index === 0 ? ` ${styles.sidebarButtonActive}` : ""}`}
-                onClick={() => handleSidebarAction(link)}
-              >
-                <span className={styles.sidebarIcon}>
-                  {index === 0 ? <IconInfo /> : <IconTrophy />}
-                </span>
-                <span>{link.label === "Start Here" ? "Getting Started" : "Top Commands"}</span>
-              </button>
-            ))}
-          </div>
-        </aside>
+        <section id="start-here" className={`${styles.heroPanel} cardSurface`}>
+          <span className="eyebrow">Player Command Guide</span>
+          <h1 className="displayTitle">All Neverwinter Commands</h1>
+          <p className={styles.heroText}>
+            Search the full command library by keyword, command syntax, alias, or category. Every
+            result is written in plain language so players can understand what each command does at a glance.
+          </p>
 
-        <div className={styles.mainColumn}>
-          <section id="start-here" className={styles.heroPanel}>
-            <span className="eyebrow">Player Command Guide</span>
-            <h1 className="displayTitle">Search All Neverwinter Commands</h1>
-            <p className={styles.heroText}>
-              Find the right Neverwinter command even if you only remember part of it. Search by
-              what you want to do, such as whispering a player, talking in alliance chat, taking a
-              screenshot, or fixing a stuck character.
-            </p>
+          <form
+            id="command-search"
+            className={styles.searchForm}
+            role="search"
+            onSubmit={(event) => {
+              event.preventDefault();
+            }}
+          >
+            <label htmlFor={searchId} className="srOnly">
+              Search commands, aliases, or categories
+            </label>
+            <div className={styles.searchInputWrap}>
+              <span className={styles.searchIcon} aria-hidden="true">
+                <IconSearch />
+              </span>
+              <input
+                id={searchId}
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search /all, /tell, /r, /CombatLog, /screenshot_jpg"
+                autoComplete="off"
+              />
+            </div>
+            <button type="button" onClick={() => { setQuery(""); setCategory("All"); }}>
+              Reset
+            </button>
+          </form>
 
-            <form
-              id="command-search"
-              className={styles.searchForm}
-              role="search"
-              onSubmit={(event) => {
-                event.preventDefault();
-                scrollTo("directory-title");
-              }}
-            >
-              <label htmlFor={searchId} className="srOnly">
-                Search commands, aliases, or categories
-              </label>
-              <div className={styles.searchInputWrap}>
-                <span className={styles.searchIcon} aria-hidden="true">
-                  <IconSearch />
-                </span>
-                <input
-                  id={searchId}
-                  type="search"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Search /all, /tell, /r, /CombatLog, /screenshot_jpg"
-                  autoComplete="off"
-                />
-              </div>
-              <button type="submit">Search</button>
-            </form>
-
-            <section id="browse-by-category" className={styles.categoryRow} aria-label="Category shortcuts">
+          <div className={styles.filterPanel}>
+            <div className={styles.filterHeader}>
+              <h2 className={styles.lowerTitle}>Filter Commands</h2>
+              <p className={styles.resultCount}>
+                {filteredCommands.length} {filteredCommands.length === 1 ? "command" : "commands"} found
+              </p>
+            </div>
+            <div className={styles.filterRow} role="toolbar" aria-label="Command filters">
+              {filterOptions.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  aria-pressed={category === option}
+                  className={`${styles.filterChip}${category === option ? ` ${styles.filterChipActive}` : ""}`}
+                  onClick={() => applyCategory(option)}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+            <div className={styles.categoryRow} aria-label="Category shortcuts">
               {categoryShortcuts.map((shortcut, index) => {
                 const Icon = categoryIcons[shortcut.label];
 
@@ -304,230 +235,41 @@ export function CommandLibrary() {
                     className={styles.categoryOrbButton}
                     onClick={() => applyCategory(shortcut.label)}
                   >
-                    <span className={`${styles.categoryOrb}${index === 0 ? ` ${styles.categoryOrbActive}` : ""}`}>
+                    <span className={`${styles.categoryOrb}${category === shortcut.label || (category === "All" && index === 0) ? ` ${styles.categoryOrbActive}` : ""}`}>
                       <Icon />
                     </span>
-                    <span className={styles.categoryLabel}>
-                      {shortcut.label}
-                    </span>
+                    <span className={styles.categoryLabel}>{shortcut.label}</span>
                   </button>
                 );
               })}
-            </section>
-          </section>
+            </div>
+          </div>
+        </section>
 
-          <section className={styles.starterSection} aria-labelledby="starter-title">
-            <div className={styles.directoryHeader}>
-              <h2 id="starter-title" className={styles.letterTitle}>
-                Start Here
-              </h2>
-              <span className={styles.directoryLine} aria-hidden="true" />
-            </div>
-            <p className={styles.sectionLead}>
-              If you do not know command names yet, start with the action you want to perform.
-              These shortcuts are written for players, not developers.
-            </p>
-            <div className={styles.starterGrid}>
-              <button type="button" className={styles.starterCard} onClick={() => applySearch("/tell")}>
-                <span className={styles.starterLabel}>Talk to one player</span>
-                <strong>Whispers and replies</strong>
-                <p>Use this when you want to privately message another player or reply to the last whisper.</p>
-              </button>
-              <button type="button" className={styles.starterCard} onClick={() => applyCategory("Chat")}>
-                <span className={styles.starterLabel}>Talk to a group</span>
-                <strong>Alliance, zone, and local chat</strong>
-                <p>Browse the commands used for public channels, coordination, and normal conversation.</p>
-              </button>
-              <button type="button" className={styles.starterCard} onClick={() => applyCategory("Utility")}>
-                <span className={styles.starterLabel}>Fix or test your client</span>
-                <strong>Utility and display tools</strong>
-                <p>Find commands for screenshots, combat logs, framerate checks, and stuck recovery.</p>
-              </button>
-            </div>
-          </section>
+        <section className={styles.directorySection} aria-labelledby="directory-title">
+          <div className={styles.directoryHeader}>
+            <h2 id="directory-title" className={styles.letterTitle}>
+              Command Directory
+            </h2>
+            <span className={styles.directoryLine} aria-hidden="true" />
+          </div>
+          <p className={styles.sectionLead}>
+            This page lists every command currently included in the guide. Use the search box and category filters above to narrow the list quickly.
+          </p>
 
-          <section id="most-used" className={styles.commonSection} aria-labelledby="most-used-title">
-            <div className={styles.directoryHeader}>
-              <h2 id="most-used-title" className={styles.letterTitle}>
-                Most Used Commands
-              </h2>
-              <span className={styles.directoryLine} aria-hidden="true" />
-            </div>
-            <p className={styles.sectionLead}>
-              Start with the commands players reach for most often during everyday play, from
-              alliance chat and whispers to screenshots, combat logs, and stuck recovery.
-            </p>
-            <div className={styles.featuredGrid}>
-              {featuredCommands.slice(0, 6).map((command) => (
-                <CommandCard key={command.id} command={command} />
-              ))}
-            </div>
-          </section>
-
-          <section className={styles.directorySection} aria-labelledby="directory-title">
-            <div className={styles.directoryHeader}>
-              <h2 id="directory-title" className={styles.letterTitle}>
-                All Commands
-              </h2>
-              <span className={styles.directoryLine} aria-hidden="true" />
-            </div>
-            <p className={styles.sectionLead}>
-              Browse the full command library by category, search term, alias, or letter. Every
-              card explains the command in plain language so you do not need technical knowledge to
-              understand what it does.
-            </p>
-
-            <div className={styles.lowerPanels}>
-              <div className={styles.filterPanel}>
-                <h3 className={styles.lowerTitle}>Browse by Category</h3>
-                <div className={styles.filterRow} role="toolbar" aria-label="Command filters">
-                  {filterOptions.map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      aria-pressed={category === option}
-                      className={`${styles.filterChip}${category === option ? ` ${styles.filterChipActive}` : ""}`}
-                      onClick={() => applyCategory(option)}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-                <p className={styles.panelText}>
-                  Filter the full library by category to narrow the list to chat, private,
-                  party and guild, emotes, utility, or display commands.
-                </p>
-              </div>
-
-              <div className={styles.filterPanel}>
-                <h3 className={styles.lowerTitle}>Search Results</h3>
-                {filteredCommands.length ? (
-                  <div className={styles.resultList}>
-                    {filteredCommands.slice(0, 4).map((command) => (
-                      <button
-                        key={command.id}
-                        type="button"
-                        className={styles.resultItem}
-                        onClick={() => applySearch(command.syntax)}
-                      >
-                        <span>{command.syntax}</span>
-                        <small>{command.title}</small>
-                      </button>
-                    ))}
-                  </div>
-                ) : (
-                  <div className={styles.emptyInline}>
-                    <p>No commands found.</p>
-                    <p className={styles.emptyHint}>
-                      Try a shorter keyword, search an alias, or browse a category instead. You
-                      can search by command name, alias, or category.
-                    </p>
-                    <div className={styles.emptyActions}>
-                      <button type="button" onClick={() => applyCategory("Chat")}>
-                        Chat Commands
-                      </button>
-                      <button type="button" onClick={() => applyCategory("Utility")}>
-                        Utility Commands
-                      </button>
-                      <button type="button" onClick={() => applyCategory("Emotes")}>
-                        Emotes
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className={styles.azSections}>
-              {letterKeys.map((letter) => (
-                <section key={letter} className={styles.azSection} aria-labelledby={`letter-${letter}`}>
-                  <div className={styles.azHeader}>
-                    <h3 id={`letter-${letter}`} className={styles.azLetter}>
-                      {letter}
-                    </h3>
-                    <span className={styles.azDivider} aria-hidden="true" />
-                  </div>
-                  <div className={styles.azGrid}>
-                    {groupedCommands[letter].map((command) => (
-                      <CommandCard key={command.id} command={command} compact />
-                    ))}
-                  </div>
-                </section>
-              ))}
-            </div>
-          </section>
-
-          <section id="developer-tricks" className={styles.devSection} aria-labelledby="dev-title">
-            <div className={styles.directoryHeader}>
-              <h2 id="dev-title" className={styles.letterTitle}>
-                Developer Tricks
-              </h2>
-              <span className={styles.directoryLine} aria-hidden="true" />
-            </div>
-            <p className={styles.sectionLead}>
-              These are practical testing and documentation commands used for parser setup,
-              screenshots, performance checks, and environment troubleshooting.
-            </p>
-            <div className={styles.azGrid}>
-              {developerTricks.map((command) => (
+          {filteredCommands.length ? (
+            <div className={styles.listGrid}>
+              {filteredCommands.map((command) => (
                 <CommandCard key={command.id} command={command} compact />
               ))}
             </div>
-          </section>
-
-          <section className={styles.helpStrip}>
-            {quickHelpLinks.map((link) => (
-              <button
-                key={link.label}
-                type="button"
-                className={styles.helpLink}
-                onClick={() => {
-                  if (link.query) {
-                    applySearch(link.query);
-                    return;
-                  }
-
-                  if (link.category) {
-                    applyCategory(link.category);
-                  }
-                }}
-              >
-                {link.label}
-              </button>
-            ))}
-          </section>
-
-          <section className={styles.faqSection} aria-labelledby="faq-title">
-            <h2 id="faq-title" className={styles.lowerTitle}>
-              Frequently Asked Questions
-            </h2>
-            <div className={styles.faqList}>
-              {faqItems.map((item, index) => (
-                <FaqItem key={item.question} item={item} index={index} />
-              ))}
+          ) : (
+            <div className={styles.emptyState}>
+              <h3>No commands found</h3>
+              <p>Try a shorter keyword, search an alias, or switch back to a broader category.</p>
             </div>
-          </section>
-
-          <footer className={styles.footerPanel}>
-            <div className={styles.footerLeft}>
-              <p className={styles.footerBrand}>
-                Neverwinter Command Guide - A Fan Mods Resource
-              </p>
-              <p className={styles.footerMeta}>
-                Fan educational reference only. Trademarks belong to their owners.
-              </p>
-            </div>
-
-            <nav className={styles.footerLinks} aria-label="Footer">
-              <a href="#">Privacy Policy</a>
-              <a href="#">Contact</a>
-              <a href="https://github.com" target="_blank" rel="noreferrer">
-                Github
-              </a>
-              <a href="#">Discord</a>
-            </nav>
-          </footer>
-        </div>
+          )}
+        </section>
       </main>
     </>
   );
