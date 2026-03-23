@@ -1,10 +1,10 @@
 "use client";
 
 import { useId, useMemo, useState } from "react";
-import Link from "next/link";
 import {
   categoryShortcuts,
   commands,
+  developerTricks,
   faqItems,
   featuredCommands,
   quickHelpLinks,
@@ -22,13 +22,85 @@ const filterOptions = [
   "Display"
 ];
 
+function IconSword() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M14.5 4.5 19.5 2l-2.5 5-7 7 2 2-1.5 1.5-2-2L6 18l-1.5-1.5 2.5-2.5-2-2L6.5 10l2 2 6-7Z" />
+    </svg>
+  );
+}
+
+function IconMove() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2 8.5 5.5h2.5V10H5.5V7.5L2 11l3.5 3.5V12H11v5.5H8.5L12 21l3.5-3.5H13V12h5.5v2.5L22 11l-3.5-3.5V10H13V5.5h2.5L12 2Z" />
+    </svg>
+  );
+}
+
+function IconUsers() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 11a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm8 1a3 3 0 1 1 0-6 3 3 0 0 1 0 6ZM3 19a5.5 5.5 0 0 1 11 0v1H3v-1Zm12 1v-1a5.9 5.9 0 0 0-1.2-3.5A4.8 4.8 0 0 1 21 19v1h-6Z" />
+    </svg>
+  );
+}
+
+function IconTools() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m14.5 4 1.8 1.8-2.7 2.7 1.9 1.9 2.7-2.7L20 9.5l-2.9 2.9 2.4 2.4-2.2 2.2-2.4-2.4-7 7H4v-3.6l7-7-2.4-2.4 2.2-2.2 2.4 2.4L16.1 4h-1.6ZM7 3.5A3.5 3.5 0 0 0 4.7 9.7l4.9-4.9A3.5 3.5 0 0 0 7 3.5Z" />
+    </svg>
+  );
+}
+
+function IconSmile() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18Zm-3 6.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Zm6 0a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Zm-7 4.1a5.3 5.3 0 0 0 8 0l-1.1-.9a3.9 3.9 0 0 1-5.8 0l-1.1.9Z" />
+    </svg>
+  );
+}
+
+function IconDisplay() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-6v2h2.5v1.5h-9V19H10v-2H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm0 1.5v9h16v-9H4Zm4 2 3 4 2-2.5 3 3.5H8Z" />
+    </svg>
+  );
+}
+
+function IconInfo() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18Zm0 4a1.2 1.2 0 1 0 0 2.4A1.2 1.2 0 0 0 12 7Zm-1 4v6h2v-6h-2Z" />
+    </svg>
+  );
+}
+
+function IconTrophy() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 4h10v2h2a1 1 0 0 1 1 1v1a4 4 0 0 1-4 4h-.4A5.5 5.5 0 0 1 13 15.8V18h3v2H8v-2h3v-2.2A5.5 5.5 0 0 1 8.4 12H8a4 4 0 0 1-4-4V7a1 1 0 0 1 1-1h2V4Zm10 4V7h2v1a2.5 2.5 0 0 1-2 2.4V8ZM5 8V7h2v3.4A2.5 2.5 0 0 1 5 8Z" />
+    </svg>
+  );
+}
+
+function IconSearch() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M10.5 4a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13Zm0 1.5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm5.7 9.6 3.8 3.8-1.1 1.1-3.8-3.8 1.1-1.1Z" />
+    </svg>
+  );
+}
+
 const categoryIcons = {
-  Chat: "C",
-  Private: "P",
-  "Party / Guild": "G",
-  Utility: "U",
-  Emotes: "E",
-  Display: "D"
+  Chat: IconSword,
+  Private: IconMove,
+  "Party / Guild": IconUsers,
+  Utility: IconTools,
+  Emotes: IconSmile,
+  Display: IconDisplay
 };
 
 function normalize(value) {
@@ -190,7 +262,9 @@ export function CommandLibrary() {
                 className={`${styles.sidebarButton}${index === 0 ? ` ${styles.sidebarButtonActive}` : ""}`}
                 onClick={() => handleSidebarAction(link)}
               >
-                <span className={styles.sidebarIcon}>{index === 0 ? "i" : "*"}</span>
+                <span className={styles.sidebarIcon}>
+                  {index === 0 ? <IconInfo /> : <IconTrophy />}
+                </span>
                 <span>{link.label === "Start Here" ? "Getting Started" : "Top Commands"}</span>
               </button>
             ))}
@@ -220,7 +294,7 @@ export function CommandLibrary() {
               </label>
               <div className={styles.searchInputWrap}>
                 <span className={styles.searchIcon} aria-hidden="true">
-                  Q
+                  <IconSearch />
                 </span>
                 <input
                   id={searchId}
@@ -235,109 +309,143 @@ export function CommandLibrary() {
             </form>
 
             <section id="browse-by-category" className={styles.categoryRow} aria-label="Category shortcuts">
-              {categoryShortcuts.map((shortcut, index) => (
-                <button
-                  key={shortcut.id}
-                  type="button"
-                  className={styles.categoryOrbButton}
-                  onClick={() => applyCategory(shortcut.label)}
-                >
-                  <span className={`${styles.categoryOrb}${index === 0 ? ` ${styles.categoryOrbActive}` : ""}`}>
-                    {categoryIcons[shortcut.label]}
-                  </span>
-                  <span className={styles.categoryLabel}>
-                    {{
-                      Chat: "Combat",
-                      Private: "Movement",
-                      "Party / Guild": "Social",
-                      Utility: "Utility",
-                      Emotes: "Emotes",
-                      Display: "Graphics"
-                    }[shortcut.label]}
-                  </span>
-                </button>
-              ))}
+              {categoryShortcuts.map((shortcut, index) => {
+                const Icon = categoryIcons[shortcut.label];
+
+                return (
+                  <button
+                    key={shortcut.id}
+                    type="button"
+                    className={styles.categoryOrbButton}
+                    onClick={() => applyCategory(shortcut.label)}
+                  >
+                    <span className={`${styles.categoryOrb}${index === 0 ? ` ${styles.categoryOrbActive}` : ""}`}>
+                      <Icon />
+                    </span>
+                    <span className={styles.categoryLabel}>
+                      {{
+                        Chat: "Combat",
+                        Private: "Movement",
+                        "Party / Guild": "Social",
+                        Utility: "Utility",
+                        Emotes: "Emotes",
+                        Display: "Graphics"
+                      }[shortcut.label]}
+                    </span>
+                  </button>
+                );
+              })}
             </section>
           </section>
 
-          <section id="most-used" className={styles.featuredGrid}>
-            {featuredCommands.slice(0, 2).map((command) => (
-              <CommandCard key={command.id} command={command} />
-            ))}
+          <section id="most-used" className={styles.commonSection} aria-labelledby="most-used-title">
+            <div className={styles.directoryHeader}>
+              <h2 id="most-used-title" className={styles.letterTitle}>
+                Most Used Commands
+              </h2>
+              <span className={styles.directoryLine} aria-hidden="true" />
+            </div>
+            <div className={styles.featuredGrid}>
+              {featuredCommands.slice(0, 6).map((command) => (
+                <CommandCard key={command.id} command={command} />
+              ))}
+            </div>
           </section>
 
           <section className={styles.directorySection} aria-labelledby="directory-title">
             <div className={styles.directoryHeader}>
               <h2 id="directory-title" className={styles.letterTitle}>
-                E
+                All Commands
               </h2>
               <span className={styles.directoryLine} aria-hidden="true" />
             </div>
 
-            <div className={styles.azGrid}>
-              {letterKeys
-                .filter((letter) => letter === "E")
-                .flatMap((letter) => groupedCommands[letter])
-                .slice(0, 1)
-                .map((command) => (
-                  <CommandCard key={command.id} command={command} compact />
-                ))}
-            </div>
-          </section>
-
-          <section className={styles.lowerPanels}>
-            <div className={styles.filterPanel}>
-              <h2 className={styles.lowerTitle}>Browse by Category</h2>
-              <div className={styles.filterRow} role="toolbar" aria-label="Command filters">
-                {filterOptions.map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    aria-pressed={category === option}
-                    className={`${styles.filterChip}${category === option ? ` ${styles.filterChipActive}` : ""}`}
-                    onClick={() => setCategory(option)}
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-              <p className={styles.panelText}>
-                Primary focus: make the player notice and understand the command quickly.
-              </p>
-            </div>
-
-            <div className={styles.filterPanel}>
-              <h2 className={styles.lowerTitle}>Search Results</h2>
-              {filteredCommands.length ? (
-                <div className={styles.resultList}>
-                  {filteredCommands.slice(0, 4).map((command) => (
+            <div className={styles.lowerPanels}>
+              <div className={styles.filterPanel}>
+                <h3 className={styles.lowerTitle}>Browse by Category</h3>
+                <div className={styles.filterRow} role="toolbar" aria-label="Command filters">
+                  {filterOptions.map((option) => (
                     <button
-                      key={command.id}
+                      key={option}
                       type="button"
-                      className={styles.resultItem}
-                      onClick={() => applySearch(command.syntax)}
+                      aria-pressed={category === option}
+                      className={`${styles.filterChip}${category === option ? ` ${styles.filterChipActive}` : ""}`}
+                      onClick={() => setCategory(option)}
                     >
-                      <span>{command.syntax}</span>
-                      <small>{command.title}</small>
+                      {option}
                     </button>
                   ))}
                 </div>
-              ) : (
-                <div className={styles.emptyInline}>
-                  <p>No commands found.</p>
-                  <div className={styles.emptyActions}>
-                    <button type="button" onClick={() => applyCategory("Chat")}>
-                      Chat Commands
-                    </button>
-                    <button type="button" onClick={() => applyCategory("Utility")}>
-                      Utility Commands
-                    </button>
-                    <button type="button" onClick={() => applyCategory("Emotes")}>
-                      Emotes
-                    </button>
+                <p className={styles.panelText}>
+                  Filter the full library by category, then browse every available command in one place.
+                </p>
+              </div>
+
+              <div className={styles.filterPanel}>
+                <h3 className={styles.lowerTitle}>Search Results</h3>
+                {filteredCommands.length ? (
+                  <div className={styles.resultList}>
+                    {filteredCommands.slice(0, 4).map((command) => (
+                      <button
+                        key={command.id}
+                        type="button"
+                        className={styles.resultItem}
+                        onClick={() => applySearch(command.syntax)}
+                      >
+                        <span>{command.syntax}</span>
+                        <small>{command.title}</small>
+                      </button>
+                    ))}
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div className={styles.emptyInline}>
+                    <p>No commands found.</p>
+                    <div className={styles.emptyActions}>
+                      <button type="button" onClick={() => applyCategory("Chat")}>
+                        Chat Commands
+                      </button>
+                      <button type="button" onClick={() => applyCategory("Utility")}>
+                        Utility Commands
+                      </button>
+                      <button type="button" onClick={() => applyCategory("Emotes")}>
+                        Emotes
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className={styles.azSections}>
+              {letterKeys.map((letter) => (
+                <section key={letter} className={styles.azSection} aria-labelledby={`letter-${letter}`}>
+                  <div className={styles.azHeader}>
+                    <h3 id={`letter-${letter}`} className={styles.azLetter}>
+                      {letter}
+                    </h3>
+                    <span className={styles.azDivider} aria-hidden="true" />
+                  </div>
+                  <div className={styles.azGrid}>
+                    {groupedCommands[letter].map((command) => (
+                      <CommandCard key={command.id} command={command} compact />
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          </section>
+
+          <section id="developer-tricks" className={styles.devSection} aria-labelledby="dev-title">
+            <div className={styles.directoryHeader}>
+              <h2 id="dev-title" className={styles.letterTitle}>
+                Developer Tricks
+              </h2>
+              <span className={styles.directoryLine} aria-hidden="true" />
+            </div>
+            <div className={styles.azGrid}>
+              {developerTricks.map((command) => (
+                <CommandCard key={command.id} command={command} compact />
+              ))}
             </div>
           </section>
 

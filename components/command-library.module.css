@@ -56,6 +56,14 @@
   font-size: 0.65rem;
 }
 
+.sidebarIcon svg,
+.categoryOrb svg,
+.searchIcon svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
 .mainColumn {
   padding: 18px 32px 34px;
   min-width: 0;
@@ -121,8 +129,6 @@
   place-items: center;
   width: 48px;
   color: #9df6ff;
-  font-family: var(--font-command), sans-serif;
-  font-size: 1rem;
 }
 
 .searchForm input {
@@ -198,8 +204,12 @@
 
 .featuredGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
+  margin-top: 22px;
+}
+
+.commonSection {
   margin-top: 22px;
 }
 
@@ -317,6 +327,10 @@
   margin-top: 58px;
 }
 
+.devSection {
+  margin-top: 48px;
+}
+
 .directoryHeader {
   display: flex;
   align-items: center;
@@ -337,17 +351,46 @@
   background: rgba(223, 235, 255, 0.18);
 }
 
-.azGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
-}
-
 .lowerPanels {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
-  margin-top: 48px;
+  margin: 0 0 34px;
+}
+
+.azSections {
+  display: grid;
+  gap: 34px;
+}
+
+.azSection {
+  display: grid;
+  gap: 18px;
+}
+
+.azHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.azLetter {
+  margin: 0;
+  font-family: var(--font-display), serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.azDivider {
+  flex: 1;
+  height: 1px;
+  background: rgba(223, 235, 255, 0.18);
+}
+
+.azGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
 }
 
 .filterPanel,
