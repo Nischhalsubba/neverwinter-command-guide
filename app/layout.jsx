@@ -1,5 +1,6 @@
 import { Space_Grotesk, Source_Sans_3 } from "next/font/google";
 import { MotionLayer } from "@/components/motion-layer";
+import { SiteFooter } from "@/components/site-footer";
 import "./globals.css";
 import { siteUrl } from "@/lib/site";
 
@@ -78,6 +79,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${headingFont.variable} ${bodyFont.variable}`}>
       <body>
         {children}
+        <SiteFooter />
         <MotionLayer />
       </body>
     </html>

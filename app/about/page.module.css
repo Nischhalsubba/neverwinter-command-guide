@@ -7,3 +7,26 @@
   gap: 18px;
   padding: clamp(24px, 5vw, 56px);
 }
+
+.officialBlock {
+  display: grid;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.officialLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.officialLinks a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.02);
+}

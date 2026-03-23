@@ -36,10 +36,39 @@ export default function AboutPage() {
             The project was designed and developed by <strong>Archew | Aяcнië</strong>.
           </p>
           <p className="sectionIntro">
-            Neverwinter Command Guide is a fan-made project and is not affiliated with
-            Cryptic Studios, Gearbox Publishing, Wizards of the Coast, or the official
-            Neverwinter website.
+            Neverwinter Command Guide is a fan-made project and is not affiliated with Cryptic
+            Studios, Gearbox Publishing, Wizards of the Coast, or the official Neverwinter
+            website.
           </p>
+          <div className={styles.officialBlock}>
+            <h2 className="sectionTitle">Official Neverwinter Resources</h2>
+            <p className="sectionIntro">
+              For official game access, account support, and trusted platform pages, use the
+              verified Neverwinter resources below.
+            </p>
+            <div className={styles.officialLinks}>
+              <a href="https://www.playneverwinter.com/" target="_blank" rel="noreferrer">
+                Official Website
+              </a>
+              <a
+                href="https://support.playneverwinter.com/hc/en-us/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Official Support
+              </a>
+              <a href="https://launcher.playneverwinter.com/" target="_blank" rel="noreferrer">
+                Official Launcher
+              </a>
+              <a
+                href="https://store.steampowered.com/app/109600/Neverwinter/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Official Steam Page
+              </a>
+            </div>
+          </div>
         </section>
       </main>
     </>
