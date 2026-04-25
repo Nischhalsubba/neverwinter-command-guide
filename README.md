@@ -1,8 +1,52 @@
+<div align="center">
+
 # Neverwinter Command Guide
 
-Neverwinter Command Guide is a fan-made, search-first reference site for Neverwinter slash commands, chat tools, emotes, utility shortcuts, and display controls. The project is built as a focused editorial library rather than a generic command dump, with the goal of helping players find the right command quickly, understand what it does, and use it with confidence.
+### Search-First Slash Command Reference for Neverwinter Players
+
+**A fan-made, premium command library for Neverwinter slash commands, chat tools, emotes, utility shortcuts, display controls, examples, aliases, category pages, and static SEO-friendly command detail routes.**
+
+![Next.js](https://img.shields.io/badge/Next.js-15.5-111111?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-19.1-61DAFB?style=for-the-badge&logo=react&logoColor=111111)
+![App Router](https://img.shields.io/badge/App%20Router-Static%20Pages-0F766E?style=for-the-badge)
+![GSAP](https://img.shields.io/badge/Motion-GSAP-88CE02?style=for-the-badge)
+![Neverwinter](https://img.shields.io/badge/Game-Neverwinter-7C3AED?style=for-the-badge)
+![Fan Project](https://img.shields.io/badge/Type-Fan%20Reference-F59E0B?style=for-the-badge)
+
+</div>
+
+---
+
+## ✨ Overview
+
+**Neverwinter Command Guide** is a fan-made, search-first reference site for Neverwinter slash commands, chat tools, emotes, utility shortcuts, and display controls.
+
+The project is built as a focused editorial library rather than a generic command dump, with the goal of helping players find the right command quickly, understand what it does, and use it with confidence.
 
 The site is designed around a simple premise: a command guide should feel as intentional as the game knowledge it documents. Players often remember fragments instead of full syntax. They might know `/r`, but not `Reply to Last Whisper`. They might remember that a screenshot command exists, but not whether it saves the UI. The interface is built to support that real-world lookup behavior.
+
+---
+
+## 🧭 Table of Contents
+
+- [Project Goals](#project-goals)
+- [Product Direction](#product-direction)
+- [Design Philosophy](#design-philosophy)
+- [Why The Design Looks The Way It Does](#why-the-design-looks-the-way-it-does)
+- [Content Strategy](#content-strategy)
+- [SEO Strategy](#seo-strategy)
+- [Accessibility Principles](#accessibility-principles)
+- [Responsive Behavior](#responsive-behavior)
+- [Information Architecture](#information-architecture)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Local Development](#local-development)
+- [Content Editing Notes](#content-editing-notes)
+- [Editorial Rules](#editorial-rules)
+- [Quality Checklist](#quality-checklist)
+- [Disclaimer](#disclaimer)
+
+---
 
 ## Project Goals
 
@@ -248,11 +292,14 @@ This improves both usability and search reach.
 
 ## Tech Stack
 
-- Next.js 15
-- React 19
-- App Router
-- CSS Modules
-- Static generation for command detail pages
+| Layer | Technology |
+|---|---|
+| Framework | Next.js `15.5.14` |
+| UI | React `19.1.0` |
+| Routing | App Router |
+| Motion | GSAP `3.14.2` |
+| Styling | CSS Modules / global CSS |
+| Rendering | Static generation for command detail pages |
 
 The implementation stays intentionally lightweight. The project does not rely on a heavy CMS or component framework because the information model is compact and the pages benefit from being fast and static.
 
@@ -277,19 +324,19 @@ lib/
 
 ### Important Files
 
-- `app/layout.jsx`
+- `app/layout.jsx`  
   Defines global metadata, fonts, and the shared application shell.
 
-- `app/globals.css`
+- `app/globals.css`  
   Contains the design tokens, base palette, typography variables, and shared global styling.
 
-- `components/command-library.jsx`
+- `components/command-library.jsx`  
   Powers the searchable `/commands` experience, including category filtering, featured commands, and the archive layout.
 
-- `components/command-preview-grid.jsx`
+- `components/command-preview-grid.jsx`  
   Renders reusable command card grids used across the homepage and category pages.
 
-- `lib/commands-data.js`
+- `lib/commands-data.js`  
   Stores the command dataset, category content, quick-help links, FAQ content, and helper utilities for routing and grouping.
 
 ## Local Development
@@ -347,6 +394,18 @@ The writing style for this project follows a few simple rules:
 - Keep syntax copy-ready.
 
 These rules are what make the site feel like a reference tool instead of a decorative shell wrapped around weak content.
+
+## Quality Checklist
+
+- [ ] Search works by syntax, title, alias, and category.
+- [ ] Command detail pages generate successfully.
+- [ ] Category pages have clear internal links.
+- [ ] Copy buttons work reliably.
+- [ ] Syntax blocks are readable on mobile.
+- [ ] SEO metadata is unique per route.
+- [ ] Sitemap and robots files are valid.
+- [ ] Keyboard focus is visible.
+- [ ] Dark surfaces maintain readable contrast.
 
 ## Disclaimer
 
