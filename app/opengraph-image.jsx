@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 
+export const alt = "Neverwinter Command Guide searchable slash commands, emotes, chat tools, utility commands, screenshots, and combat logs";
+
 export const size = {
   width: 1200,
   height: 630
