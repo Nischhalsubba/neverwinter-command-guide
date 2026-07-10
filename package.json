@@ -2,6 +2,9 @@
   "name": "neverwinter-command-guide",
   "version": "0.1.0",
   "private": true,
+  "description": "A static Next.js and React fan-made Neverwinter slash-command reference with searchable command data, command detail routes, category pages, SEO metadata, sitemap/robots support, GSAP motion, and copy-ready command examples.",
+  "author": "Nischhal Raj Subba",
+  "license": "UNLICENSED",
   "packageManager": "npm@11.6.2",
   "engines": {
     "node": ">=22.0.0",
