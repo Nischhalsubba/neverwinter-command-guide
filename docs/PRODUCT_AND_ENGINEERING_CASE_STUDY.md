@@ -58,51 +58,40 @@ This case study documents the product reasoning, content model, editorial rules,
 | Attribute | Value |
 |---|---|
 | Repository | `Nischhalsubba/neverwinter-command-guide` |
-| Visibility | Public |
-| Default branch | `main` |
-| App type | Fan-made static command reference site |
+| App type | Static fan-made command reference site |
 | Framework | Next.js `15.5.14` |
-| UI runtime | React `19.1.0` |
-| Routing | Next.js App Router |
+| UI | React `19.1.0` |
+| Routing | App Router |
+| Rendering direction | Static pages and generated command routes |
 | Motion | GSAP `3.14.2` |
-| Styling | Global CSS and component styling |
-| Data source | Local command dataset in `lib/commands-data.js` |
-| Rendering model | Static generation for command pages |
-| Main product surface | `/commands` searchable command archive |
-| Supporting surfaces | homepage, category pages, emotes, utility pages, command detail pages |
-| Package status | Private package, public repository |
-| Maintainer | Nischhal Raj Subba |
+| Styling | Global CSS and CSS module-style component structure |
+| Content source | `lib/commands-data.js` |
+| Primary product surface | `/commands` archive |
+| Secondary surfaces | category pages, command detail pages, emotes, utility pages |
+| Package manager | npm `11.6.2` |
+| Node requirement | `>=22.0.0` |
+| Build command | `npm run build` |
+| License metadata | `UNLICENSED` |
+| Project status | Focused public fan-reference project |
 
 ---
 
 ## Product Context
 
-Neverwinter is an MMO with many chat, social, utility, display, and command-line style shortcuts. These commands can help with:
+Game command references often fail in predictable ways. They are incomplete, hard to search, written like technical leftovers, or buried in wiki pages where every command receives the same lifeless treatment. Neverwinter Command Guide treats command lookup as a product experience, not just a list.
 
-- alliance communication
-- zone communication
-- guild communication
-- party communication
-- private whispers
-- replying to whispers
-- emotes and roleplay
-- screenshots
-- frame-rate display
-- combat logging
-- help and recovery
-- stuck character handling
+The product context is simple:
 
-The problem is not only that commands exist. The problem is that players need them at specific moments. They may be trying to coordinate a run, reply to a whisper, turn on combat logs before a dungeon, take a clean screenshot, or recover a stuck character. At those moments, a command guide should be fast, readable, and copy-ready.
+- players need commands during play
+- players do not always remember full syntax
+- players may search by task rather than command name
+- command behavior can vary between patches or clients
+- commands often have aliases
+- utility commands need warnings and context
+- undocumented commands need careful wording
+- SEO matters because many players search from outside the site
 
-A search-first command guide is valuable because it turns command knowledge into an interface:
-
-- users search by syntax
-- users browse by category
-- users scan common commands first
-- users open detail pages for examples
-- users copy syntax directly
-- users learn aliases and notes
-- users understand uncertainty when commands are undocumented or patch-sensitive
+The project therefore organizes commands around player intent. It is not trying to become a complete Neverwinter wiki, lore archive, build planner, or combat parser. That restraint is a strength. Tiny miracle: a project that knows what it is not.
 
 ---
 
@@ -110,23 +99,23 @@ A search-first command guide is valuable because it turns command knowledge into
 
 ### User problem
 
-Players need quick command help, but command information is often scattered, outdated, incomplete, or written in a way that assumes users already know what they are looking for.
+Players need a fast, reliable way to find command syntax and understand when to use it.
 
 ### Content problem
 
-Raw command lists are technically useful but often unfriendly. They may include syntax without context, aliases without examples, undocumented behavior without warnings, and utility commands without practical notes.
+Raw command lists do not explain enough. A useful reference needs syntax, aliases, examples, categories, caveats, and plain-language descriptions.
 
 ### Product problem
 
-A command guide must support both quick lookup and exploratory browsing. Users might know the exact command, category, intended action, or only a vague memory of what they want.
+A command guide must support both immediate search and exploratory browsing. Some users arrive with a command fragment. Some arrive with a task. Some arrive through Google. Some arrive from another Neverwinter tool and only need one specific command.
 
-### SEO problem
+### Technical problem
 
-Many users arrive through specific search intent such as “Neverwinter whisper command,” “Neverwinter combat log command,” or “Neverwinter screenshot command.” A single large page does not serve long-tail intent as well as structured command detail routes.
+The command dataset must remain structured enough to generate archive pages, category pages, detail pages, metadata, internal links, and future search/index logic without duplicating content across routes.
 
 ### Trust problem
 
-Fan-made game references can become stale. The site must avoid presenting undocumented, patch-sensitive, or unverified behavior as absolute truth.
+Some commands may be undocumented, patch-sensitive, client-dependent, or behaviorally inconsistent. The site should not present uncertain commands with the same confidence as verified core commands.
 
 ---
 
@@ -134,363 +123,358 @@ Fan-made game references can become stale. The site must avoid presenting undocu
 
 ### 1. New players
 
-New players need simple explanations and examples. They may not understand chat channels, aliases, command syntax, or when commands are useful.
+New players need plain explanations and useful examples. They may not know what alliance chat, guild chat, zone chat, whisper, or combat log commands are.
 
 Needs:
 
-- plain-language descriptions
-- copy-ready syntax
-- common examples
-- clear categories
-- minimal jargon
+- simple descriptions
+- safe examples
+- category browsing
+- obvious copy buttons
+- beginner-friendly wording
 
 ### 2. Returning players
 
-Returning players may remember command fragments but not exact syntax.
+Returning players may remember old commands but forget aliases or exact syntax.
 
 Needs:
 
 - fast search
-- alias lookup
-- category browsing
-- most-used command shortcuts
-- detail pages for reminders
+- alias support
+- examples
+- notes about variability
 
 ### 3. Endgame players
 
-Endgame players may need utility commands for combat logs, screenshots, party communication, and coordination.
+Endgame players often need utility commands such as combat logging, screenshots, invite commands, party chat, or stuck recovery.
 
 Needs:
 
-- combat log guidance
-- chat and whisper syntax
-- utility notes
-- reliable examples
-- fast mobile lookup
+- quick lookup
+- parser-adjacent command support
+- exact syntax
+- notes on enabling/disabling utilities
 
 ### 4. Guild and alliance organizers
 
-Organizers need party, guild, officer, alliance, and zone communication commands.
+Organizers use communication commands frequently.
 
 Needs:
 
-- communication command clusters
-- examples with realistic coordination language
-- alias coverage
-- category pages
+- party, guild, officer, alliance, and zone chat references
+- copy-ready examples
+- category pages for communication commands
 
-### 5. Content maintainers
+### 5. Roleplayers and social users
 
-Maintainers need a predictable data model and editorial rules to add commands safely.
-
-Needs:
-
-- command schema
-- content checklist
-- verification states
-- QA process
-- category rules
-- SEO checklist
-
-### 6. Portfolio reviewers
-
-Portfolio reviewers need to see product thinking beyond “I made a page.”
+Social users look for emotes and interaction commands.
 
 Needs:
 
-- product rationale
-- IA strategy
-- SEO strategy
-- accessibility direction
-- frontend architecture
-- content system design
+- browseable emote section
+- lighter descriptive copy
+- clear cosmetic/social context
+
+### 6. Maintainers
+
+Maintainers need a clean schema and editorial rules.
+
+Needs:
+
+- command data model
+- routing rules
+- QA checklist
+- verification process
+- SEO and metadata notes
 
 ---
 
 ## Product Principles
 
-### 1. Search-first, not decoration-first
+### 1. Search first
 
-The command archive is the product. Visual polish supports lookup, but search and command comprehension matter most.
+The core action is lookup. Search should work by syntax, title, alias, category, and user intent where possible.
 
-### 2. Copy-ready syntax
+### 2. Syntax must be copy-ready
 
-A command reference should make syntax easy to copy, read, and distinguish from surrounding prose.
+A command reference fails if users cannot copy or confidently type the command.
 
-### 3. Examples should feel real
+### 3. Context matters
 
-Examples should reflect how players actually communicate. Fake examples make the site feel decorative and oddly corporate, which is impressive in the worst way.
+Descriptions should explain what the command does, not merely repeat the title.
 
-### 4. Categories should match player intent
+### 4. Aliases deserve visibility
 
-Players think in tasks: chat, whispers, utility, screenshots, emotes, display controls. The IA should reflect that.
+Players may know `/w` but not `/tell`, or `/g` but not `/guild`. Alias handling is central to search.
 
-### 5. Detail pages should serve long-tail intent
+### 5. Category pages should match mental models
 
-Every meaningful command deserves its own page when the command can attract specific search or help intent.
+Players think in tasks: chat, whisper, utility, display, emotes. They do not always think alphabetically.
 
-### 6. Uncertainty should be visible
+### 6. Uncertainty should be labeled
 
-Undocumented or patch-sensitive commands should carry notes rather than being presented as guaranteed behavior.
+Commands with patch or client variability should include notes.
 
-### 7. Stay narrow
+### 7. SEO should serve humans first
 
-This is not a full wiki. The project is strongest when it focuses on command reference and does not mutate into a catch-all fansite with lore, builds, mounts, and the existential weight of every MMO spreadsheet ever created.
+Programmatic pages are useful only if they answer real questions. Otherwise, SEO becomes landfill with headings.
 
 ---
 
 ## Information Architecture
 
-The site follows a layered information architecture.
+The site uses a layered information architecture.
 
 ```mermaid
 flowchart TD
-    HOME[Homepage] --> COMMANDS[/commands archive]
-    HOME --> CATEGORIES[Category pages]
-    HOME --> FEATURED[Most-used commands]
-    COMMANDS --> DETAIL[Command detail pages]
-    CATEGORIES --> DETAIL
-    DETAIL --> COMMANDS
-    DETAIL --> CATEGORY[Related category]
-    HOME --> EMOTES[/emotes]
-    HOME --> UTILITY[/utility]
+    HOME[Homepage] --> ARCHIVE[/commands archive]
+    HOME --> CATEGORIES[Category entry points]
+    ARCHIVE --> SEARCH[Search and filters]
+    ARCHIVE --> CARDS[Command cards]
+    CARDS --> DETAIL[Command detail pages]
+    CATEGORIES --> CATPAGE[Category pages]
+    CATPAGE --> DETAIL
+    DETAIL --> RELATED[Related category context]
 ```
 
 ### Homepage
 
-The homepage acts as orientation. It should:
+The homepage orients the user and sends them toward high-value entry points.
 
-- explain what the guide covers
-- surface major command groups
-- highlight common commands
-- route users toward the command archive
-- reinforce that this is a fan-made reference
+Recommended homepage sections:
+
+- hero search
+- most used commands
+- command categories
+- utility callouts
+- combat-log and screenshot shortcuts
+- FAQ or quick help
 
 ### Commands archive
 
-`/commands` is the main search and browse surface.
+The `/commands` archive is the product center. It should support:
 
-It should support:
-
-- search by syntax
-- search by title
-- search by aliases
-- search by description
+- search
 - category filtering
 - featured or most-used commands
 - full archive browsing
+- copy action
+- command detail links
 
 ### Category pages
 
-Category pages serve intent clusters.
+Category pages serve task-based browsing and SEO. They should introduce the category, list commands, and link to detail pages.
 
-Examples:
+### Detail pages
 
-- Chat commands
-- Private messaging commands
-- Party and guild commands
-- Utility commands
-- Emotes
-- Display commands
-
-### Command detail pages
-
-Command detail pages serve specific queries.
-
-Each page should include:
+Detail pages should provide the deepest command context:
 
 - syntax
-- title
-- description
+- plain explanation
 - example
 - aliases
 - category
-- note if needed
-- related commands or category link
-- SEO metadata
+- note/caution if needed
+- related commands if available
 
 ---
 
 ## Command Data Model
 
-The current command dataset stores structured command entries in `lib/commands-data.js`.
+The current command dataset lives in `lib/commands-data.js`.
 
-### Existing fields
+### Current command fields
 
-The command entries use fields such as:
+| Field | Purpose |
+|---|---|
+| `id` | Stable identifier and likely route slug basis |
+| `syntax` | Copy-ready command syntax |
+| `title` | Human-readable command name |
+| `description` | Plain-language explanation |
+| `example` | Practical command usage example |
+| `aliases` | Alternative syntaxes |
+| `category` | User-facing grouping |
+| `section` | Optional section such as Most Used |
+| `anchor` | Internal page/category anchor |
+| `letter` | Alphabetical grouping support |
+| `note` | Short note label |
+| `noteText` | Full note explanation |
 
-- `id`
-- `syntax`
-- `title`
-- `description`
-- `example`
-- `aliases`
-- `category`
-- `section`
-- `anchor`
-- `letter`
-- `note`
-- `noteText`
+### Data model strengths
 
-### Why this model works
+- central source of truth
+- simple object shape
+- supports archive cards
+- supports detail pages
+- supports category groupings
+- supports aliases and notes
 
-The model is compact and friendly to static generation. A local dataset is enough because the command library is narrow, curated, and editorially managed.
+### Data model risks
 
-### Recommended future fields
+- no explicit verification status
+- no explicit source field
+- no patch/version field
+- no explicit related commands array
+- no difficulty or user-intent tags
+- no examples array for complex commands
 
-As the guide expands, consider adding:
+### Suggested evolution
 
-- `verificationStatus`
-- `source`
-- `lastVerifiedAt`
-- `patchNotes`
-- `platformNotes`
-- `relatedCommandIds`
-- `searchTerms`
-- `riskLevel`
+Add optional fields gradually:
 
-### Command data rule
-
-Every command entry should be valid as both a card and a detail page. If the entry only works in one layout, the model is leaking presentation assumptions. Naturally the data will not apologize for this. Data never does.
+```js
+{
+  id: "combat-log",
+  syntax: "/CombatLog 1",
+  title: "Toggle Combat Log",
+  description: "Turn combat logging on for parser-friendly log output.",
+  example: "/CombatLog 1",
+  aliases: [],
+  category: "Utility",
+  section: "Most Used",
+  anchor: "utility-commands",
+  letter: "C",
+  verificationStatus: "verified",
+  sourceNotes: "Confirmed by in-game usage or current community reference.",
+  patchContext: "Known behavior may vary by client/patch.",
+  related: ["combat-log-off", "showfps"]
+}
+```
 
 ---
 
 ## Content and Editorial Strategy
 
-The site should be written as a practical guide, not a lore-heavy fan page or a raw technical dump.
+The editorial strategy is the difference between a helpful command library and a dead command spreadsheet with CSS.
 
-### Editorial voice
+### Editorial goals
 
-The content should be:
+- write in plain English
+- lead with use case
+- keep syntax exact
+- keep examples realistic
+- mark uncertain behavior
+- avoid lore filler
+- avoid overclaiming official status
 
-- direct
-- player-friendly
-- practical
-- copy-ready
-- clear about uncertainty
-- light on fluff
-- specific with examples
+### Description pattern
 
-### Command entry structure
+Good command descriptions answer:
 
-Every command entry should answer:
+1. What does this command do?
+2. When would a player use it?
+3. Does it have a caveat?
 
-1. What is the command?
-2. What does it do?
-3. What syntax should I type?
-4. What is a realistic example?
-5. Are there aliases?
-6. Does it have any caveat?
+Bad descriptions merely restate the title.
 
-### Notes strategy
+Example:
 
-Use notes for:
+- Weak: `Send party chat.`
+- Better: `Send a message to your current party.`
 
-- undocumented behavior
-- availability caveats
-- safer usage advice
-- commands that vary by client or patch
-- commands with on/off values
-- commands that may confuse new players
+### Example pattern
 
-### Example strategy
-
-Examples should be realistic but harmless.
-
-Good examples:
+Examples should feel like actual player behavior:
 
 - `/p Ready for the next pull`
 - `/z LFM for master trial`
-- `/all Looking for dragon runs`
 - `/tell Character@Handle, hello`
+- `/all Looking for dragon runs`
 
-Avoid examples that include:
+Avoid examples that contain sensitive information, harassment, exploits, or anything that suggests abusive gameplay.
 
-- harassment
-- personal information
-- account names beyond generic placeholders
-- trading scams
-- exploit instructions
-- false official claims
+### Notes pattern
+
+Use notes when:
+
+- behavior varies by client
+- command is undocumented
+- command toggles something persistent
+- command affects files or logs
+- command may fail depending on permissions
 
 ---
 
 ## Search and Discovery Strategy
 
-The site is search-first in two senses:
+Search is the core product behavior.
 
-1. **Internal search** inside the command archive.
-2. **External search** through SEO and command-specific pages.
+### Search should match
 
-### Internal search should match
+- syntax: `/tell`, `/r`, `/CombatLog 1`
+- aliases: `/w`, `/t`, `/guild`, `/party`
+- title: `Private Message`, `Zone Chat`
+- category: `Utility`, `Display`, `Emotes`
+- descriptions: `combat log`, `screenshot`, `whisper`
 
-- syntax: `/r`, `/tell`, `/CombatLog 1`
-- aliases: `/w`, `/t`, `/whisper`
-- title: Private Message, Zone Chat
-- category: Chat, Utility, Emotes
-- description: whisper, screenshot, combat log
+### Search ranking recommendations
 
-### Search UX rules
+Prioritize matches in this order:
 
-- Search input should be prominent.
-- Empty results should explain what was searched.
-- Category filters should be visible and easy to reset.
-- Featured commands should not disappear into decoration.
-- Copy buttons should be clear and reliable.
-- Command cards should be scannable.
+1. exact syntax
+2. alias
+3. title
+4. category
+5. description
+6. example
+7. note text
 
-### Discovery patterns
+### Empty search state
 
-| User intent | Best surface |
-|---|---|
-| “I know the exact command” | Search box |
-| “I know the task” | Category shortcut |
-| “I need common commands” | Most-used section |
-| “I need more context” | Detail page |
-| “I am browsing socially” | Emotes page |
-| “I need technical utility” | Utility page |
+If no results match, show helpful recovery:
+
+- suggest checking aliases
+- link categories
+- show most-used commands
+- invite feedback if command is missing
+
+### Search UX principle
+
+A command search box should be forgiving. Users type fragments. Users mistype. Users remember vibes. Computers should compensate; otherwise why did we build these expensive autocomplete rectangles?
 
 ---
 
 ## SEO and Programmatic Pages
 
-The site has strong SEO potential because commands naturally map to long-tail search queries.
+The site has strong SEO potential because each command maps to a specific user query.
 
-### SEO goals
+### Route-level metadata
 
-- index command detail pages
-- support long-tail command searches
-- use descriptive metadata
-- keep pages fast and static
-- provide canonical URLs
-- generate sitemap entries
-- avoid thin duplicate pages
+The app layout already defines strong global metadata including:
 
-### Example long-tail queries
+- title template
+- keywords
+- description
+- Open Graph metadata
+- Twitter metadata
+- robots directives
+- canonical URL
+- structured data
+
+### Programmatic SEO surfaces
+
+Command detail pages can target long-tail searches such as:
 
 - Neverwinter whisper command
 - Neverwinter reply command
-- Neverwinter alliance chat command
-- Neverwinter zone chat command
 - Neverwinter combat log command
 - Neverwinter screenshot command
-- Neverwinter emote command
+- Neverwinter guild chat command
 - Neverwinter stuck command
+- Neverwinter emote commands
 
-### Metadata strategy
+### SEO rules
 
-The site should use route-level metadata for:
-
-- homepage
-- command archive
-- category pages
-- command detail pages
-- utility pages
-- emote pages
+- Every command detail page should have a unique title.
+- Meta descriptions should include syntax and use case.
+- Category pages should include introductory copy.
+- Internal links should connect archive, categories, and details.
+- Do not keyword-stuff.
+- Avoid implying official affiliation.
 
 ### Structured data caution
 
-The app includes structured data for website/search behavior. Keep it accurate. Do not add misleading official organization markup or imply affiliation with rights holders. SEO is not a license to impersonate authority, despite what the internet keeps trying to prove.
+The layout includes `SearchAction` structured data. SearchAction is most appropriate when the site search URL actually supports query parameters and returns search results consistently. If `/commands?query=` does not work as expected, either implement support or remove/adjust the structured data. Tiny thing, huge SEO-trust difference. Naturally, search engines are fussy about people lying in JSON.
 
 ---
 
@@ -500,192 +484,205 @@ The app includes structured data for website/search behavior. Keep it accurate. 
 
 | Route | Purpose |
 |---|---|
-| `/` | Orientation and entry points |
-| `/commands` | Searchable full archive |
-| `/commands/[slug]` | Individual command detail |
-| `/categories` or `/categories/[category]` | Category-based browsing |
-| `/emotes` | Social/emote-focused commands |
-| `/utility` | Utility and support commands |
-| `/about` | Project explanation and fan-project context |
+| `/` | Homepage and entry point |
+| `/commands` | Searchable command archive |
+| `/commands/[slug]` | Command detail page |
+| `/categories` or category routes | Task-based browsing |
+| `/emotes` | Social/emote command focus |
+| `/utility` | Utility command focus |
+| `/about` | Project context and disclaimer |
 
-### Page responsibilities
+### Command detail page requirements
 
-A page should not do everything. Keep each route focused.
+Each detail page should include:
 
-| Page type | Primary job |
-|---|---|
-| Homepage | Introduce and route users |
-| Archive | Search and filter all commands |
-| Category page | Serve task-based clusters |
-| Detail page | Explain one command deeply |
-| About page | Explain project scope and disclaimer |
+- command title
+- command syntax
+- copy button
+- explanation
+- example
+- aliases
+- category link
+- caveat/note if present
+- related commands if available
+- disclaimer footer or site-wide disclaimer link
+
+### Category page requirements
+
+Each category page should include:
+
+- category title
+- short category explanation
+- command list
+- featured commands
+- internal links
+- category-specific FAQ if useful
 
 ---
 
 ## Frontend Architecture
 
-The app uses a compact static architecture.
+The project uses Next.js App Router and a compact file structure.
+
+### Important paths
+
+| Path | Purpose |
+|---|---|
+| `app/layout.jsx` | Global metadata, fonts, structured data, footer, motion layer |
+| `app/globals.css` | Global design tokens and base styling |
+| `app/commands/` | Command archive and detail routing |
+| `app/categories/` | Category-focused routes |
+| `components/command-library.jsx` | Searchable archive UI |
+| `components/command-preview-grid.jsx` | Reusable command card grids |
+| `components/site-header.jsx` | Navigation/header behavior |
+| `components/site-footer.jsx` | Footer and disclaimer support |
+| `components/motion-layer.jsx` | GSAP or visual motion layer |
+| `lib/commands-data.js` | Command and category content source |
+| `lib/site.js` | Site URL and shared site metadata |
+
+### Data flow
 
 ```mermaid
 flowchart TD
-    DATA[lib/commands-data.js] --> ARCHIVE[components/command-library.jsx]
-    DATA --> GRID[components/command-preview-grid.jsx]
-    DATA --> DETAIL[app/commands/[slug]]
+    DATA[lib/commands-data.js] --> ARCHIVE[commands archive]
     DATA --> CATEGORY[category pages]
-    LAYOUT[app/layout.jsx] --> PAGES[App Router pages]
-    LAYOUT --> META[Global metadata]
-    LAYOUT --> FOOTER[SiteFooter]
-    LAYOUT --> MOTION[MotionLayer]
-    CSS[app/globals.css] --> PAGES
+    DATA --> DETAIL[command detail pages]
+    DATA --> GRID[preview grids]
+    SITE[lib/site.js] --> META[metadata/canonicals]
+    LAYOUT[app/layout.jsx] --> PAGES[app routes]
+    PAGES --> COMPONENTS[shared components]
 ```
 
-### Key files
+### Architecture rule
 
-| Path | Role |
-|---|---|
-| `app/layout.jsx` | Global metadata, fonts, shell, structured data |
-| `app/globals.css` | Design tokens, palette, base styles |
-| `components/command-library.jsx` | Searchable command archive |
-| `components/command-preview-grid.jsx` | Reusable command grids |
-| `components/site-header.jsx` | Shared navigation/header |
-| `components/site-footer.jsx` | Shared footer and disclaimer area |
-| `components/motion-layer.jsx` | Motion/animation layer |
-| `lib/commands-data.js` | Command dataset, categories, helper content |
-| `lib/site.js` | Site-level constants such as canonical URL |
-
-### Architecture principle
-
-Keep data centralized and presentation reusable. If every route invents its own command display logic, the site will become a tiny command museum where every room has different labels and nobody knows why.
+Keep command content centralized. Do not duplicate command copy inside individual routes. Duplication is how reference sites become contradictory little museums of stale text.
 
 ---
 
 ## Design System Direction
 
-The visual system balances fantasy mood with reference clarity.
+The project uses a dark, premium, arcane command-console style.
 
-### Desired feeling
+### Visual goals
 
-The UI should feel:
+- fantasy-adjacent but readable
+- premium but not ornamental overload
+- technical enough for command syntax
+- clear enough for mobile lookup
+- consistent card anatomy
+- strong command/syntax distinction
 
-- premium
-- arcane but readable
-- editorial
-- fast to scan
-- command-focused
-- polished without being noisy
-- game-aware but not game-cluttered
+### Token roles
 
-### Visual elements
-
-- deep dark surfaces
-- restrained gold accents
-- cool cyan highlights
-- syntax panels
-- subtle gradients
-- strong card boundaries
-- accessible focus states
-- consistent metadata badges
-
-### Design risks
-
-| Risk | Why it matters |
+| Token type | Purpose |
 |---|---|
-| Too much fantasy decoration | Reduces readability |
-| Too little structure | Cards become hard to scan |
-| Weak contrast | Dark UI becomes inaccessible |
-| Overanimated cards | Search feels slower |
-| Inconsistent command cards | Users must relearn layout |
+| background tokens | deep shell and page atmosphere |
+| panel tokens | cards, surfaces, modules |
+| gold accents | hierarchy and premium warmth |
+| cyan accents | interaction and active states |
+| muted text | descriptions and secondary labels |
+| syntax styles | command blocks and examples |
 
-### Design rule
+### Card anatomy
 
-Syntax should visually stand apart from prose. Users need to recognize command text instantly.
+Recommended order:
+
+1. category badge
+2. copy action
+3. syntax block
+4. title
+5. description
+6. example
+7. aliases
+8. notes
+
+Keeping the order consistent improves scanning. It is boring in the way seatbelts are boring: useful, proven, and not optional just because someone wants drama.
 
 ---
 
 ## Accessibility Strategy
 
-Accessibility matters because command lookup is often urgent. Users might be multitasking during gameplay, using a second screen, or viewing on mobile.
+### Accessibility priorities
 
-### Current principles to preserve
-
-- semantic headings
-- strong contrast
+- keyboard navigation
 - visible focus states
-- skip link support
-- readable syntax blocks
-- clear interactive affordances
-- mobile-friendly search/filter layout
+- semantic headings
+- readable contrast
+- copy buttons with labels
+- search input label/placeholder clarity
+- category filters that work without color-only state
+- syntax blocks readable on small screens
+- reduced-motion support
 
-### Accessibility checklist
+### Manual checks
 
-- Search input has accessible label.
-- Copy buttons have descriptive labels.
-- Keyboard users can reach every command card action.
-- Focus order is logical.
-- Category filters expose selected state.
-- Color is not the only state indicator.
-- Syntax blocks remain readable at small widths.
-- Motion does not block use.
-- Links have meaningful text.
-- Headings follow a logical outline.
+- Tab through the homepage.
+- Tab through `/commands`.
+- Use search by keyboard only.
+- Copy command using keyboard.
+- Open command detail page by keyboard.
+- Check mobile zoom behavior.
+- Check dark-mode contrast.
+- Check screen-reader labels for copy buttons.
 
-### Copy button accessibility
+### Motion accessibility
 
-A copy action should announce success through visible text or accessible status messaging. A silent copy button is just a tiny confidence trick with an icon.
+GSAP motion should respect reduced-motion preference. Decorative motion should never block reading, search, or copy behavior.
 
 ---
 
 ## Responsive Strategy
 
-The site must work well on mobile because players may search commands from a phone while the game is open on another screen.
+Neverwinter players may look up commands while playing, chatting, or using another device.
 
-### Mobile priorities
+### Mobile requirements
 
-1. Search remains visible.
-2. Cards stack cleanly.
-3. Syntax blocks do not overflow awkwardly.
-4. Copy actions are tappable.
-5. Category filters are easy to use.
-6. Detail pages remain readable.
-7. Header navigation does not hide the main task.
+- search remains visible and usable
+- syntax blocks wrap or scroll safely
+- copy buttons remain tappable
+- category filters do not overflow badly
+- cards stack cleanly
+- command detail pages remain readable
+- footer/disclaimer does not dominate
 
-### Tablet priorities
+### Tablet requirements
 
-- use multi-column layouts only when scanning remains comfortable
-- keep filter controls visible
-- preserve card hierarchy
+- archive cards can use two columns where appropriate
+- search and category controls remain near top
+- headings do not overwhelm content
 
-### Desktop priorities
+### Desktop requirements
 
-- support fast scanning
-- show category sections clearly
-- make detail pages feel editorial and complete
-- preserve whitespace without wasting it like a luxury brochure for one slash command
+- preserve strong visual hierarchy
+- avoid overly wide line lengths
+- support fast scanning of command cards
+- keep command syntax visually distinct
 
 ---
 
 ## Motion Strategy
 
-GSAP is used for motion polish.
+Motion is useful when it supports orientation, but risky when it competes with reference reading.
 
-### Motion goals
+### Good motion use
 
-- reinforce page atmosphere
-- smooth entry states
-- avoid distracting from command lookup
-- keep performance stable
-- respect reduced-motion preferences where possible
+- subtle entry transitions
+- hover polish
+- background atmosphere
+- active category transitions
+- copy confirmation feedback
 
-### Motion rules
+### Bad motion use
 
-- Do not animate core readability away.
-- Avoid long delays before content appears.
-- Do not animate every card in a heavy list if it hurts responsiveness.
-- Use motion to guide attention, not to show that GSAP exists.
+- distracting loops behind text
+- moving command cards during search
+- animations that delay interaction
+- scroll hijacking
+- large motion on mobile
 
-### Reduced motion
+### Rule
 
-Add or preserve reduced-motion fallbacks for users who prefer less animation.
+This is a command guide, not a cinematic trailer. If animation gets between the player and `/tell`, the animation has lost its job.
 
 ---
 
@@ -693,254 +690,253 @@ Add or preserve reduced-motion fallbacks for users who prefer less animation.
 
 ### Syntax rules
 
-- Always include the leading slash.
-- Use placeholders clearly, such as `<message>` or `<player>`.
-- Keep casing consistent with common usage when known.
-- For on/off commands, show both enabled and disabled forms where useful.
-
-### Description rules
-
-- Lead with what the command does.
-- Avoid vague language like “used for stuff.” Humanity has suffered enough.
-- Explain caveats in notes.
-- Keep descriptions short on cards.
-- Use detail pages for deeper explanation.
-
-### Alias rules
-
-- Include common aliases.
-- Keep alias formatting consistent.
-- Avoid claiming aliases that are not verified.
-- Explain when aliases may vary.
+- Preserve exact capitalization when meaningful.
+- Include placeholders in angle brackets.
+- Keep commas and spaces accurate.
+- Do not include trailing punctuation inside syntax blocks unless part of command.
+- Mark toggles clearly, such as `/CombatLog 1` and `/CombatLog 0`.
 
 ### Example rules
 
-- Examples should be realistic.
-- Examples should be safe and non-abusive.
-- Examples should not expose real player handles.
-- Examples should match the command’s category.
+- Use realistic gameplay text.
+- Avoid offensive or abusive examples.
+- Avoid real player identifiers unless generic.
+- Use `Character@Handle` as generic identity placeholder.
+- Include context where commands are not self-evident.
+
+### Note rules
+
+Use `note` and `noteText` for:
+
+- undocumented commands
+- patch-sensitive behavior
+- permission-dependent commands
+- commands with persistent effects
+- commands that affect files/logs/screenshots
 
 ---
 
 ## Command Verification Strategy
 
-Game commands can change or vary by client behavior, patch, permissions, or undocumented quirks.
+A fan command guide should have a verification workflow.
 
 ### Verification states
 
-Recommended future states:
-
 | State | Meaning |
 |---|---|
-| `verified` | Tested recently in-game or confirmed from reliable source |
-| `partially_verified` | Syntax likely works, but behavior has caveats |
-| `undocumented` | Public documentation is incomplete |
-| `patch_sensitive` | Could change with updates |
-| `deprecated` | Known old command, not recommended |
-| `unknown` | Needs confirmation |
+| Verified | Tested in current client or strong current source |
+| Partially verified | Syntax works but behavior has caveats |
+| Undocumented | Known from community use but official source unclear |
+| Patch-sensitive | Behavior may change across updates |
+| Deprecated | Command may no longer work |
+| Unknown | Needs testing |
 
-### Verification fields
+### Verification process
 
-Add fields such as:
+1. Add or update command entry.
+2. Test command in-game where possible.
+3. Confirm aliases.
+4. Confirm category.
+5. Add example.
+6. Add note if behavior is uncertain.
+7. Build site.
+8. Check generated detail page.
+9. Review mobile readability.
 
-- `verificationStatus`
-- `lastVerifiedAt`
-- `sourceUrl`
-- `sourceNote`
-- `patchContext`
+### Source notes
 
-### Verification rule
-
-Do not make uncertain commands look equally authoritative. A note is not weakness. It is how a reference earns trust.
+Future schema should include source notes. Even simple notes such as `tested in-game`, `community reported`, or `needs verification` would improve trust.
 
 ---
 
 ## Content Expansion Strategy
 
-### Expansion priorities
+### Expansion candidates
 
-1. Add missing common chat commands.
-2. Expand private messaging commands.
-3. Add more emotes.
-4. Add display and screenshot command variants.
-5. Add utility and support commands.
-6. Add platform or permission caveats.
-7. Add verification metadata.
-8. Add related command links.
+- more emotes
+- UI/display commands
+- social commands
+- guild/alliance commands
+- support/recovery commands
+- combat-log-related commands
+- screenshot/video commands
+- private messaging commands
+- help/debug commands
 
-### Avoid expansion traps
+### Expansion rules
 
-- Do not add commands without examples.
-- Do not add undocumented commands without caveats.
-- Do not mix console commands, chat commands, and unrelated config notes without clear labels.
-- Do not turn the site into a general Neverwinter wiki.
+Do not add commands just to inflate count. A command should include enough context to be useful.
 
-### Content backlog categories
+Minimum entry quality:
 
-| Category | Expansion ideas |
-|---|---|
-| Chat | say, zone, trade, looking-for-group, alliance |
-| Private | whisper, tell, reply, ignore/block where applicable |
-| Party/Guild | party, guild, officer, invite, leave/disband where applicable |
-| Emotes | common social emotes and roleplay commands |
-| Utility | help, stuck, combat log, support shortcuts |
-| Display | screenshots, FPS, UI visibility where verified |
+- syntax
+- title
+- description
+- example
+- category
+- alias list, even if empty
+- note if uncertain
+
+### Future enhancements
+
+- related commands
+- command difficulty/use case tags
+- verification status
+- patch notes
+- examples array
+- copy success analytics if privacy-safe
+- user-submitted corrections workflow
 
 ---
 
 ## Quality Assurance Strategy
 
-### Functional QA
+### Build checks
 
-- Search matches syntax.
-- Search matches aliases.
-- Search matches titles.
-- Search matches descriptions.
-- Category filters work.
-- Copy buttons copy correct syntax.
-- Command detail pages generate.
-- Category pages link correctly.
-- Not-found states work.
+```bash
+npm install
+npm run build
+npm run check
+```
 
-### Content QA
+### Functional checks
 
-- Every command has an ID.
-- Every command has syntax.
-- Every command has a title.
-- Every command has a description.
-- Every command has an example.
-- Alias arrays are present even if empty.
-- Notes are clear where needed.
-- Categories match existing category list.
+- command archive loads
+- search works by title
+- search works by syntax
+- search works by alias
+- search works by category
+- copy buttons work
+- detail pages generate
+- category pages link correctly
+- not-found state works
 
-### SEO QA
+### SEO checks
 
-- Command pages have unique titles.
-- Command pages have meaningful descriptions.
-- Canonicals are correct.
-- Sitemap includes static routes.
-- Robots directives are valid.
-- Open Graph images render.
-- Structured data remains accurate.
+- page titles are unique
+- meta descriptions are present
+- canonical URLs are correct
+- sitemap includes command routes
+- robots file is valid
+- Open Graph image works
+- SearchAction matches real search behavior
 
-### Accessibility QA
+### Content checks
 
-- Keyboard focus visible.
-- Search usable by keyboard.
-- Copy buttons accessible.
-- Contrast passes target guidelines.
-- Mobile layout remains readable.
-- Motion does not block reading.
+- no duplicate IDs
+- no duplicate slugs
+- aliases are arrays
+- examples match syntax
+- notes are clear
+- categories match available category set
 
 ---
 
 ## Performance Strategy
 
-The project is intentionally lightweight, which is excellent. Please, for once, keep it that way.
+This project should stay fast because it is static and content-focused.
 
-### Performance strengths
+### Performance goals
 
-- local data
-- static pages
-- no heavy CMS
-- compact dependency list
-- App Router static generation
-- small command dataset
+- fast initial load
+- static generation where possible
+- minimal JavaScript for reference pages
+- no heavy CMS dependency
+- low layout shift
+- optimized fonts
+- efficient search/filter behavior
 
-### Performance risks
+### Watch areas
 
-| Risk | Mitigation |
-|---|---|
-| Command dataset grows large | Keep search efficient and consider indexing |
-| Excessive GSAP animation | Scope motion and respect reduced motion |
-| Heavy images/social assets | Optimize generated images |
-| Too many client components | Keep static pages static where possible |
-| Large global CSS drift | Maintain token discipline |
+- GSAP motion layer
+- large command datasets
+- client-side search cost
+- font loading
+- Open Graph image generation
+- CSS visual effects on low-end devices
 
-### Performance checklist
+### Mitigations
 
-- Build succeeds.
-- Static pages generate.
-- No unnecessary client bundles for static content.
-- Command archive remains responsive.
-- Search/filter updates are fast.
-- Lighthouse performance remains strong.
+- keep motion subtle
+- pre-generate command detail pages
+- avoid importing all decorative logic into critical routes
+- keep command data simple
+- use semantic HTML
+- test mobile performance
 
 ---
 
 ## Privacy, Legal, and Fan-Project Notes
 
-### Fan-project positioning
+This is a fan-made project. It should not imply official affiliation with Cryptic Studios, Gearbox Publishing, Wizards of the Coast, Arc Games, or any Neverwinter rights holder.
 
-The site must remain clear that it is fan-made and not official.
+### Legal copy rules
 
-### Avoid official confusion
+- keep disclaimer visible
+- avoid official-looking claims
+- avoid using protected assets unless rights are clear
+- use textual command references responsibly
+- do not claim endorsement
 
-Do not imply:
+### Privacy rules
 
-- official support status
-- official command authority
-- affiliation with Cryptic Studios
-- affiliation with Arc Games
-- affiliation with Gearbox Publishing
-- affiliation with Wizards of the Coast
-- official Neverwinter endorsement
+The site appears static and does not need user accounts. Keep it that way unless there is a strong product reason.
 
-### User data
+If analytics are added later:
 
-The current site appears static and does not need user accounts or personal data. Keep it that way unless a strong product need appears.
-
-### Legal and trademark rule
-
-Use game names only for descriptive reference. Keep disclaimers visible.
+- disclose them
+- avoid tracking sensitive data
+- avoid collecting copied command text as personal behavior unless necessary
+- respect privacy settings
 
 ---
 
 ## Maintenance Playbook
 
-### Adding a new command
+### Adding a command
 
-1. Add entry to `lib/commands-data.js`.
-2. Use a stable `id`.
-3. Add copy-ready `syntax`.
+1. Open `lib/commands-data.js`.
+2. Add a unique `id`.
+3. Add exact `syntax`.
 4. Add clear `title`.
-5. Add short `description`.
+5. Write a useful `description`.
 6. Add realistic `example`.
-7. Add `aliases`, even if empty.
-8. Assign valid `category`.
-9. Add `anchor` and `letter`.
-10. Add note fields if behavior is uncertain.
+7. Add `aliases` array.
+8. Choose category.
+9. Add `letter`.
+10. Add `note` and `noteText` if needed.
 11. Run build.
-12. Check archive search.
-13. Check detail page.
-14. Check mobile syntax display.
+12. Test archive search.
+13. Test command detail route.
+14. Test mobile card layout.
 
 ### Adding a category
 
 1. Add category shortcut.
-2. Add category route/page if needed.
-3. Ensure commands can link to the category.
-4. Add archive filter behavior.
-5. Update SEO metadata.
-6. Update README and docs.
-
-### Editing visual design
-
-1. Check contrast.
-2. Check syntax readability.
-3. Check focus states.
-4. Check mobile cards.
-5. Check category pages.
-6. Check command detail pages.
-7. Avoid decorative bloat.
+2. Add category copy.
+3. Map commands to the category.
+4. Create or update category route.
+5. Add internal links.
+6. Add metadata.
+7. Test empty and populated states.
 
 ### Editing SEO metadata
 
-1. Keep titles descriptive.
-2. Keep canonical URLs correct.
-3. Do not overstuff keywords.
-4. Keep fan-project identity clear.
-5. Test social previews if possible.
+1. Check `app/layout.jsx` for global defaults.
+2. Check page-level metadata.
+3. Confirm canonical URLs.
+4. Confirm Open Graph image path.
+5. Confirm sitemap/robots output.
+6. Rebuild.
+
+### Editing visual system
+
+1. Review global tokens.
+2. Check contrast.
+3. Check syntax block readability.
+4. Check mobile cards.
+5. Check focus state.
+6. Check reduced motion.
 
 ---
 
@@ -948,125 +944,118 @@ Use game names only for descriptive reference. Keep disclaimers visible.
 
 | Risk | Severity | Why it matters | Mitigation |
 |---|---:|---|---|
-| Stale command behavior | High | Players may use wrong command | Add verification states and notes |
-| Unverified aliases | Medium | Search may mislead users | Mark aliases carefully |
-| SEO over-optimization | Medium | Content becomes spammy | Write for players first |
-| Official-affiliation confusion | High | Legal/trust issue | Keep fan disclaimer clear |
-| Dark UI contrast issues | Medium | Readability/accessibility suffers | Test contrast and focus states |
-| Command dataset inconsistency | Medium | Cards/routes break | Add schema validation eventually |
-| Search misses aliases | Medium | Users fail to find commands | Include aliases in search index |
-| Copy button failure | Medium | Core UX breaks | Test clipboard behavior |
-| Overbroad scope | Medium | Site loses focus | Stay command-reference focused |
-| Motion overload | Low/Medium | Lookup feels slow | Limit GSAP effects |
+| Incorrect command syntax | High | Users lose trust immediately | Verify commands before publishing |
+| Stale command behavior | Medium | Game patches can change behavior | Add verification and patch notes |
+| Duplicate command IDs | High | Static routes can break | Add lint/data validation later |
+| Weak search matching | Medium | Users cannot find commands | Search syntax, aliases, titles, categories |
+| Overdecorated UI | Medium | Reference becomes hard to read | Keep editorial hierarchy strong |
+| Poor mobile syntax blocks | High | Players often search on mobile | Test responsive wrapping/scrolling |
+| SEO overclaiming | Medium | Reduces trust and search quality | Human-first metadata and disclaimers |
+| Official-affiliation confusion | High | Legal/trust issue | Keep fan disclaimer visible |
+| Motion distraction | Low/Medium | Hurts readability | Respect reduced motion |
+| Structured data mismatch | Medium | Search engines may distrust metadata | Ensure SearchAction works correctly |
 
 ---
 
 ## Roadmap
 
-### Near-term
+### Near term
 
-- Add verification status fields.
-- Add `.schema` or validation helper for commands.
-- Expand command coverage.
-- Add related commands on detail pages.
-- Add more explicit source/caveat notes.
-- Add command count and category count to README.
+- Add verification status to command entries.
+- Add source notes for uncertain commands.
+- Add related command links.
+- Add data validation script.
+- Improve search ranking for exact syntax and aliases.
+- Add more utility and display commands.
 
-### Mid-term
+### Mid term
 
-- Add fuzzy search.
-- Add keyboard shortcuts for search focus.
-- Add copy success announcements.
-- Add command submission/review workflow as GitHub issue template.
-- Add visual examples for screenshot/display commands.
-- Add more robust command detail metadata.
+- Add command contribution guidelines.
+- Add changelog.
+- Add command verification log.
+- Add category-specific FAQ sections.
+- Add screenshot previews for display commands where appropriate.
+- Add structured data for individual command detail pages.
 
-### Long-term
+### Long term
 
-- Add command version history.
-- Add patch verification log.
-- Add multilingual support if there is demand.
-- Add static JSON export of command data.
-- Add automated content schema validation in CI.
-- Add visual regression snapshots for command cards.
+- Add correction/request workflow.
+- Add versioned command behavior notes.
+- Add cross-links to combat parser tools.
+- Add offline-friendly static export.
+- Add optional JSON command dataset export.
+- Add automated checks for duplicate IDs and missing fields.
 
 ---
 
 ## Portfolio Review Notes
 
-This project works well as a portfolio example because it shows a narrow product problem solved with thoughtful IA, search UX, static generation, SEO, content design, and visual polish.
+This repository is valuable as a portfolio project because it demonstrates:
 
-### Strong portfolio angles
+- narrow product focus
+- SEO-aware information architecture
+- content strategy
+- design system thinking
+- static site architecture
+- search-first UX
+- editorial discipline
+- accessibility awareness
+- fan-project legal caution
 
-| Angle | Evidence |
-|---|---|
-| Product strategy | Narrow command-reference scope |
-| UX design | Search-first archive and category browsing |
-| Content design | Syntax, examples, aliases, notes |
-| SEO thinking | Static command detail pages and metadata |
-| Frontend architecture | App Router, static generation, local data |
-| Accessibility | Focus, contrast, semantic structure |
-| Visual design | Arcane/premium style without sacrificing readability |
+### Strong portfolio framing
 
-### How to describe it
-
-> Designed and built a fan-made, search-first Neverwinter command reference using Next.js and React. The project turns slash commands, aliases, examples, categories, and utility notes into a static SEO-friendly command library with searchable archive pages, command detail routes, category pages, semantic metadata, and a premium fantasy-inspired visual system focused on readability.
+> Designed and built a static Next.js command-reference site for Neverwinter players, focused on search-first command discovery, copy-ready slash command syntax, category browsing, command detail pages, SEO-friendly static generation, accessible dark UI design, and a centralized command data model.
 
 ### What not to overclaim
 
 Do not claim:
 
-- the site is official
-- every command is verified unless it is
-- undocumented commands are guaranteed
-- command behavior cannot change
-- this is a complete Neverwinter wiki
-- SEO traffic proves command accuracy
+- official affiliation
+- complete coverage of every command
+- guaranteed current behavior for undocumented commands
+- combat parser functionality
+- wiki-level breadth
 
-Truth in portfolio work. Strange concept. Worth trying.
+The strength of this project is focus. Don’t ruin that by pretending it is everything. Humans adore scope creep like moths adore lamps, and with similar outcomes.
 
 ---
 
 ## AI Coding Agent Notes
 
-Future AI agents should treat this as a focused command-reference product.
+Future AI agents should inspect before editing.
 
 ### Inspect first
 
-Before making changes, inspect:
-
 1. `README.md`
 2. `package.json`
-3. `lib/commands-data.js`
-4. `app/layout.jsx`
-5. `app/commands/`
-6. `app/categories/`
-7. `components/command-library.jsx`
-8. `components/command-preview-grid.jsx`
-9. `app/globals.css`
-10. sitemap and robots files if present
+3. `app/layout.jsx`
+4. `app/globals.css`
+5. `lib/commands-data.js`
+6. `components/command-library.jsx`
+7. `components/command-preview-grid.jsx`
+8. `components/site-header.jsx`
+9. sitemap/robots files
+10. command detail route files
 
 ### Do not
 
-- Do not invent command behavior.
-- Do not remove fan-project disclaimer.
-- Do not create official-sounding claims.
+- Do not duplicate command data in route files.
 - Do not add commands without examples.
-- Do not add aliases without confidence.
-- Do not break static generation.
-- Do not overanimate archive cards.
-- Do not hide command syntax behind decorative UI.
+- Do not invent official claims.
+- Do not remove disclaimer language.
+- Do not break command detail route generation.
+- Do not add heavy client-side dependencies for simple reference behavior.
+- Do not let motion interfere with reading or copying commands.
 
 ### Prefer
 
-- local data updates
-- schema-consistent commands
-- static route generation
-- accessible labels
-- clear notes for uncertainty
-- readable syntax blocks
-- small dependency footprint
-- build verification after content changes
+- small content-model changes
+- explicit command fields
+- static generation
+- semantic HTML
+- accessible controls
+- exact syntax matching
+- clear notes for uncertain commands
 
 ---
 
@@ -1075,7 +1064,6 @@ Before making changes, inspect:
 ```ts
 type CommandEntry = {
   id: string;
-  slug?: string;
   syntax: string;
   title: string;
   description: string;
@@ -1088,10 +1076,8 @@ type CommandEntry = {
   note?: string;
   noteText?: string;
   verificationStatus?: "verified" | "partially_verified" | "undocumented" | "patch_sensitive" | "deprecated" | "unknown";
-  lastVerifiedAt?: string;
-  sourceUrl?: string;
-  relatedCommandIds?: string[];
-  searchTerms?: string[];
+  sourceNotes?: string;
+  related?: string[];
 };
 ```
 
@@ -1103,12 +1089,12 @@ type CommandEntry = {
 type CommandCategory = {
   id: string;
   label: string;
-  slug: string;
   blurb: string;
   description?: string;
+  route?: string;
   seoTitle?: string;
   seoDescription?: string;
-  relatedCategoryIds?: string[];
+  featuredCommandIds?: string[];
 };
 ```
 
@@ -1118,42 +1104,42 @@ type CommandCategory = {
 
 | Area | Test | Expected result |
 |---|---|---|
-| Build | `npm run build` | Next.js build succeeds |
-| Homepage | Load `/` | Main entry page appears |
-| Archive | Load `/commands` | Searchable command archive appears |
+| Homepage | Load `/` | Page loads with clear entry points |
+| Archive | Load `/commands` | Search/archive interface appears |
 | Search | Search `/r` | Reply command appears |
 | Search | Search `whisper` | Private message commands appear |
 | Search | Search `combat log` | Combat log command appears |
-| Search | Search alias `/w` | Tell/whisper command appears |
-| Category | Open chat category | Chat commands appear |
-| Category | Open utility category | Utility commands appear |
-| Detail | Open command detail | Syntax, example, alias, note render |
-| Copy | Click copy | Correct syntax copies and feedback appears |
-| Mobile | Archive on small viewport | Cards stack and syntax remains readable |
-| Accessibility | Keyboard through archive | Focus remains visible |
-| SEO | Inspect metadata | Title/description/canonical are appropriate |
-| Sitemap | Generate/check sitemap | Command pages included |
-| Robots | Inspect robots directives | Crawl rules match intent |
-| Disclaimer | Footer/about | Fan-project disclaimer visible |
+| Search | Search unknown text | Empty state helps recovery |
+| Copy | Copy syntax | Correct command copied |
+| Category | Open Chat category | Chat commands listed |
+| Category | Open Utility category | Utility commands listed |
+| Detail | Open command detail | Syntax, example, aliases display |
+| Mobile | View command card | Syntax readable and actions tappable |
+| Keyboard | Tab through archive | Focus states visible |
+| SEO | Inspect title/meta | Unique metadata present |
+| Build | Run `npm run build` | Static generation succeeds |
+| Legal | Footer/disclaimer visible | Fan-project status clear |
 
 ---
 
 ## Appendix D: Editorial Checklist
 
-Before adding or editing command content:
+Before publishing a command, confirm:
 
-- [ ] Syntax starts with `/` where appropriate.
-- [ ] Placeholder values use angle brackets.
-- [ ] Title is human-readable.
-- [ ] Description explains the actual user benefit.
-- [ ] Example feels like real player behavior.
-- [ ] Alias list is accurate or empty.
-- [ ] Category matches user intent.
-- [ ] Note is added for uncertain behavior.
-- [ ] Command appears in search.
-- [ ] Detail route builds.
+- [ ] ID is unique.
+- [ ] Syntax is exact.
+- [ ] Title is readable.
+- [ ] Description explains the use case.
+- [ ] Example is realistic.
+- [ ] Aliases are complete where known.
+- [ ] Category is correct.
+- [ ] Letter grouping is correct.
+- [ ] Note is added if behavior is uncertain.
+- [ ] Detail page generates.
+- [ ] Search finds the command by syntax.
+- [ ] Search finds the command by alias.
 - [ ] Mobile card remains readable.
-- [ ] No official-affiliation claim is introduced.
+- [ ] No official endorsement is implied.
 
 ---
 
@@ -1161,22 +1147,24 @@ Before adding or editing command content:
 
 | Term | Meaning |
 |---|---|
-| Slash command | A text command beginning with `/` used inside the game client |
-| Syntax | The exact command format a player types |
-| Alias | Alternative shorthand command that performs a similar action |
-| Command archive | Full searchable list of commands |
-| Command detail page | Dedicated page for one command |
-| Category page | Page grouping commands by intent or function |
-| Static generation | Build-time creation of pages for fast loading and SEO |
-| Long-tail search | Specific search query such as “Neverwinter whisper command” |
-| Fan project | Independent project not affiliated with official rights holders |
-| Verification status | Confidence label for command behavior |
-| Copy-ready | Formatted so a user can copy and paste the command directly |
+| Slash command | A command typed into the game chat or command input using `/` syntax |
+| Alias | Alternative syntax that performs the same or similar action |
+| Syntax | Exact command format |
+| Example | Realistic sample command usage |
+| Category | User-facing command grouping |
+| Archive | Searchable list of commands |
+| Detail page | Dedicated page for one command |
+| Static generation | Pre-rendering pages at build time |
+| SEO | Search engine optimization |
+| Canonical URL | Preferred URL for search indexing |
+| Open Graph | Metadata for social previews |
+| Structured data | JSON-LD metadata for search engines |
+| Fan project | Independent community project without official affiliation |
 
 ---
 
 ## Disclaimer
 
-Neverwinter Command Guide is an independent fan-made reference project. It is not affiliated with, endorsed by, sponsored by, or officially connected to Cryptic Studios, Arc Games, Gearbox Publishing, Wizards of the Coast, or any Neverwinter rights holder. Game names, commands, terms, and related intellectual property belong to their respective owners.
+Neverwinter Command Guide is an independent fan-made project. It is not affiliated with, endorsed by, sponsored by, or officially connected to Cryptic Studios, Arc Games, Gearbox Publishing, Wizards of the Coast, or any Neverwinter rights holder. Game names, command terms, and related intellectual property belong to their respective owners.
 
-Command behavior can change across patches, clients, permissions, and undocumented game behavior. Treat this guide as a practical reference, not an official source of truth. Commands marked as undocumented, uncertain, or patch-sensitive should be verified in-game before relying on them in important situations.
+Command behavior may change across patches, platforms, clients, or account states. Treat undocumented or uncertain commands as helpful references, not official guarantees. Always verify important command behavior in the current game client before relying on it during gameplay, content creation, or tool workflows.
