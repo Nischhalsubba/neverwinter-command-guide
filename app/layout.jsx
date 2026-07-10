@@ -19,7 +19,7 @@ const bodyFont = Source_Sans_3({
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Neverwinter Command Guide",
+    default: "Neverwinter Command Guide | Slash Commands, Emotes & Utility",
     template: "%s | Neverwinter Command Guide"
   },
   keywords: [
@@ -29,12 +29,18 @@ export const metadata = {
     "Neverwinter chat commands",
     "Neverwinter utility commands",
     "Neverwinter whisper command",
-    "Neverwinter combat log"
+    "Neverwinter combat log command",
+    "Neverwinter screenshot command",
+    "Neverwinter alliance chat command",
+    "Neverwinter console command guide"
   ],
   description:
-    "A fan-made searchable reference for Neverwinter chat commands, emotes, utility commands, and copy-ready syntax.",
+    "Search Neverwinter slash commands, whispers, chat shortcuts, emotes, utility tools, screenshot controls, combat-log commands, aliases, and copy-ready examples.",
   applicationName: "Neverwinter Command Guide",
-  category: "gaming",
+  authors: [{ name: "Nischhal Raj Subba", url: "https://github.com/Nischhalsubba" }],
+  creator: "Nischhal Raj Subba",
+  publisher: "Nischhal Raj Subba",
+  category: "gaming reference",
   robots: {
     index: true,
     follow: true,
@@ -47,9 +53,9 @@ export const metadata = {
     }
   },
   openGraph: {
-    title: "Neverwinter Command Guide",
+    title: "Neverwinter Command Guide | Slash Commands & Emotes",
     description:
-      "Search Neverwinter commands, chat shortcuts, whispers, emotes, utility commands, and copy-ready syntax.",
+      "Search Neverwinter chat commands, whispers, alliance tools, emotes, utility commands, screenshots, combat logs, aliases, and copy-ready syntax.",
     type: "website",
     siteName: "Neverwinter Command Guide",
     url: siteUrl,
@@ -58,15 +64,15 @@ export const metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Neverwinter Command Guide"
+        alt: "Neverwinter Command Guide searchable slash-command reference"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Neverwinter Command Guide",
+    title: "Neverwinter Command Guide | Slash Commands & Emotes",
     description:
-      "A fan-made searchable reference for Neverwinter chat commands, emotes, utility commands, and copy-ready syntax.",
+      "A searchable Neverwinter reference for chat, whispers, emotes, utility commands, screenshots, combat logs, and copy-ready syntax.",
     images: ["/twitter-image"]
   },
   alternates: {
@@ -75,9 +81,37 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Neverwinter Command Guide",
+    url: siteUrl,
+    description:
+      "A searchable reference for Neverwinter slash commands, chat tools, whispers, emotes, utility commands, screenshots, combat logs, aliases, and examples.",
+    inLanguage: "en",
+    creator: {
+      "@type": "Person",
+      name: "Nischhal Raj Subba",
+      url: "https://github.com/Nischhalsubba"
+    },
+    about: {
+      "@type": "VideoGame",
+      name: "Neverwinter"
+    },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${siteUrl}/commands?query={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
+  };
+
   return (
     <html lang="en" className={`${headingFont.variable} ${bodyFont.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         {children}
         <SiteFooter />
         <MotionLayer />
