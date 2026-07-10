@@ -1,0 +1,43 @@
+# Neverwinter Command Guide
+
+Neverwinter Command Guide is a searchable reference website for Neverwinter slash commands, chat commands, whispers, alliance and party tools, emotes, utility commands, screenshots, display controls, combat logs, aliases, and copy-ready examples.
+
+## Primary use cases
+
+- Find a Neverwinter command by syntax, title, alias, category, or use case.
+- Learn how a command works before copying it.
+- Browse chat, private-message, guild, alliance, party, emote, utility, display, screenshot, and combat-log commands.
+- Open dedicated static pages for individual commands.
+- Browse category landing pages for related commands.
+
+## Main routes
+
+- `/` — Homepage and command-guide overview.
+- `/commands` — Searchable command archive.
+- `/categories` — Command categories.
+- `/emotes` — Neverwinter emote commands.
+- `/utility` — Utility and technical commands.
+- `/about` — Project information.
+- `/commands/[slug]` — Static command detail pages with syntax, explanation, examples, aliases, and category context.
+
+## Technical summary
+
+- Next.js 15 App Router.
+- React 19.
+- Static generation for command detail pages.
+- Dynamic sitemap and robots output.
+- Route-level metadata and canonical URLs.
+- Open Graph and Twitter preview images.
+- Search-first command dataset stored in `lib/commands-data.js`.
+
+## Repository
+
+https://github.com/Nischhalsubba/neverwinter-command-guide
+
+## Accuracy note
+
+Neverwinter commands can change or become undocumented after game updates. Commands should be verified before being presented as current or officially supported.
+
+## Disclaimer
+
+This is an independent fan-made reference and is not affiliated with or endorsed by Cryptic Studios, Arc Games, Gearbox Publishing, or the Neverwinter rights holders.
