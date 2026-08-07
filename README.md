@@ -4,27 +4,27 @@
 
 # neverwinter-command-guide
 
-**Branch-aware technical guide for [`main`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main)**
+**Branch-aware technical guide for [`agent/security-next-lock`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/agent/security-next-lock)**
 
-<p><img alt="branch: main" src="https://img.shields.io/static/v1?label=&message=branch%3A%20main&color=5965F2&style=flat-square"> <img alt="Next.js" src="https://img.shields.io/static/v1?label=&message=Next.js&color=24292F&style=flat-square"> <img alt="React" src="https://img.shields.io/static/v1?label=&message=React&color=24292F&style=flat-square"> <img alt="JavaScript" src="https://img.shields.io/static/v1?label=&message=JavaScript&color=24292F&style=flat-square"> <img alt="CSS" src="https://img.shields.io/static/v1?label=&message=CSS&color=24292F&style=flat-square"> <img alt="docs: branch-aware" src="https://img.shields.io/static/v1?label=&message=docs%3A%20branch-aware&color=8250DF&style=flat-square"></p>
+<p><img alt="branch: agent/security-next-lock" src="https://img.shields.io/static/v1?label=&message=branch%3A%20agent%2Fsecurity-next-lock&color=5965F2&style=flat-square"> <img alt="Next.js" src="https://img.shields.io/static/v1?label=&message=Next.js&color=24292F&style=flat-square"> <img alt="React" src="https://img.shields.io/static/v1?label=&message=React&color=24292F&style=flat-square"> <img alt="JavaScript" src="https://img.shields.io/static/v1?label=&message=JavaScript&color=24292F&style=flat-square"> <img alt="CSS" src="https://img.shields.io/static/v1?label=&message=CSS&color=24292F&style=flat-square"> <img alt="docs: branch-aware" src="https://img.shields.io/static/v1?label=&message=docs%3A%20branch-aware&color=8250DF&style=flat-square"></p>
 
 <p>
-  <a href="https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main"><strong>Browse source</strong></a> ·
+  <a href="https://github.com/Nischhalsubba/neverwinter-command-guide/tree/agent/security-next-lock"><strong>Browse source</strong></a> ·
   <a href="https://github.com/Nischhalsubba/neverwinter-command-guide/issues"><strong>Issues</strong></a> ·
-  <a href="https://github.com/Nischhalsubba/neverwinter-command-guide/codespaces/new?ref=main"><strong>Open in Codespaces</strong></a>
+  <a href="https://github.com/Nischhalsubba/neverwinter-command-guide/codespaces/new?ref=agent%2Fsecurity-next-lock"><strong>Open in Codespaces</strong></a>
 </p>
 
 </div>
 
 > [!IMPORTANT]
-> This guide is generated from the files actually present on `main`. It links to detected source paths, preserves project-authored notes, and avoids claiming components that were not found.
+> This guide is generated from the files actually present on `agent/security-next-lock`. It links to detected source paths, preserves project-authored notes, and avoids claiming components that were not found.
 
 ## At a glance
 
 | Item | Detected value |
 |---|---|
 | Purpose | A static Next.js and React fan-made Neverwinter slash-command reference with searchable command data, command detail routes, category pages, SEO metadata, sitemap/robots support, GSAP motion, and copy-ready command examples. |
-| Branch role | Default branch |
+| Branch role | Compared with `main` |
 | Stack | Next.js, React, JavaScript, CSS |
 | Manifests | package.json |
 | Prerequisites | Node.js |
@@ -33,7 +33,7 @@
 
 ## Branch scope
 
-This is the repository's default branch.
+No branch-specific file differences were detected against the default branch at generation time.
 
 
 
@@ -56,7 +56,7 @@ npm run build
 
 ```mermaid
 flowchart TD
-    ROOT["neverwinter-command-guide / main"]
+    ROOT["neverwinter-command-guide / agent/security-next-lock"]
     ROOT --> P0[".github/"]
     ROOT --> P1["app/"]
     ROOT --> P2["components/"]
@@ -72,10 +72,10 @@ flowchart TD
 
 | Responsibility | Detected source paths |
 |---|---|
-| Interface | [`app`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/app), [`public`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/public), [`components`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/components) |
-| Application logic | [`lib`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/lib) |
-| Documentation | [`docs`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/docs) |
-| Delivery | [`.github`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/.github) |
+| Interface | [`app`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/agent/security-next-lock/app), [`public`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/agent/security-next-lock/public), [`components`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/agent/security-next-lock/components) |
+| Application logic | [`lib`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/agent/security-next-lock/lib) |
+| Documentation | [`docs`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/agent/security-next-lock/docs) |
+| Delivery | [`.github`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/agent/security-next-lock/.github) |
 
 ## Website or application map
 
@@ -151,7 +151,7 @@ Define useful logs, metrics, traces, alerts, and rollback signals for production
 
 ```mermaid
 flowchart LR
-    CHANGE["Change on main"] --> CHECK["Tests and quality checks"]
+    CHANGE["Change on agent/security-next-lock"] --> CHECK["Tests and quality checks"]
     CHECK --> REVIEW["Review architecture and documentation impact"]
     REVIEW --> BUILD["Build or package"]
     BUILD --> DEPLOY["Deploy or release"]
@@ -160,7 +160,7 @@ flowchart LR
 
 ### Automation detected
 
-- [`.github/workflows/apply-interactive-readme.yml`](https://github.com/Nischhalsubba/neverwinter-command-guide/blob/main/.github/workflows/apply-interactive-readme.yml)
+- [`.github/workflows/apply-interactive-readme.yml`](https://github.com/Nischhalsubba/neverwinter-command-guide/blob/agent/security-next-lock/.github/workflows/apply-interactive-readme.yml)
 
 ## Contribution flow
 
@@ -185,7 +185,7 @@ flowchart LR
 | Topic | Source |
 |---|---|
 | Repository | [`Nischhalsubba/neverwinter-command-guide`](https://github.com/Nischhalsubba/neverwinter-command-guide) |
-| Branch | [`main`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main) |
+| Branch | [`agent/security-next-lock`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/agent/security-next-lock) |
 | Ownership | No CODEOWNERS file detected |
 | Contributing | Use the contribution flow above |
 | Support | [Open or review issues](https://github.com/Nischhalsubba/neverwinter-command-guide/issues) |
