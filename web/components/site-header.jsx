@@ -20,6 +20,15 @@ export function SiteHeader({ activePath = "" }) {
     setMenuOpen(false);
   }, [activePath]);
 
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const onEscape = (event) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("keydown", onEscape);
+    return () => document.removeEventListener("keydown", onEscape);
+  }, [menuOpen]);
+
   return (
     <header className="siteHeader">
       <div className="shell siteHeaderInner">
@@ -57,6 +66,7 @@ export function SiteHeader({ activePath = "" }) {
                 key={item.href}
                 href={item.href}
                 className={`navLink${isActive ? " active" : ""}`}
+                onClick={() => setMenuOpen(false)}
               >
                 {item.label}
               </Link>
