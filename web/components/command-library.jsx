@@ -8,6 +8,7 @@ import {
   commands,
   getCommandUrl,
 } from "@/lib/commands-data";
+import { normalizeCommandSearch, matchesCommandSearch } from "@/lib/command-search.mjs";
 import styles from "./command-library.module.css";
 
 const filterOptions = [
@@ -85,26 +86,6 @@ const categoryIcons = {
   Display: IconDisplay
 };
 
-function normalize(value) {
-  return value.toLowerCase().trim();
-}
-
-function matchesSearch(command, query) {
-  const haystack = [
-    command.syntax,
-    command.title,
-    command.description,
-    command.category,
-    command.example,
-    ...(command.aliases || [])
-  ]
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase();
-
-  return haystack.includes(query);
-}
-
 function CommandCard({ command, compact = false }) {
   const aliasText = command.aliases?.length ? command.aliases.join(", ") : "No alias";
 
@@ -141,12 +122,12 @@ export function CommandLibrary() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
   const searchId = useId();
-  const normalizedQuery = normalize(query);
+  const normalizedQuery = normalizeCommandSearch(query);
 
   const filteredCommands = useMemo(() => {
     return commands.filter((command) => {
       const matchesCategory = category === "All" || command.category === category;
-      const matchesText = !normalizedQuery || matchesSearch(command, normalizedQuery);
+      const matchesText = !normalizedQuery || matchesCommandSearch(command, normalizedQuery);
       return matchesCategory && matchesText;
     });
   }, [category, normalizedQuery]);
