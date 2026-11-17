@@ -225,7 +225,7 @@ export function CommandLibrary() {
               ))}
             </div>
             <div className={styles.categoryRow} aria-label="Category shortcuts">
-              {categoryShortcuts.map((shortcut, index) => {
+              {categoryShortcuts.map((shortcut) => {
                 const Icon = categoryIcons[shortcut.label];
 
                 return (
@@ -233,9 +233,10 @@ export function CommandLibrary() {
                     key={shortcut.id}
                     type="button"
                     className={styles.categoryOrbButton}
+                    aria-pressed={category === shortcut.label}
                     onClick={() => applyCategory(shortcut.label)}
                   >
-                    <span className={`${styles.categoryOrb}${category === shortcut.label || (category === "All" && index === 0) ? ` ${styles.categoryOrbActive}` : ""}`}>
+                    <span className={`${styles.categoryOrb}${category === shortcut.label ? ` ${styles.categoryOrbActive}` : ""}`}>
                       <Icon />
                     </span>
                     <span className={styles.categoryLabel}>{shortcut.label}</span>
