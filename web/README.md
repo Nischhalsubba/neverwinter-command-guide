@@ -72,9 +72,9 @@ flowchart TD
 
 | Responsibility | Detected source paths |
 |---|---|
-| Interface | [`app`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/app), [`public`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/public), [`components`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/components) |
-| Application logic | [`lib`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/lib) |
-| Documentation | [`docs`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/docs) |
+| Interface | [`app`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/web/app), [`public`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/web/public), [`components`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/web/components) |
+| Application logic | [`lib`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/web/lib) |
+| Documentation | [`docs`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/web/docs) |
 | Delivery | [`.github`](https://github.com/Nischhalsubba/neverwinter-command-guide/tree/main/.github) |
 
 ## Website or application map
@@ -160,7 +160,7 @@ flowchart LR
 
 ### Automation detected
 
-- [`.github/workflows/apply-interactive-readme.yml`](https://github.com/Nischhalsubba/neverwinter-command-guide/blob/main/.github/workflows/apply-interactive-readme.yml)
+- [`.github/workflows/quality.yml`](https://github.com/Nischhalsubba/neverwinter-command-guide/blob/main/.github/workflows/quality.yml)
 
 ## Contribution flow
 
