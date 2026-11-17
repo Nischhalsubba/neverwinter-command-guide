@@ -100,6 +100,14 @@ export function GlobalSearch() {
   const searchId = useId();
   const overlayRef = useRef(null);
   const dialogRef = useRef(null);
+  const previousFocusRef = useRef(null);
+
+  function openSearch() {
+    if (!previousFocusRef.current && document.activeElement instanceof HTMLElement) {
+      previousFocusRef.current = document.activeElement;
+    }
+    setOpen(true);
+  }
 
   const searchableCommands = useMemo(
     () =>
@@ -150,7 +158,7 @@ export function GlobalSearch() {
         }
 
         event.preventDefault();
-        setOpen(true);
+        openSearch();
       }
 
       if (event.key === "Escape") {
@@ -165,6 +173,10 @@ export function GlobalSearch() {
   useEffect(() => {
     if (!open) {
       setQuery("");
+      if (previousFocusRef.current?.isConnected) {
+        previousFocusRef.current.focus();
+      }
+      previousFocusRef.current = null;
       return;
     }
 
@@ -197,6 +209,32 @@ export function GlobalSearch() {
   }, [open]);
 
   useEffect(() => {
+    if (!open || !dialogRef.current) return;
+    const dialog = dialogRef.current;
+    function keepKeyboardFocusInside(event) {
+      if (event.key !== "Tab") return;
+      const focusable = Array.from(dialog.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      ));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      } else if (!dialog.contains(document.activeElement)) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+    dialog.addEventListener("keydown", keepKeyboardFocusInside);
+    return () => dialog.removeEventListener("keydown", keepKeyboardFocusInside);
+  }, [open]);
+
+  useEffect(() => {
     if (!open || !overlayRef.current || !dialogRef.current) {
       return;
     }
@@ -220,7 +258,7 @@ export function GlobalSearch() {
 
   return (
     <>
-      <button type="button" className="quickSearchLink" onClick={() => setOpen(true)}>
+      <button type="button" className="quickSearchLink" onClick={openSearch}>
         <span className="quickSearchIcon" aria-hidden="true">
           <IconSearch />
         </span>
