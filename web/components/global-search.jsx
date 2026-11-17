@@ -68,6 +68,7 @@ function scoreSearch(item, query) {
   const title = normalize(item.title || "");
   const syntax = normalize(item.syntax || "");
   const description = normalize(item.description || "");
+  const example = normalize(item.example || "");
   const aliases = (item.aliases || []).map(normalize);
   const keywords = (item.keywords || []).map(normalize);
   const category = normalize(item.category || "");
@@ -79,7 +80,7 @@ function scoreSearch(item, query) {
   if (aliases.includes(q) || keywords.includes(q)) score += 70;
   if (title.includes(q) || syntax.includes(q)) score += 50;
   if (category.includes(q)) score += 30;
-  if (description.includes(q)) score += 20;
+  if (description.includes(q) || example.includes(q)) score += 20;
   if (aliases.some((alias) => alias.includes(q))) score += 20;
   if (keywords.some((keyword) => keyword.includes(q))) score += 20;
 
