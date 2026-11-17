@@ -160,7 +160,7 @@ flowchart LR
 
 ### Automation detected
 
-- [`.github/workflows/apply-interactive-readme.yml`](https://github.com/Nischhalsubba/neverwinter-command-guide/blob/main/.github/workflows/quality.yml)
+- [`.github/workflows/quality.yml`](https://github.com/Nischhalsubba/neverwinter-command-guide/blob/main/.github/workflows/quality.yml)
 
 ## Contribution flow
 
