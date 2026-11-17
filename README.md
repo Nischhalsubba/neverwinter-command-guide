@@ -51,12 +51,18 @@ flowchart TD
 
 ## Getting started
 
+The Next.js app and its lockfile are in [`web/`](./web), not the repository root. Use Node.js 22+ and npm 10+ as declared by [`web/package.json`](./web/package.json).
+
 ```bash
 git clone https://github.com/Nischhalsubba/neverwinter-command-guide.git
-cd neverwinter-command-guide
+cd neverwinter-command-guide/web
+npm ci
+npm run dev
 ```
 
-Use the manifests and lockfiles in the repository to determine the current runtime and commands.
+Open http://localhost:3000 to browse the guide locally. To verify a production build, run `npm run check` from the same `web/` directory. Run `npm run build` before `npm start`, since `start` serves a built application.
+
+For more background, see the [application documentation](./web/README.md) and the [quality workflow](./.github/workflows/quality.yml).
 
 ## Content quality
 
